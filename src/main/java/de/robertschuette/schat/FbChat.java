@@ -49,6 +49,15 @@ public class FbChat extends Region {
         getChildren().add(browser);
     }
 
+    public int getUnreadMessages() {
+        if(webEngine.getLoadWorker().getState() == Worker.State.SUCCEEDED) {
+            return (Integer) webEngine.executeScript("getUnreadMessages();");
+        }
+        else {
+            return 0;
+        }
+    }
+
 
     public void testFetch() {
         Integer unread = (Integer) webEngine.executeScript("getUnreadMessages();");
@@ -57,7 +66,11 @@ public class FbChat extends Region {
         //System.out.println(getStringFromDoc(webEngine.getDocument()));
     }
 
-    public String getStringFromDoc(org.w3c.dom.Document doc) {
+
+
+
+
+    private String getStringFromDoc(org.w3c.dom.Document doc) {
         try {
             DOMSource domSource = new DOMSource(doc);
             StringWriter writer = new StringWriter();
