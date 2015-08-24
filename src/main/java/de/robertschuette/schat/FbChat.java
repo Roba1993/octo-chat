@@ -6,6 +6,7 @@ import javafx.concurrent.Worker;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import org.w3c.dom.Document;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -24,9 +25,14 @@ public class FbChat extends Region {
     private final WebView browser = new WebView();
     private final WebEngine webEngine = browser.getEngine();
 
+
+    /**
+     * Generate the Facebook region.
+     *
+     */
     public FbChat() {
         // load the web page
-        webEngine.load("http://www.messenger.com");
+        webEngine.load("https://www.messenger.com");
 
         // bind the browser windows dimensions to the FbChat dimension
         browser.prefWidthProperty().bind(this.widthProperty());
@@ -49,6 +55,11 @@ public class FbChat extends Region {
         getChildren().add(browser);
     }
 
+    /**
+     * Loads the unread messages for Facebook from the WebEngine.
+     *
+     * @return number of unread messages
+     */
     public int getUnreadMessages() {
         if(webEngine.getLoadWorker().getState() == Worker.State.SUCCEEDED) {
             return (Integer) webEngine.executeScript("getUnreadMessages();");
@@ -60,17 +71,17 @@ public class FbChat extends Region {
 
 
     public void testFetch() {
-        Integer unread = (Integer) webEngine.executeScript("getUnreadMessages();");
-        System.out.println("unread messages: "+unread);
-
-        //System.out.println(getStringFromDoc(webEngine.getDocument()));
+        webEngine.load("http://www.messenger.com");
     }
 
-
-
-
-
-    private String getStringFromDoc(org.w3c.dom.Document doc) {
+    /**
+     * Function to get the whole dom tree as String
+     * ONLY FOR DEV-ANALYSE!!!
+     *
+     * @param doc dom to parse
+     * @return dom as string
+     */
+    private String getStringFromDoc(Document doc) {
         try {
             DOMSource domSource = new DOMSource(doc);
             StringWriter writer = new StringWriter();

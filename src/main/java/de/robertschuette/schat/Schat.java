@@ -2,7 +2,6 @@ package de.robertschuette.schat;
 
 import com.sun.javafx.runtime.VersionInfo;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -11,13 +10,15 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+
 /**
  * Main class for the schat program.
  *
  * @author Robert Schütte
  */
 public class Schat extends Application {
-    private final FbChat fbChat = new FbChat();
+    private FbChat fbChat = new FbChat();
+    Group root = new Group();
 
     /**
      * The main entry point for the program.
@@ -35,7 +36,10 @@ public class Schat extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        Group root = new Group();
+        // initialise the new cookie manager and load the cookies from the file
+        FileCookieStore.init(getClass().getClassLoader().getResource(".").getPath()+"/cookie-store.xls");
+
+        // define root element for the stage
         Scene scene = new Scene(root, 500, 500, Color.WHITE);
 
         // define the fb chat window
@@ -45,8 +49,8 @@ public class Schat extends Application {
         fbChat.setPrefHeight(700);
         root.getChildren().add(fbChat);
 
-        // create and add the menue
-        root.getChildren().addAll(createMenue());
+        // create and add the menu
+        root.getChildren().addAll(createMenu());
 
         // create the stage
         stage.setScene(scene);
@@ -55,7 +59,7 @@ public class Schat extends Application {
         stage.setTitle(VersionInfo.getRuntimeVersion());
         stage.show();
 
-
+        // start the worker demon for background work
         WorkerThread wt = new WorkerThread(fbChat);
         wt.start();
     }
@@ -65,16 +69,20 @@ public class Schat extends Application {
      *
      * @return the created menue
      */
-    private MenuBar createMenue() {
+    private MenuBar createMenu() {
         final Menu menu1 = new Menu("File");
         final Menu menu2 = new Menu("Options");
         final Menu menu3 = new Menu("Help");
         final Menu menu4 = new Menu("Develop");
         final MenuItem menuItem1 = new MenuItem("Test");
+        final MenuItem menuItem2 = new MenuItem("Test2");
         menuItem1.setOnAction(event -> {
             fbChat.testFetch();
         });
-        menu4.getItems().addAll(menuItem1);
+        menuItem2.setOnAction(event -> {
+            fbChat.testFetch();
+        });
+        menu4.getItems().addAll(menuItem1, menuItem2);
 
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(menu1, menu2, menu3, menu4);

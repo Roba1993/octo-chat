@@ -52,7 +52,7 @@ public class ScriptUtil {
 
         // create a new script element
         Element n = doc.createElement("script");
-        n.setAttribute("type", "text/javascript");
+        //n.setAttribute("type", "text/javascript");
         n.setTextContent(sourceCode);
 
         // add the element to the head section

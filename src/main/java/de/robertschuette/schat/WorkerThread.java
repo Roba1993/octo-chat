@@ -27,13 +27,15 @@ public class WorkerThread extends Thread {
             Platform.runLater(() -> {
                 // update the unread messages
                 int count = fbChat.getUnreadMessages();
-                if(count == 0) {
+                if (count == 0) {
                     Application.getApplication().setDockIconBadge(null);
-                }
-                else {
+                } else {
                     Application.getApplication().setDockIconBadge(Integer.toString(count));
                 }
             });
+
+            // save the cookies
+            FileCookieStore.save();
 
             // sleep for 0.5 seconds
             try {
