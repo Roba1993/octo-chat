@@ -1,4 +1,4 @@
-package de.robertschuette.schat;
+package de.robertschuette.octachat;
 
 import com.apple.eawt.Application;
 import javafx.application.Platform;

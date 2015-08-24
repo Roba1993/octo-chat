@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.robertschuette</groupId>
-    <artifactId>schat</artifactId>
+    <artifactId>octa-chat</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <!-- The final name for the JAR that you can find in target directory-->
-        <jar.final.name>schat</jar.final.name>
+        <jar.final.name>octa-chat</jar.final.name>
         <!--  the default class that has the public static void main(String[]) method -->
-        <main.class>de.robertschuette.schat.Schat</main.class>
+        <main.class>de.robertschuette.octachat.OctaChat</main.class>
     </properties>
 
     <dependencies>

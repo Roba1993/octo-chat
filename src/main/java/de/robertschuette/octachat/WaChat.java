@@ -1,14 +1,11 @@
-package de.robertschuette.schat;
+package de.robertschuette.octachat;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
-import javafx.event.EventHandler;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebErrorEvent;
 import javafx.scene.web.WebView;
-import jdk.nashorn.api.scripting.JSObject;
 import org.w3c.dom.Document;
 
 import javax.xml.transform.Transformer;

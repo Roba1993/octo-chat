@@ -1,4 +1,4 @@
-package de.robertschuette.schat;
+package de.robertschuette.octachat;
 
 import javafx.scene.web.WebEngine;
 import org.w3c.dom.Document;

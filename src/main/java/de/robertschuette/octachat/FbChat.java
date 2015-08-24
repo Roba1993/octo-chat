@@ -1,4 +1,4 @@
-package de.robertschuette.schat;
+package de.robertschuette.octachat;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

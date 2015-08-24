@@ -1,4 +1,4 @@
-package de.robertschuette.schat;
+package de.robertschuette.octachat;
 
 
 import org.jdom2.Document;

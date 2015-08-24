@@ -1,4 +1,4 @@
-package de.robertschuette.schat;
+package de.robertschuette.octachat;
 
 import com.aquafx_project.AquaFx;
 import com.sun.javafx.runtime.VersionInfo;
@@ -15,11 +15,11 @@ import javafx.stage.Stage;
 
 
 /**
- * Main class for the schat program.
+ * Main class for the octachat program.
  *
  * @author Robert Schütte
  */
-public class Schat extends Application {
+public class OctaChat extends Application {
     private FbChat fbChat;
     private WaChat waChat;
     private Group root;
