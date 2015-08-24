@@ -1,5 +1,6 @@
 package de.robertschuette.schat;
 
+import com.aquafx_project.AquaFx;
 import com.sun.javafx.runtime.VersionInfo;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -37,7 +38,7 @@ public class Schat extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // initialise the new cookie manager and load the cookies from the file
-        FileCookieStore.init(getClass().getClassLoader().getResource(".").getPath()+"/cookie-store.xls");
+        FileCookieStore.init(getClass().getClassLoader().getResource(".").getPath()+"/cookie-store.xlm");
 
         // define root element for the stage
         Scene scene = new Scene(root, 500, 500, Color.WHITE);
@@ -51,6 +52,9 @@ public class Schat extends Application {
 
         // create and add the menu
         root.getChildren().addAll(createMenu());
+
+        // set mac style on the mac
+        applyMacStyle();
 
         // create the stage
         stage.setScene(scene);
@@ -77,7 +81,7 @@ public class Schat extends Application {
         final MenuItem menuItem1 = new MenuItem("Test");
         final MenuItem menuItem2 = new MenuItem("Test2");
         menuItem1.setOnAction(event -> {
-            fbChat.testFetch();
+
         });
         menuItem2.setOnAction(event -> {
             fbChat.testFetch();
@@ -88,5 +92,15 @@ public class Schat extends Application {
         menuBar.getMenus().addAll(menu1, menu2, menu3, menu4);
 
         return menuBar;
+    }
+
+    private void applyMacStyle() {
+        // only continue when we have a mac
+        if(!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            return;
+        }
+
+        // style the whole application
+        AquaFx.style();
     }
 }

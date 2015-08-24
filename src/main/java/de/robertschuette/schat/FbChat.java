@@ -45,8 +45,6 @@ public class FbChat extends Region {
                         if (newState == Worker.State.SUCCEEDED) {
                             ScriptUtil.injectFile(webEngine, getClass().getClassLoader().getResource("jquery2.1.4.js").getPath());
                             ScriptUtil.injectFile(webEngine, getClass().getClassLoader().getResource("fbchat.js").getPath());
-                            System.out.println("called");
-
                         }
                     }
                 });
@@ -67,6 +65,10 @@ public class FbChat extends Region {
         else {
             return 0;
         }
+    }
+
+    public boolean isReady() {
+        return webEngine.getLoadWorker().getState() == Worker.State.SUCCEEDED;
     }
 
 

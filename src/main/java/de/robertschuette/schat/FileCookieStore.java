@@ -25,6 +25,7 @@ import java.util.List;
 class FileCookieStore {
     private static String path;
     private static CookieManager manager;
+    private static String lastDoc;
 
     /**
      * Create a new cookie manager to get access to the cookie store.
@@ -44,6 +45,11 @@ class FileCookieStore {
             // open the xml file
             Document document = new SAXBuilder().build(new File(path));
             Element rootNode = document.getRootElement();
+
+            // save the xml string to compare for changes in the save() function
+            XMLOutputter xmlOutput = new XMLOutputter();
+            xmlOutput.setFormat(Format.getPrettyFormat());
+            lastDoc = xmlOutput.outputString(document);
 
             // get the cookie elements
             List list = rootNode.getChildren("cookie");
@@ -113,6 +119,15 @@ class FileCookieStore {
 
             // display nice
             xmlOutput.setFormat(Format.getPrettyFormat());
+
+            // compare for changes
+            String newStringDoc = xmlOutput.outputString(doc);
+            if(newStringDoc.equals(lastDoc)) {
+                return;
+            }
+
+            // set the new string for later comparison
+            lastDoc = newStringDoc;
 
             // write the dom to the file
             xmlOutput.output(doc, new FileWriter(path));
