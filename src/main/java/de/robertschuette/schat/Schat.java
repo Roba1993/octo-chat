@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  * @author Robert Schütte
  */
 public class Schat extends Application {
-    private FbChat fbChat = new FbChat();
+    private FbChat fbChat;
     Group root = new Group();
 
     /**
@@ -38,14 +38,15 @@ public class Schat extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // initialise the new cookie manager and load the cookies from the file
-        FileCookieStore.init(getClass().getClassLoader().getResource(".").getPath()+"/cookie-store.xlm");
+        FileCookieStore.init(getClass().getClassLoader().getResource(".").getPath() + "/cookie-store.xlm");
 
         // define root element for the stage
         Scene scene = new Scene(root, 500, 500, Color.WHITE);
 
         // define the fb chat window
+        fbChat = new FbChat();
         fbChat.setLayoutX(0);
-        fbChat.setLayoutY(20);
+        fbChat.setLayoutY(0);
         fbChat.setPrefWidth(900);
         fbChat.setPrefHeight(700);
         root.getChildren().add(fbChat);
@@ -60,7 +61,7 @@ public class Schat extends Application {
         stage.setScene(scene);
         stage.setWidth(900);
         stage.setHeight(700);
-        stage.setTitle(VersionInfo.getRuntimeVersion());
+        stage.setTitle("S-Chat - Java Version: "+VersionInfo.getRuntimeVersion());
         stage.show();
 
         // start the worker demon for background work
@@ -81,10 +82,11 @@ public class Schat extends Application {
         final MenuItem menuItem1 = new MenuItem("Test");
         final MenuItem menuItem2 = new MenuItem("Test2");
         menuItem1.setOnAction(event -> {
-
+            FileCookieStore.showCookies(true);
         });
         menuItem2.setOnAction(event -> {
-            fbChat.testFetch();
+            FileCookieStore.init(getClass().getClassLoader().getResource(".").getPath() + "/cookie-store.xlm");
+            FileCookieStore.showCookies(false);
         });
         menu4.getItems().addAll(menuItem1, menuItem2);
 

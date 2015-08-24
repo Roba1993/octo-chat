@@ -98,7 +98,10 @@ class FileCookieStore {
 
             // iterate over all cookies and save them to the dom
             for(HttpCookie httpCookie : manager.getCookieStore().getCookies()) {
+                // create the cookie element
                 Element cookie = new Element("cookie");
+
+                // add the attributes
                 cookie.addContent(new Element("name-value").setText(httpCookie.toString()));
                 cookie.addContent(new Element("uri").setText(createUri(httpCookie.getDomain()).toASCIIString()));
                 cookie.addContent(new Element("domain").setText(httpCookie.getDomain()));
@@ -125,6 +128,8 @@ class FileCookieStore {
             if(newStringDoc.equals(lastDoc)) {
                 return;
             }
+
+            System.out.println("cookie changed");
 
             // set the new string for later comparison
             lastDoc = newStringDoc;
@@ -153,6 +158,14 @@ class FileCookieStore {
             return new URI(s);
         } catch (URISyntaxException e) {
             return null;
+        }
+    }
+
+    public static void showCookies(boolean onlyValid) {
+        // iterate over all cookies and save them to the dom
+        for(HttpCookie httpCookie : manager.getCookieStore().getCookies()) {
+            System.out.println(createUri(httpCookie.getDomain()).toASCIIString()+" # "+
+                    httpCookie.toString()+" - "+httpCookie.getSecure()+" - "+httpCookie.getPath());
         }
     }
 
