@@ -59,4 +59,22 @@ public class ScriptUtil {
         doc.getElementsByTagName("head").item(0).appendChild(n);
     }
 
+    /**
+     * Injects a firebug analyse tool
+     *
+     * @param engine the WebEngine to inject the code in
+     */
+    public static void injectFirebugLite(WebEngine engine) {
+        // get the dom
+        Document doc = engine.getDocument();
+
+        // create a new script element
+        Element n = doc.createElement("script");
+        n.setAttribute("type", "text/javascript");
+        n.setAttribute("src", "https://getfirebug.com/firebug-lite.js#startOpened=true,disableWhenFirebugActive=false");
+
+        // add the element to the head section
+        doc.getElementsByTagName("head").item(0).appendChild(n);
+    }
+
 }

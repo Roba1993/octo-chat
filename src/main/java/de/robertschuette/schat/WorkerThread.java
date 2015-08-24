@@ -32,10 +32,11 @@ public class WorkerThread extends Thread {
                 } else {
                     Application.getApplication().setDockIconBadge(Integer.toString(count));
                 }
+
+                // save the cookies
+                FileCookieStore.save();
             });
 
-            // save the cookies
-            FileCookieStore.save();
 
             // sleep for 0.5 seconds
             try {

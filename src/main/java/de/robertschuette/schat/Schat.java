@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -19,7 +21,8 @@ import javafx.stage.Stage;
  */
 public class Schat extends Application {
     private FbChat fbChat;
-    Group root = new Group();
+    private WaChat waChat;
+    private Group root;
 
     /**
      * The main entry point for the program.
@@ -41,27 +44,68 @@ public class Schat extends Application {
         FileCookieStore.init(getClass().getClassLoader().getResource(".").getPath() + "/cookie-store.xlm");
 
         // define root element for the stage
-        Scene scene = new Scene(root, 500, 500, Color.WHITE);
+        root = new Group();
 
         // define the fb chat window
         fbChat = new FbChat();
-        fbChat.setLayoutX(0);
+        fbChat.setLayoutX(50);
         fbChat.setLayoutY(0);
-        fbChat.setPrefWidth(900);
-        fbChat.setPrefHeight(700);
+        fbChat.setPrefWidth(850);
+        fbChat.setPrefHeight(650);
         root.getChildren().add(fbChat);
 
+        // define the wa chat window
+        waChat = new WaChat();
+        waChat.setLayoutX(50);
+        waChat.setLayoutY(0);
+        waChat.setPrefWidth(850);
+        waChat.setPrefHeight(650);
+        waChat.setVisible(false);
+        root.getChildren().add(waChat);
+
+        // show the chat images
+        Image fbImage = new Image("/img/fb-icon.png");
+        ImageView fbImageViewer = new ImageView();
+        fbImageViewer.setImage(fbImage);
+        fbImageViewer.setFitWidth(50);
+        fbImageViewer.setLayoutX(0);
+        fbImageViewer.setLayoutY(0);
+        fbImageViewer.setPreserveRatio(true);
+        fbImageViewer.setSmooth(true);
+        fbImageViewer.setCache(true);
+        fbImageViewer.setOnMouseClicked(event -> {
+            fbChat.setVisible(true);
+            waChat.setVisible(false);
+        });
+        root.getChildren().add(fbImageViewer);
+
+        Image waImage = new Image("/img/wa-icon.png");
+        ImageView waImageViewer = new ImageView();
+        waImageViewer.setImage(waImage);
+        waImageViewer.setFitWidth(50);
+        waImageViewer.setLayoutX(0);
+        waImageViewer.setLayoutY(50);
+        waImageViewer.setPreserveRatio(true);
+        waImageViewer.setSmooth(true);
+        waImageViewer.setCache(true);
+        waImageViewer.setOnMouseClicked(event -> {
+            fbChat.setVisible(false);
+            waChat.setVisible(true);
+        });
+        root.getChildren().add(waImageViewer);
+
         // create and add the menu
-        root.getChildren().addAll(createMenu());
+        createMenu();
 
         // set mac style on the mac
         applyMacStyle();
 
         // create the stage
+        Scene scene = new Scene(root, 500, 500, Color.WHITE);
         stage.setScene(scene);
         stage.setWidth(900);
         stage.setHeight(700);
-        stage.setTitle("S-Chat - Java Version: "+VersionInfo.getRuntimeVersion());
+        stage.setTitle("S-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
         stage.show();
 
         // start the worker demon for background work
@@ -74,7 +118,7 @@ public class Schat extends Application {
      *
      * @return the created menue
      */
-    private MenuBar createMenu() {
+    private void createMenu() {
         final Menu menu1 = new Menu("File");
         final Menu menu2 = new Menu("Options");
         final Menu menu3 = new Menu("Help");
@@ -82,20 +126,23 @@ public class Schat extends Application {
         final MenuItem menuItem1 = new MenuItem("Test");
         final MenuItem menuItem2 = new MenuItem("Test2");
         menuItem1.setOnAction(event -> {
-            FileCookieStore.showCookies(true);
+            waChat.testFetch();
         });
         menuItem2.setOnAction(event -> {
-            FileCookieStore.init(getClass().getClassLoader().getResource(".").getPath() + "/cookie-store.xlm");
-            FileCookieStore.showCookies(false);
+            FileCookieStore.showCookies();
         });
         menu4.getItems().addAll(menuItem1, menuItem2);
 
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(menu1, menu2, menu3, menu4);
 
-        return menuBar;
+        root.getChildren().addAll(menuBar);
     }
 
+    /**
+     * Style the whole application in a os x design when
+     * this actual machine is a mac
+     */
     private void applyMacStyle() {
         // only continue when we have a mac
         if(!System.getProperty("os.name").toLowerCase().contains("mac")) {

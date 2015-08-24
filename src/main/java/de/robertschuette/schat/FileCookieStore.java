@@ -129,8 +129,6 @@ class FileCookieStore {
                 return;
             }
 
-            System.out.println("cookie changed");
-
             // set the new string for later comparison
             lastDoc = newStringDoc;
 
@@ -161,7 +159,7 @@ class FileCookieStore {
         }
     }
 
-    public static void showCookies(boolean onlyValid) {
+    public static void showCookies() {
         // iterate over all cookies and save them to the dom
         for(HttpCookie httpCookie : manager.getCookieStore().getCookies()) {
             System.out.println(createUri(httpCookie.getDomain()).toASCIIString()+" # "+
