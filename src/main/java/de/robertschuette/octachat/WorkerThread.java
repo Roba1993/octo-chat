@@ -1,6 +1,5 @@
 package de.robertschuette.octachat;
 
-import com.apple.eawt.Application;
 import de.robertschuette.octachat.os.OsSpecific;
 import javafx.application.Platform;
 

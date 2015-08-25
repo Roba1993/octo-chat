@@ -43,8 +43,8 @@ public class FbChat extends Region {
                     @Override
                     public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
                         if (newState == Worker.State.SUCCEEDED) {
-                            ScriptUtil.injectFile(webEngine, getClass().getClassLoader().getResource("jquery2.1.4.js").getPath());
-                            ScriptUtil.injectFile(webEngine, getClass().getClassLoader().getResource("fbchat.js").getPath());
+                            ScriptUtil.injectFile(webEngine, Util.getResourcesPath()+"jquery2.1.4.js");
+                            ScriptUtil.injectFile(webEngine, Util.getResourcesPath()+"fbchat.js");
                         }
                     }
                 });

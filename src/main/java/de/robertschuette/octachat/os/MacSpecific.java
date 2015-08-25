@@ -2,6 +2,7 @@ package de.robertschuette.octachat.os;
 
 import com.apple.eawt.Application;
 import com.aquafx_project.AquaFx;
+import de.robertschuette.octachat.Util;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class MacSpecific extends OsSpecific {
     @Override
     public void setSpecificNotification(String title, String message) {
         // get the path to the terminal notifier app
-        String path = getClass().getClassLoader().getResource("./mac").getPath();
+        String path = Util.getResourcesPath()+"mac";
 
         // make the app executable
         new File(path + "/terminal-notifier.app").setExecutable(true);

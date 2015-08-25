@@ -31,7 +31,7 @@ public class WaChat extends Region {
      *
      */
     public WaChat() {
-        webEngine.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/8.0.8 Safari/600.8.9");
+        //webEngine.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/8.0.8 Safari/600.8.9");
 
         // load the web page
         webEngine.load("https://web.whatsapp.com");
@@ -104,7 +104,7 @@ public class WaChat extends Region {
     }
 
     private String getHtml() {
-        try(BufferedReader br = new BufferedReader(new FileReader(getClass().getClassLoader().getResource("wa.html").getPath()))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(Util.getResourcesPath()+"wa.html"))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
 

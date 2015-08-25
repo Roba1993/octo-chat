@@ -1,6 +1,5 @@
 package de.robertschuette.octachat;
 
-import com.aquafx_project.AquaFx;
 import com.sun.javafx.runtime.VersionInfo;
 import de.robertschuette.octachat.os.OsSpecific;
 import javafx.application.Application;
@@ -13,8 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import java.io.File;
 
 
 /**
@@ -44,7 +41,7 @@ public class OctaChat extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // initialise the new cookie manager and load the cookies from the file
-        FileCookieStore.init(getClass().getClassLoader().getResource(".").getPath() + "/cookie-store.xlm");
+        FileCookieStore.init(Util.getResourcesPath() + "/cookie-store.xlm");
 
         // define root element for the stage
         root = new Group();
@@ -100,6 +97,7 @@ public class OctaChat extends Application {
         // create and add the menu
         createMenu();
 
+        // set a os specific style
         OsSpecific.getSpecific().setSpecificStyle();
 
         // create the stage
