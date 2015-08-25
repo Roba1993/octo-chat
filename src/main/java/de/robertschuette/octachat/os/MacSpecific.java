@@ -4,6 +4,8 @@ import com.apple.eawt.Application;
 import com.aquafx_project.AquaFx;
 import de.robertschuette.octachat.Util;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +25,10 @@ public class MacSpecific extends OsSpecific {
     public void setSpecificStyle() {
         // style the whole application
         AquaFx.style();
+
+        // set the mac os x dock icon
+        Image image = new ImageIcon(Util.getResourcesPath()+"/img/octo.png").getImage();
+        com.apple.eawt.Application.getApplication().setDockIconImage(image);
     }
 
     /**

@@ -105,6 +105,7 @@ public class OctaChat extends Application {
         stage.setScene(scene);
         stage.setWidth(900);
         stage.setHeight(700);
+        stage.getIcons().add(new Image("/img/octo.png"));
         stage.setTitle("Octo-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
         stage.show();
 
