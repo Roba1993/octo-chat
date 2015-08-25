@@ -1,5 +1,6 @@
-# octo-chat
-A native chat program with focus on the Facebook and WhatsApp messengers. ![alt tag](https://raw.githubusercontent.com/Roba1993/octo-chat/master/img/octo.png =50x)
+# octo-chat   <img src="https://raw.githubusercontent.com/Roba1993/octo-chat/master/img/octo.png" width="50">
+
+A native chat program with focus on the Facebook and WhatsApp messengers. 
 
 ![alt tag](https://raw.githubusercontent.com/Roba1993/octo-chat/master/img/octa-chat.png)
 
