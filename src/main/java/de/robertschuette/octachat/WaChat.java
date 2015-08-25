@@ -45,9 +45,9 @@ public class WaChat extends Region {
                     @Override
                     public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
                         if (newState == Worker.State.SUCCEEDED) {
-                            ScriptUtil.injectFile(webEngine, getClass().getClassLoader().getResource("jquery2.1.4.js").getPath());
-                            ScriptUtil.injectFile(webEngine, getClass().getClassLoader().getResource("wa-chat.js").getPath());
-                            ScriptUtil.injectFirebugLite(webEngine);
+                            JsUtil.injectFile(webEngine, getClass().getClassLoader().getResource("jquery2.1.4.js").getPath());
+                            JsUtil.injectFile(webEngine, getClass().getClassLoader().getResource("wa-chat.js").getPath());
+                            JsUtil.injectFirebugLite(webEngine);
                         }
                     }
                 });

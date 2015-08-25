@@ -6,6 +6,7 @@ import javafx.concurrent.Worker;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import netscape.javascript.JSObject;
 import org.w3c.dom.Document;
 
 import javax.xml.transform.Transformer;
@@ -21,10 +22,8 @@ import java.io.StringWriter;
  * @author Robert Schütte
  */
 public class FbChat extends Region {
-
     private final WebView browser = new WebView();
     private final WebEngine webEngine = browser.getEngine();
-
 
     /**
      * Generate the Facebook region.
@@ -43,8 +42,8 @@ public class FbChat extends Region {
                     @Override
                     public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
                         if (newState == Worker.State.SUCCEEDED) {
-                            ScriptUtil.injectFile(webEngine, Util.getResourcesPath()+"jquery2.1.4.js");
-                            ScriptUtil.injectFile(webEngine, Util.getResourcesPath()+"fbchat.js");
+                            JsUtil.injectFile(webEngine, Util.getResourcesPath() + "jquery2.1.4.js");
+                            JsUtil.injectFile(webEngine, Util.getResourcesPath() + "fbchat.js");
                         }
                     }
                 });
@@ -54,26 +53,64 @@ public class FbChat extends Region {
     }
 
     /**
-     * Loads the unread messages for Facebook from the WebEngine.
+     * This function checks if the engine has
+     * loaded to url and is ready to work with.
      *
-     * @return number of unread messages
+     * @return true or false
      */
-    public int getUnreadMessages() {
-        if(webEngine.getLoadWorker().getState() == Worker.State.SUCCEEDED) {
-            return (Integer) webEngine.executeScript("getUnreadMessages();");
-        }
-        else {
-            return 0;
-        }
-    }
-
     public boolean isReady() {
         return webEngine.getLoadWorker().getState() == Worker.State.SUCCEEDED;
     }
 
 
     public void testFetch() {
-        webEngine.load("http://www.messenger.com");
+        if(isReady()) {
+            // inject the js bridge
+            JsUtil.injectBridge(webEngine);
+
+            // test
+            webEngine.executeScript("test();");
+        }
+    }
+
+    /**
+     * Update the chat data store with the actual facebook
+     * chat data.
+     *
+     * @param cds the data store to updat
+     */
+    public void update(ChatDataStore cds) {
+        if(!isReady()) {
+            return;
+        }
+
+        // execute the function & get the json
+        JSObject json = (JSObject) webEngine.executeScript("update();");
+        JSObject messages = (JSObject) json.getMember("messages");
+
+        // loop over the messages and compare them with the store
+        int i = 0;
+        while (true) {
+            // when there aren't more entries end
+            if("undefined".equals(messages.getSlot(i).toString())) {
+                break;
+            }
+
+            // fetch the message object from the json
+            JSObject m = (JSObject) messages.getSlot(i);
+
+            // create the chat data
+            ChatData cd = new ChatData("facebook", m.getMember("id").toString(), m.getMember("name").toString());
+            cd.setLastMessage(m.getMember("text").toString());
+            cd.setLastMessageUnread(Boolean.parseBoolean(m.getMember("unread").toString()));
+            cd.setLastMessageTime(m.getMember("time").toString());
+            cd.setIsOnline(Boolean.parseBoolean(m.getMember("online").toString()));
+
+            // update the store
+            cds.updateChat(cd);
+
+            i++;
+        }
     }
 
     /**
@@ -99,3 +136,4 @@ public class FbChat extends Region {
         }
     }
 }
+

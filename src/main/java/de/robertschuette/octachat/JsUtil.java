@@ -1,6 +1,7 @@
 package de.robertschuette.octachat;
 
 import javafx.scene.web.WebEngine;
+import netscape.javascript.JSObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -14,7 +15,7 @@ import java.io.IOException;
  *
  * @author Robert Schütte
  */
-public class ScriptUtil {
+public class JsUtil {
 
     /**
      * Injects a local javascript file into the existing source code
@@ -75,6 +76,21 @@ public class ScriptUtil {
 
         // add the element to the head section
         doc.getElementsByTagName("head").item(0).appendChild(n);
+    }
+
+    /**
+     * Injects the Java - Javascript Bridge. All functions
+     * in the JsBridge class are after this call available
+     * for javascript over the variable Java.
+     *
+     * Example javascript call:
+     * Java.println("Hello World");
+     *
+     * @param engine
+     */
+    public static void injectBridge(WebEngine engine) {
+        JSObject window = (JSObject) engine.executeScript("window");
+        window.setMember("Java", new JsBridge());
     }
 
 }

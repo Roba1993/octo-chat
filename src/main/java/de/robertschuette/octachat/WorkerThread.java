@@ -10,9 +10,12 @@ import javafx.application.Platform;
  */
 public class WorkerThread extends Thread {
     private FbChat fbChat;
+    private ChatDataStore cds;
 
     public WorkerThread(FbChat fbChat) {
         this.fbChat = fbChat;
+
+        cds = new ChatDataStore();
 
         setDaemon(true);
     }
@@ -26,7 +29,9 @@ public class WorkerThread extends Thread {
             // use runLater to access gui components
             Platform.runLater(() -> {
                 // update the unread messages
-                OsSpecific.getSpecific().setSpecificEventCount(fbChat.getUnreadMessages());
+                //OsSpecific.getSpecific().setSpecificEventCount(fbChat.getUnreadMessages());
+
+                fbChat.update(cds);
 
                 // save the cookies
                 FileCookieStore.save();

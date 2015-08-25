@@ -105,7 +105,7 @@ public class OctaChat extends Application {
         stage.setScene(scene);
         stage.setWidth(900);
         stage.setHeight(700);
-        stage.setTitle("S-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
+        stage.setTitle("Octo-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
         stage.show();
 
         // start the worker demon for background work
@@ -126,7 +126,8 @@ public class OctaChat extends Application {
         final MenuItem menuItem1 = new MenuItem("Test");
         final MenuItem menuItem2 = new MenuItem("Test2");
         menuItem1.setOnAction(event -> {
-            OsSpecific.getSpecific().setSpecificNotification("Robert Schuette", "Send you a new Message");
+            //OsSpecific.getSpecific().setSpecificNotification("Robert Schuette", "Send you a new Message");
+            fbChat.testFetch();
         });
         menuItem2.setOnAction(event -> {
             FileCookieStore.showCookies();
