@@ -1,6 +1,7 @@
 package de.robertschuette.octachat;
 
 import com.apple.eawt.Application;
+import de.robertschuette.octachat.os.OsSpecific;
 import javafx.application.Platform;
 
 /**
@@ -26,12 +27,7 @@ public class WorkerThread extends Thread {
             // use runLater to access gui components
             Platform.runLater(() -> {
                 // update the unread messages
-                int count = fbChat.getUnreadMessages();
-                if (count == 0) {
-                    Application.getApplication().setDockIconBadge(null);
-                } else {
-                    Application.getApplication().setDockIconBadge(Integer.toString(count));
-                }
+                OsSpecific.getSpecific().setSpecificEventCount(fbChat.getUnreadMessages());
 
                 // save the cookies
                 FileCookieStore.save();

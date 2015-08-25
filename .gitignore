@@ -472,3 +472,6 @@ _Pvt_Extensions
 .settings
 
 
+### Own additions
+# allow all ressources
+!src/main/resources/*

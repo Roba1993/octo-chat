@@ -2,6 +2,7 @@ package de.robertschuette.octachat;
 
 import com.aquafx_project.AquaFx;
 import com.sun.javafx.runtime.VersionInfo;
+import de.robertschuette.octachat.os.OsSpecific;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,6 +13,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 
 /**
@@ -97,8 +100,7 @@ public class OctaChat extends Application {
         // create and add the menu
         createMenu();
 
-        // set mac style on the mac
-        applyMacStyle();
+        OsSpecific.getSpecific().setSpecificStyle();
 
         // create the stage
         Scene scene = new Scene(root, 500, 500, Color.WHITE);
@@ -126,7 +128,7 @@ public class OctaChat extends Application {
         final MenuItem menuItem1 = new MenuItem("Test");
         final MenuItem menuItem2 = new MenuItem("Test2");
         menuItem1.setOnAction(event -> {
-            waChat.testFetch();
+            OsSpecific.getSpecific().setSpecificNotification("Robert Schuette", "Send you a new Message");
         });
         menuItem2.setOnAction(event -> {
             FileCookieStore.showCookies();
@@ -139,17 +141,4 @@ public class OctaChat extends Application {
         root.getChildren().addAll(menuBar);
     }
 
-    /**
-     * Style the whole application in a os x design when
-     * this actual machine is a mac
-     */
-    private void applyMacStyle() {
-        // only continue when we have a mac
-        if(!System.getProperty("os.name").toLowerCase().contains("mac")) {
-            return;
-        }
-
-        // style the whole application
-        AquaFx.style();
-    }
 }
