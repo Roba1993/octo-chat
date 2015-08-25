@@ -28,10 +28,11 @@ public class WorkerThread extends Thread {
         while(true) {
             // use runLater to access gui components
             Platform.runLater(() -> {
-                // update the unread messages
-                //OsSpecific.getSpecific().setSpecificEventCount(fbChat.getUnreadMessages());
-
+                // update the data store with fb data
                 fbChat.update(cds);
+
+                // show unread messages
+                OsSpecific.getSpecific().setSpecificEventCount(cds.getNumberUnread());
 
                 // save the cookies
                 FileCookieStore.save();

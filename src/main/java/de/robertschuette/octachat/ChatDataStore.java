@@ -70,4 +70,22 @@ public class ChatDataStore {
     public void addChat(ChatData cd) {
         chatData.add(cd);
     }
+
+    /**
+     * Returns the number of unread messages.
+     *
+     * @return number of unread messages
+     */
+    public int getNumberUnread() {
+        int i=0;
+
+        // loop over the store and count
+        for(ChatData cd : chatData) {
+            if(cd.isLastMessageUnread()) {
+                i++;
+            }
+        }
+
+        return i;
+    }
 }
