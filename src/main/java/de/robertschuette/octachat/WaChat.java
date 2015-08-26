@@ -6,14 +6,6 @@ import javafx.concurrent.Worker;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import org.w3c.dom.Document;
-
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.*;
 
 /**
  * The Facebook chat window from a browser view.
@@ -77,48 +69,6 @@ public class WaChat extends Region {
 
     public void testFetch() {
         //webEngine.load("https://web.whatsapp.com");
-        System.out.println(getStringFromDoc(webEngine.getDocument()));
-    }
-
-    /**
-     * Function to get the whole dom tree as String
-     * ONLY FOR DEV-ANALYSE!!!
-     *
-     * @param doc dom to parse
-     * @return dom as string
-     */
-    private String getStringFromDoc(Document doc) {
-        try {
-            DOMSource domSource = new DOMSource(doc);
-            StringWriter writer = new StringWriter();
-            StreamResult result = new StreamResult(writer);
-            TransformerFactory tf = TransformerFactory.newInstance();
-            Transformer transformer = tf.newTransformer();
-            transformer.transform(domSource, result);
-            writer.flush();
-            return writer.toString();
-        } catch (TransformerException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    private String getHtml() {
-        try(BufferedReader br = new BufferedReader(new FileReader(Util.getResourcesPath()+"wa.html"))) {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-            return sb.toString();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "Error";
+        System.out.println(Util.getStringFromDoc(webEngine.getDocument()));
     }
 }

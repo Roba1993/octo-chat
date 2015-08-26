@@ -59,6 +59,8 @@ public class MacSpecific extends OsSpecific {
             commands.add(title);
             commands.add("-message");
             commands.add(message);
+            commands.add("-appIcon");
+            commands.add(Util.getResourcesPath()+"img/octo.png");
 
             //Run macro on target
             ProcessBuilder pb = new ProcessBuilder(commands);

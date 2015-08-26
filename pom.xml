@@ -36,6 +36,14 @@
             <artifactId>aquafx</artifactId>
             <version>0.2</version>
         </dependency>
+
+        <!-- irc chat api -->
+        <dependency>
+            <groupId>org.pircbotx</groupId>
+            <artifactId>pircbotx</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

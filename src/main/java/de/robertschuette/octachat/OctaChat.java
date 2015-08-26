@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 public class OctaChat extends Application {
     private FbChat fbChat;
     private WaChat waChat;
+    private IrcChat ircChat;
     private Group root;
 
     /**
@@ -40,6 +41,9 @@ public class OctaChat extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        // set a os specific style first to show dock image first
+        OsSpecific.getSpecific().setSpecificStyle();
+
         // initialise the new cookie manager and load the cookies from the file
         FileCookieStore.init(Util.getResourcesPath() + "/cookie-store.xlm");
 
@@ -63,6 +67,15 @@ public class OctaChat extends Application {
         waChat.setVisible(false);
         root.getChildren().add(waChat);
 
+        // define the irc chat window
+        ircChat = new IrcChat();
+        ircChat.setLayoutX(50);
+        ircChat.setLayoutY(0);
+        ircChat.setPrefWidth(850);
+        ircChat.setPrefHeight(650);
+        ircChat.setVisible(false);
+        root.getChildren().add(ircChat);
+
         // show the chat images
         Image fbImage = new Image("/img/fb-icon.png");
         ImageView fbImageViewer = new ImageView();
@@ -76,6 +89,7 @@ public class OctaChat extends Application {
         fbImageViewer.setOnMouseClicked(event -> {
             fbChat.setVisible(true);
             waChat.setVisible(false);
+            ircChat.setVisible(false);
         });
         root.getChildren().add(fbImageViewer);
 
@@ -89,16 +103,30 @@ public class OctaChat extends Application {
         waImageViewer.setSmooth(true);
         waImageViewer.setCache(true);
         waImageViewer.setOnMouseClicked(event -> {
+            ircChat.setVisible(false);
             fbChat.setVisible(false);
             waChat.setVisible(true);
         });
         root.getChildren().add(waImageViewer);
 
+        Image ircImage = new Image("/img/irc-icon.png");
+        ImageView ircImageViewer = new ImageView();
+        ircImageViewer.setImage(ircImage);
+        ircImageViewer.setFitWidth(50);
+        ircImageViewer.setLayoutX(0);
+        ircImageViewer.setLayoutY(100);
+        ircImageViewer.setPreserveRatio(true);
+        ircImageViewer.setSmooth(true);
+        ircImageViewer.setCache(true);
+        ircImageViewer.setOnMouseClicked(event -> {
+            fbChat.setVisible(false);
+            waChat.setVisible(false);
+            ircChat.setVisible(true);
+        });
+        root.getChildren().add(ircImageViewer);
+
         // create and add the menu
         createMenu();
-
-        // set a os specific style
-        OsSpecific.getSpecific().setSpecificStyle();
 
         // create the stage
         Scene scene = new Scene(root, 500, 500, Color.WHITE);
@@ -128,7 +156,10 @@ public class OctaChat extends Application {
         final MenuItem menuItem2 = new MenuItem("Test2");
         menuItem1.setOnAction(event -> {
             //OsSpecific.getSpecific().setSpecificNotification("Robert Schuette", "Send you a new Message");
-            fbChat.testFetch();
+            //fbChat.testFetch();
+            //ircChat.testFetch();
+            ircChat.displayMessage("Hello", true);
+            ircChat.displayMessage("World", false);
         });
         menuItem2.setOnAction(event -> {
             FileCookieStore.showCookies();
