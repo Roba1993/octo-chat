@@ -15,14 +15,6 @@
         <main.class>de.robertschuette.octachat.OctaChat</main.class>
     </properties>
 
-    <!--<repositories>
-        <repository>
-            <id>in-project</id>
-            <name>In Project Repo</name>
-            <url>file://${project.basedir}/src/lib/jxbrowser-5/lib</url>
-        </repository>
-    </repositories>-->
-
     <dependencies>
         <!-- .xml reader & writer -->
         <dependency>
@@ -53,42 +45,48 @@
         </dependency>
 
         <!-- JxBrowser main jar -->
-        <!--<dependency>
-            <groupId>jxbrowser-5.4.2</groupId>
-            <artifactId>jxbrowser-5.4.2</artifactId>
-            <scope>system</scope>
-            <version>1.0</version>
-            <systemPath>${basedir}/src/lib/jxbrowser-5/lib/jxbrowser-5.4.2.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jxbrowser-mac-5.4.2</groupId>
-            <artifactId>jxbrowser-mac-5.4.2</artifactId>
-            <scope>system</scope>
-            <version>1.0</version>
-            <systemPath>${basedir}/src/lib/jxbrowser-5/lib/jxbrowser-mac-5.4.2.jar</systemPath>
-        </dependency>-->
-
-        <!--<dependency>
-            <groupId>license-development</groupId>
-            <artifactId>license-development</artifactId>
-            <scope>system</scope>
-            <version>1.0</version>
-            <systemPath>license-development.jar</systemPath>
-        </dependency>-->
-
         <dependency>
             <groupId>teamdev</groupId>
             <artifactId>jxbrowser</artifactId>
             <version>5.4.2</version>
         </dependency>
 
+        <!-- JxBrowser mac jar -->
         <dependency>
             <groupId>teamdev</groupId>
             <artifactId>jxbrowser-mac</artifactId>
             <version>5.4.2</version>
         </dependency>
 
+        <!-- JxBrowser win jar -->
+        <dependency>
+            <groupId>teamdev</groupId>
+            <artifactId>jxbrowser-win</artifactId>
+            <version>5.4.2</version>
+        </dependency>
+
+        <!-- JxBrowser linux 32 jar -->
+        <dependency>
+            <groupId>teamdev</groupId>
+            <artifactId>jxbrowser-lin32</artifactId>
+            <version>5.4.2</version>
+        </dependency>
+
+        <!-- JxBrowser linux 64 jar -->
+        <dependency>
+            <groupId>teamdev</groupId>
+            <artifactId>jxbrowser-lin64</artifactId>
+            <version>5.4.2</version>
+        </dependency>
+
+        <!-- JxBrowser developer license -->
+        <dependency>
+            <groupId>teamdev</groupId>
+            <artifactId>jxbrowser-license-dev</artifactId>
+            <version>5.4.2</version>
+        </dependency>
+
+        <!-- JxBrowser user license -->
         <dependency>
             <groupId>teamdev</groupId>
             <artifactId>jxbrowser-license</artifactId>
@@ -113,7 +111,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!--<imgPath>../img</imgPath>-->
                     <inputPath>${basedir}/src/main/resources/chat/sass</inputPath>
                     <outputPath>${basedir}/src/main/resources/chat/css</outputPath>
                     <includePath>${basedir}/src/main/resources/chat/sass/plugins/</includePath>
@@ -145,11 +142,12 @@
                 </configuration>
             </plugin>
 
-
+            <!-- external jar includer -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
                 <executions>
+                    <!-- install jxbrowser main jar -->
                     <execution>
                         <id>jxbrowser</id>
                         <phase>clean</phase>
@@ -166,6 +164,7 @@
                             <goal>install-file</goal>
                         </goals>
                     </execution>
+                    <!-- install jxbrowser mac jar -->
                     <execution>
                         <id>jxbrowser-mac</id>
                         <phase>clean</phase>
@@ -182,11 +181,80 @@
                             <goal>install-file</goal>
                         </goals>
                     </execution>
+                    <!-- install jxbrowser win jar -->
+                    <execution>
+                        <id>jxbrowser-win</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <file>${basedir}/src/lib/jxbrowser-5/lib/jxbrowser-win-5.4.2.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>teamdev</groupId>
+                            <artifactId>jxbrowser-win</artifactId>
+                            <version>5.4.2</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                    <!-- install jxbrowser linux 32 jar -->
+                    <execution>
+                        <id>jxbrowser-lin32</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <file>${basedir}/src/lib/jxbrowser-5/lib/jxbrowser-linux32-5.4.2.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>teamdev</groupId>
+                            <artifactId>jxbrowser-lin32</artifactId>
+                            <version>5.4.2</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                    <!-- install jxbrowser linux 64 jar -->
+                    <execution>
+                        <id>jxbrowser-lin64</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <file>${basedir}/src/lib/jxbrowser-5/lib/jxbrowser-linux64-5.4.2.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>teamdev</groupId>
+                            <artifactId>jxbrowser-lin64</artifactId>
+                            <version>5.4.2</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                    <!-- install jxbrowser developer license -->
+                    <execution>
+                        <id>jxbrowser-license-dev</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <file>${basedir}/src/lib/jxbrowser-5/lib/license-development.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>teamdev</groupId>
+                            <artifactId>jxbrowser-license-dev</artifactId>
+                            <version>5.4.2</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                    <!-- install jxbrowser license -->
                     <execution>
                         <id>jxbrowser-license</id>
                         <phase>clean</phase>
                         <configuration>
-                            <file>${basedir}/src/lib/jxbrowser-5/lib/license-development.jar</file>
+                            <file>${basedir}/src/lib/jxbrowser-5/lib/license-runtime.jar</file>
                             <repositoryLayout>default</repositoryLayout>
                             <groupId>teamdev</groupId>
                             <artifactId>jxbrowser-license</artifactId>
@@ -201,11 +269,11 @@
                 </executions>
             </plugin>
 
-
         </plugins>
     </build>
 
     <profiles>
+        <!-- profile to run the packaged jar -->
         <profile>
             <id>run</id>
             <build>

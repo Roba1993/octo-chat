@@ -3,6 +3,7 @@ package de.robertschuette.octachat;
 import com.sun.javafx.runtime.VersionInfo;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
+import de.robertschuette.octachat.chats.ChatWindowWhatsapp;
 import de.robertschuette.octachat.os.OsSpecific;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -24,12 +25,9 @@ import javafx.stage.Stage;
  */
 public class OctaChat extends Application {
     private FbChat fbChat;
-    //private WaChat waChat;
+    private ChatWindowWhatsapp chatWindowWhatsapp;
     private IrcChat ircChat;
     private Group root;
-
-    private Browser browser;
-    private BrowserView browserView;
 
     /**
      * The main entry point for the program.
@@ -64,23 +62,14 @@ public class OctaChat extends Application {
         fbChat.setPrefHeight(650);
         root.getChildren().add(fbChat);
 
-        // define the wa chat window
-        /*waChat = new WaChat();
-        waChat.setLayoutX(50);
-        waChat.setLayoutY(0);
-        waChat.setPrefWidth(850);
-        waChat.setPrefHeight(650);
-        waChat.setVisible(false);
-        root.getChildren().add(waChat);*/
-        browser = new Browser();
-        browserView = new BrowserView(browser);
-        browserView.setLayoutX(50);
-        browserView.setLayoutY(0);
-        browserView.setPrefHeight(650);
-        browserView.setPrefWidth(850);
-        browserView.setVisible(false);
-        root.getChildren().add(browserView);
-        browser.loadURL("http://www.google.com");
+        // define the whats app chat window
+        chatWindowWhatsapp = new ChatWindowWhatsapp();
+        chatWindowWhatsapp.setLayoutX(50);
+        chatWindowWhatsapp.setLayoutY(0);
+        chatWindowWhatsapp.setPrefHeight(650);
+        chatWindowWhatsapp.setPrefWidth(850);
+        chatWindowWhatsapp.setVisible(false);
+        root.getChildren().add(chatWindowWhatsapp);
 
         // define the irc chat window
         ircChat = new IrcChat();
@@ -103,8 +92,7 @@ public class OctaChat extends Application {
         fbImageViewer.setCache(true);
         fbImageViewer.setOnMouseClicked(event -> {
             fbChat.setVisible(true);
-            //waChat.setVisible(false);
-            browserView.setVisible(false);
+            chatWindowWhatsapp.setVisible(false);
             ircChat.setVisible(false);
         });
         root.getChildren().add(fbImageViewer);
@@ -121,8 +109,7 @@ public class OctaChat extends Application {
         waImageViewer.setOnMouseClicked(event -> {
             ircChat.setVisible(false);
             fbChat.setVisible(false);
-            //waChat.setVisible(true);
-            browserView.setVisible(true);
+            chatWindowWhatsapp.setVisible(true);
         });
         root.getChildren().add(waImageViewer);
 
@@ -137,8 +124,7 @@ public class OctaChat extends Application {
         ircImageViewer.setCache(true);
         ircImageViewer.setOnMouseClicked(event -> {
             fbChat.setVisible(false);
-            //waChat.setVisible(false);
-            browserView.setVisible(false);
+            chatWindowWhatsapp.setVisible(false);
             ircChat.setVisible(true);
         });
         root.getChildren().add(ircImageViewer);
