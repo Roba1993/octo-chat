@@ -1,5 +1,6 @@
 package de.robertschuette.octachat;
 
+import de.robertschuette.octachat.chats.ChatWindowWhatsapp;
 import de.robertschuette.octachat.os.OsSpecific;
 import javafx.application.Platform;
 
@@ -10,10 +11,12 @@ import javafx.application.Platform;
  */
 public class WorkerThread extends Thread {
     private FbChat fbChat;
+    private ChatWindowWhatsapp chatWindowWhatsapp;
     private ChatDataStore cds;
 
-    public WorkerThread(FbChat fbChat) {
+    public WorkerThread(FbChat fbChat, ChatWindowWhatsapp chatWindowWhatsapp) {
         this.fbChat = fbChat;
+        this.chatWindowWhatsapp = chatWindowWhatsapp;
 
         cds = new ChatDataStore();
 
@@ -35,7 +38,7 @@ public class WorkerThread extends Thread {
                 OsSpecific.getSpecific().setSpecificEventCount(cds.getNumberUnread());
 
                 // save the cookies
-                FileCookieStore.save();
+                FileCookieStore.save(chatWindowWhatsapp.getCookies());
             });
 
 

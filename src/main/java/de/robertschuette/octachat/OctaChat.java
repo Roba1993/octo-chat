@@ -142,7 +142,7 @@ public class OctaChat extends Application {
         stage.show();
 
         // start the worker demon for background work
-        WorkerThread wt = new WorkerThread(fbChat);
+        WorkerThread wt = new WorkerThread(fbChat, chatWindowWhatsapp);
         wt.start();
     }
 
