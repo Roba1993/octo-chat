@@ -1,9 +1,11 @@
 package de.robertschuette.octachat.chats;
 
-import com.teamdev.jxbrowser.chromium.*;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserContext;
+import com.teamdev.jxbrowser.chromium.Cookie;
+import com.teamdev.jxbrowser.chromium.LoggerProvider;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
-import de.robertschuette.octachat.FileCookieStore;
-import de.robertschuette.octachat.Util;
+import de.robertschuette.octachat.util.Util;
 import javafx.scene.layout.Region;
 
 import java.util.List;
@@ -14,31 +16,28 @@ import java.util.logging.Level;
  *
  * @author Robert Schütte
  */
-public class ChatWindowWhatsapp extends Region {
+public class ChatWhatsapp extends Region {
     private Browser engine;
     private BrowserView browser;
 
 
-    public ChatWindowWhatsapp() {
+    public ChatWhatsapp() {
         // disable console output
         LoggerProvider.getChromiumProcessLogger().setLevel(Level.OFF);
         LoggerProvider.getIPCLogger().setLevel(Level.OFF);
         LoggerProvider.getBrowserLogger().setLevel(Level.OFF);
 
         // create the browser and view
-        engine = new Browser();
+        engine = new Browser(new BrowserContext(Util.getResourcesPath()+"/cache/jx-browser"));
         browser = new BrowserView(engine);
-
-        // set the cookies
-        setCookies();
 
         // bind the browser dimensions to the dimensions of this object
         browser.prefWidthProperty().bind(this.widthProperty());
         browser.prefHeightProperty().bind(this.heightProperty());
 
         // load the website
-        //engine.loadURL("https://web.whatsapp.com");
-        engine.loadURL("https://messenger.com");
+        engine.loadURL("https://web.whatsapp.com");
+        //engine.loadURL("https://messenger.com");
 
         // add the browser to this window
         getChildren().add(browser);
@@ -53,24 +52,4 @@ public class ChatWindowWhatsapp extends Region {
         return engine.getCookieStorage().getAllCookies();
     }
 
-    private void setCookies() {
-        List<Cookie> cookies = FileCookieStore.getJxCookies();
-
-        if(cookies == null) {
-            return;
-        }
-
-        for(Cookie cookie : cookies) {
-            engine.getCookieStorage().setCookie(
-                    cookie.getDomain(),
-                    cookie.getName(),
-                    cookie.getValue(),
-                    cookie.getDomain(),
-                    cookie.getPath(),
-                    cookie.getExpirationTime(),
-                    cookie.isSecure(),
-                    cookie.isHTTPOnly()
-            );
-        }
-    }
 }

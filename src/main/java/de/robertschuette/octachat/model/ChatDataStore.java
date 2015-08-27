@@ -1,4 +1,4 @@
-package de.robertschuette.octachat;
+package de.robertschuette.octachat.model;
 
 import de.robertschuette.octachat.os.OsSpecific;
 

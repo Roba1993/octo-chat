@@ -1,4 +1,4 @@
-package de.robertschuette.octachat;
+package de.robertschuette.octachat.model;
 
 /**
  * This object stores all information about a

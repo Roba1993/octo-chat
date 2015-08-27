@@ -1,4 +1,4 @@
-package de.robertschuette.octachat;
+package de.robertschuette.octachat.util;
 
 import javafx.scene.web.WebEngine;
 import netscape.javascript.JSObject;

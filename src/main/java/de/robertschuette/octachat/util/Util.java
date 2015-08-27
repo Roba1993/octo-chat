@@ -1,4 +1,4 @@
-package de.robertschuette.octachat;
+package de.robertschuette.octachat.util;
 
 import org.w3c.dom.Document;
 

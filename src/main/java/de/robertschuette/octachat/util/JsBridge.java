@@ -1,4 +1,4 @@
-package de.robertschuette.octachat;
+package de.robertschuette.octachat.util;
 
 /**
  * This class get injected to the javascript

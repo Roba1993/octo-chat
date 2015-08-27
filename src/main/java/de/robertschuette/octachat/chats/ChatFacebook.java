@@ -1,5 +1,9 @@
-package de.robertschuette.octachat;
+package de.robertschuette.octachat.chats;
 
+import de.robertschuette.octachat.model.ChatData;
+import de.robertschuette.octachat.model.ChatDataStore;
+import de.robertschuette.octachat.util.JsUtil;
+import de.robertschuette.octachat.util.Util;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
@@ -13,7 +17,7 @@ import netscape.javascript.JSObject;
  *
  * @author Robert Schütte
  */
-public class FbChat extends Region {
+public class ChatFacebook extends Region {
     private final WebView browser = new WebView();
     private final WebEngine webEngine = browser.getEngine();
 
@@ -21,7 +25,7 @@ public class FbChat extends Region {
      * Generate the Facebook region.
      *
      */
-    public FbChat() {
+    public ChatFacebook() {
         // load the web page
         webEngine.load("https://www.messenger.com");
 

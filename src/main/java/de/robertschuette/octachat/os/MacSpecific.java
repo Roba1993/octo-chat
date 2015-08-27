@@ -2,7 +2,7 @@ package de.robertschuette.octachat.os;
 
 import com.apple.eawt.Application;
 import com.aquafx_project.AquaFx;
-import de.robertschuette.octachat.Util;
+import de.robertschuette.octachat.util.Util;
 
 import javax.swing.*;
 import java.awt.*;

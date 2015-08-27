@@ -1,5 +1,6 @@
-package de.robertschuette.octachat;
+package de.robertschuette.octachat.chats;
 
+import de.robertschuette.octachat.util.Util;
 import javafx.concurrent.Worker;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
@@ -19,7 +20,7 @@ import java.io.IOException;
  *
  * @author Robert Schütte
  */
-public class IrcChat extends Region {
+public class ChatIrc extends Region {
 
     private final WebView browser = new WebView();
     private final WebEngine webEngine = browser.getEngine();
@@ -28,7 +29,7 @@ public class IrcChat extends Region {
     /**
      * Constructor to create a new Irc Chat.
      */
-    public IrcChat() {
+    public ChatIrc() {
         // load the web page
         webEngine.load("file:" + Util.getResourcesPath() + "chat/chat.html");
 

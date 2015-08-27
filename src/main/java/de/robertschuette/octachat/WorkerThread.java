@@ -1,6 +1,9 @@
 package de.robertschuette.octachat;
 
-import de.robertschuette.octachat.chats.ChatWindowWhatsapp;
+import de.robertschuette.octachat.chats.ChatWhatsapp;
+import de.robertschuette.octachat.chats.ChatFacebook;
+import de.robertschuette.octachat.model.ChatDataStore;
+import de.robertschuette.octachat.model.FileCookieStore;
 import de.robertschuette.octachat.os.OsSpecific;
 import javafx.application.Platform;
 
@@ -10,13 +13,13 @@ import javafx.application.Platform;
  * @author Robert Schütte
  */
 public class WorkerThread extends Thread {
-    private FbChat fbChat;
-    private ChatWindowWhatsapp chatWindowWhatsapp;
+    private ChatFacebook chatFacebook;
+    private ChatWhatsapp chatWhatsapp;
     private ChatDataStore cds;
 
-    public WorkerThread(FbChat fbChat, ChatWindowWhatsapp chatWindowWhatsapp) {
-        this.fbChat = fbChat;
-        this.chatWindowWhatsapp = chatWindowWhatsapp;
+    public WorkerThread(ChatFacebook chatFacebook, ChatWhatsapp chatWhatsapp) {
+        this.chatFacebook = chatFacebook;
+        this.chatWhatsapp = chatWhatsapp;
 
         cds = new ChatDataStore();
 
@@ -32,13 +35,13 @@ public class WorkerThread extends Thread {
             // use runLater to access gui components
             Platform.runLater(() -> {
                 // update the data store with fb data
-                fbChat.update(cds);
+                chatFacebook.update(cds);
 
                 // show unread messages
                 OsSpecific.getSpecific().setSpecificEventCount(cds.getNumberUnread());
 
                 // save the cookies
-                FileCookieStore.save(chatWindowWhatsapp.getCookies());
+                FileCookieStore.save();
             });
 
 
