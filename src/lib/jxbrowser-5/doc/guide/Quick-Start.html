@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="CONTENT-LANGUAGE" content="en-US"/>
+    <title>Quick Start Guide</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen,projection"/>
+</head>
+
+<body>
+<div class="main-wrapper">
+    <h1 class="doc_title">Quick Start Guide</h1>
+
+    <p class="version">Version: 5.4.2</p>
+
+    <div class="chapter">
+
+        <p>In this Quick Start Guide you will learn how to download JxBrowser library, get evaluation license, create and
+            run your first Java Swing application that loads and displays <a href="http://www.teamdev.com/jxbrowser">www.teamdev.com/jxbrowser</a>
+            web page.</p>
+
+        <h2>Step 1: Download JxBrowser Library</h2>
+
+        <p>To download JxBrowser library navigate to <a href="http://www.teamdev.com/jxbrowser">http://www.teamdev.com/jxbrowser</a>
+            and click <strong>Download</strong> button or use
+            <a href="https://s3.amazonaws.com/cloud.teamdev.com/downloads/jxbrowser/jxbrowser-5.4.2-cross-desktop-win_mac_linux.zip">
+                direct link</a>. Unzip the the downloaded archive into some directory (e.g. <code>D:\Projects\jxbrowser-5.4.2\</code>). When you unzip the archive it will give you
+            directory structure inside <code>D:\Projects\jxbrowser-5.4.2\</code> as follows:</p>
+        <pre>lib\
+    jxbrowser-5.4.2.jar          // JxBrowser library
+    jxbrowser-win-5.4.2.jar      // Chromium binaries for Windows
+    jxbrowser-mac-5.4.2.jar      // Chromium binaries for Mac OS X
+    jxbrowser-linux32-5.4.2.jar  // Chromium binaries for Linux 32-bit
+    jxbrowser-linux64-5.4.2.jar  // Chromium binaries for Linux 64-bit
+samples\                       // API samples
+doc\javadoc\                   // Public API JavaDocs
+doc\guide\                     // Programmer's and Quick Start Guide
+demo\                          // Demo application
+Readme.txt                     // Readme file
+License agreement.txt          // License agreement</pre>
+
+        <h2>Step 2: Get JxBrowser License</h2>
+
+        <p>To get free JxBrowser 30-days evaluation license please fill the <a
+                href="http://www.teamdev.com/jxbrowser#evaluate">web form</a>
+            and click <strong>Send Me Evaluation Key</strong> button. You will receive an email with a link that you can
+            use to download
+            evaluation license &mdash; <code>license.jar</code>.<br/> Download the <code>license.jar</code> file and
+            save it in the <code>D:\Projects\jxbrowser-5.4.2\lib\</code> directory.</p>
+        <pre>lib\
+    jxbrowser-5.4.2.jar          // JxBrowser library
+    jxbrowser-win-5.4.2.jar      // Chromium binaries for Windows
+    jxbrowser-mac-5.4.2.jar      // Chromium binaries for Mac OS X
+    jxbrowser-linux32-5.4.2.jar  // Chromium binaries for Linux 32-bit
+    jxbrowser-linux64-5.4.2.jar  // Chromium binaries for Linux 64-bit
+    license.jar                // Free 30-day evaluation license</pre>
+
+        <h2>Step 3: Create Java Project</h2>
+
+        <p>Create a new Java Project using your favorite IDE.</p>
+        <p class="ide">How to create a new Java Project in
+            <a class="idea" target="idea" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-idea#TOC-1.-Run-IntelliJ-IDEA-and-create-a-new-Empty-Java-Project:">IntelliJ IDEA</a>
+            <a class="eclipse" target="eclipse" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-eclipse#TOC-1.-Run-Eclipse-and-select-a-workspace:">Eclipse</a>
+            <a class="netbeans" target="netbeans" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-netbeans#TOC-1.-Run-NetBeans-and-create-a-new-Java-project:">NetBeans</a></p>
+
+        <h2>Step 4: Add Required Libraries</h2>
+
+        <p>In your favorite IDE add JxBrowser libraries and evaluation license in the Project:
+        <ul class="list">
+            <li><code>D:\Projects\jxbrowser-5.4.2\lib\jxbrowser-5.4.2.jar</code></li>
+            <li><code>D:\Projects\jxbrowser-5.4.2\lib\jxbrowser-win-5.4.2.jar</code></li>
+            <li><code>D:\Projects\jxbrowser-5.4.2\lib\jxbrowser-mac-5.4.2.jar</code></li>
+            <li><code>D:\Projects\jxbrowser-5.4.2\lib\jxbrowser-linux32-5.4.2.jar</code></li>
+            <li><code>D:\Projects\jxbrowser-5.4.2\lib\jxbrowser-linux64-5.4.2.jar</code></li>
+            <li><code>D:\Projects\jxbrowser-5.4.2\lib\license.jar</code></li>
+        </ul>
+        </p>
+
+        <p class="ide">How to add libraries in a Project in
+            <a class="idea" target="idea" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-idea#TOC-4.-Add-libraries-to-the-Java-Module-dependencies-list:">IntelliJ IDEA</a>
+            <a class="eclipse" target="eclipse" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-eclipse#TOC-4.-Open-Project-Properties-dialog:">Eclipse</a>
+            <a class="netbeans" target="netbeans" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-netbeans#TOC-3.-Add-the-required-libraries:    ">NetBeans</a></p>
+
+        <h2>Step 5: Create HelloWorld Example</h2>
+
+        <p>In Java Project create a new <code>HelloWorld</code> java class with the following content.</p>
+        <pre>import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class HelloWorld {
+    public static void main(String[] args) {
+        final Browser browser = new Browser();
+        BrowserView browserView = new BrowserView(browser);
+
+        final JTextField addressBar = new JTextField("http://www.teamdev.com/jxbrowser");
+        addressBar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                browser.loadURL(addressBar.getText());
+            }
+        });
+
+        JPanel addressPane = new JPanel(new BorderLayout());
+        addressPane.add(new JLabel(" URL: "), BorderLayout.WEST);
+        addressPane.add(addressBar, BorderLayout.CENTER);
+
+        JFrame frame = new JFrame("JxBrowser - Hello World");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(addressPane, BorderLayout.NORTH);
+        frame.add(browserView, BorderLayout.CENTER);
+        frame.setSize(800, 500);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+        browser.loadURL(addressBar.getText());
+    }
+}</pre>
+
+        <p class="ide">How to create Java class in
+            <a class="idea" target="idea" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-idea#TOC-6.-Create-HelloWorld-class:">IntelliJ IDEA</a>
+            <a class="eclipse" target="eclipse" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-eclipse#TOC-6.-Create-a-new-BrowserSample-class-and-click-Finish-button:">Eclipse</a>
+            <a class="netbeans" target="netbeans" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-netbeans#TOC-4.-Create-HelloWorld-class:">NetBeans</a></p>
+
+        <h2>Step 6: Run the Program</h2>
+
+        <p>Compile and run <code>HelloWorld</code> program. You will see the following window:</p>
+        <p><img src="images/browser-sample.png" alt="HelloWorld JFrame"/></p>
+
+        <p class="ide">How to run Java program in
+            <a class="idea" target="idea" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-idea#TOC-7.-Run-HelloWorld-program:">IntelliJ IDEA</a>
+            <a class="eclipse" target="eclipse" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-eclipse#TOC-8.-Run-BrowserSample:">Eclipse</a>
+            <a class="netbeans" target="netbeans" href="https://sites.google.com/a/teamdev.com/jxbrowser-support/documentation/using-jxbrowser-under-netbeans#TOC-5.-Run-HelloWorld-program:">NetBeans</a></p>
+
+        <h2>Useful Links</h2>
+
+        <ul class="list">
+            <li><a href="http://www.teamdev.com/jxbrowser">About JxBrowser</a></li>
+            <li><a href="http://www.teamdev.com/downloads/jxbrowser/docs/JxBrowser-PGuide.html">Programmer's Guide</a></li>
+            <li><a href="http://www.teamdev.com/downloads/jxbrowser/javadoc/index.html">API Documentation</a></li>
+            <li><a href="http://links.teamdev.com/jxbrowser-samples">Samples</a></li>
+        </ul>
+    </div>
+
+    <div class="copyright">
+        Copyright &copy; 2002-2015 TeamDev Ltd.
+    </div>
+</div>
+</body>
+</html>

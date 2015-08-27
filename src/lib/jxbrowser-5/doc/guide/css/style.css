@@ -1,0 +1,159 @@
+*{
+	margin:0;
+	padding:0;
+	color:#333;
+	font:13px Arial, Georgia, "Times New Roman", Times, serif;
+}
+.chapter{
+	clear:both;
+	margin:0 0 60px 0;
+}
+a{
+	color:#007ece;
+}
+a:focus,a:active{
+	outline:none;
+}
+html, body {
+	width: 100%;
+	height:100%;
+}		
+p{
+	margin-bottom:20px;
+	line-height:1.5em;
+}
+p.version{
+	padding:0px 0 30px 0;
+	color:#666;
+	text-align:center;
+}
+.main-wrapper{
+	width:700px;
+	margin:0 auto;
+	padding:80px 0 10px 0;
+}
+.table_of_contents {
+	margin:10px 0 60px 30px;
+}
+.table_of_contents a{
+	color: #204E89;
+	text-decoration:none;
+}
+.table_of_contents a:hover{
+	color: #204E89;
+	text-decoration:none;
+	border-bottom:none;
+}
+.table_of_contents li{
+	margin:5px 0;
+}
+.table_of_contents ul {
+	list-style:none;
+	margin: 10px 0 10px 30px;
+}
+h1{
+	display:block;
+	font-size:26px;
+	margin:10px 0;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+h2{
+	display:block;
+	font-size:20px;
+	margin:30px 0 10px 0;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+h3{
+	display:block;
+	margin:30px 0 10px 0;
+	font-weight: bold;
+}
+h1.doc_title{
+	padding:15px 0 0 0;
+	text-align: center;
+	font-size:38px;
+	margin:0 0 10px;
+}
+.hor_separator{
+	height:1px;
+	border-top:1px solid #CCC;
+	margin:5px 0;
+	display:block;
+}
+.ol_type1, .ul_type1{
+	overflow:hidden;
+	padding-left:30px;
+	margin-left:20px;
+	margin-bottom:20px;
+}
+.ol_type1 li {
+	line-height:16px;
+	margin:5px 0;
+}
+.ul_type1 li{
+	list-style:square;
+	line-height:1.5em;
+}
+.literal{
+	font-style:italic;
+	font-size:13px;
+}
+.code{
+	font:12px Consolas,Lucida Console,DejaVu Sans Mono,Monaco,Courier New,monospace;
+}
+code{
+	font:12px Consolas,Lucida Console,DejaVu Sans Mono,Monaco,Courier New,monospace;
+	background:#f9f2f4;
+	color:#c7254e;
+	padding: 2px;
+}
+pre{
+	background:#f3f5f7;
+	padding:10px 10px 10px 20px;
+	margin:15px 0;
+	font:12px Consolas,Lucida Console,DejaVu Sans Mono,Monaco,Courier New,monospace;
+	line-height: 1.5em;
+}
+dl dd{
+	margin: 0 0 0 40px;
+}
+dl dd p{ margin: 0;}
+.copyright{
+	text-align: center;
+	font-size:12px;
+	margin:60px 30px 0;
+	padding:15px 0;
+}
+.note{
+	background:url(../images/important.gif) 10px 5px no-repeat;
+	padding:10px 0 10px 50px;	
+}
+strong, b{
+    font-weight: bold;
+}
+.list ul{
+
+}
+.list li{
+    list-style-type: none;
+}
+.ide{
+    color:#666666;
+    font:12px Arial, Georgia, "Times New Roman", Times, serif;
+}
+.ide a{
+    text-decoration:none;
+    margin-left:10px;
+    margin-right:0px;
+    padding-left:20px;
+    color: #32a1e8;
+}
+.idea{
+    background:url(../images/idea.png) 0 0 no-repeat;
+}
+.eclipse{
+    background:url(../images/eclipse.png) 0 0 no-repeat;
+}
+.netbeans{
+    background:url(../images/netbeans.png) 0 0 no-repeat;
+}

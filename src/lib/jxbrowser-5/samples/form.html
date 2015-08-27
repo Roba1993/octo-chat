@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript">
+          function sendFormData() {
+            var firstNameValue = myForm.elements['firstName'].value;
+            var lastNameValue = myForm.elements['lastName'].value;
+            // Invoke the 'save' Java callback
+            save(firstNameValue, lastNameValue);
+          }
+
+    </script>
+</head>
+<body>
+<form name="myForm">
+    First name: <input type="text" name="firstName"/>
+    <br/>
+    Last name: <input type="text" name="lastName"/>
+    <br/>
+    <input type="button" value="Save" onclick="sendFormData();"/>
+</form>
+</body>
+</html>

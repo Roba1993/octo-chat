@@ -1,0 +1,1718 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="CONTENT-LANGUAGE" content="en-US"/>
+    <title>JxBrowser Programmer&rsquo;s Guide</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen,projection"/>
+</head>
+
+<body>
+<div class="main-wrapper">
+<h1 class="doc_title">JxBrowser Programmer&rsquo;s Guide</h1>
+
+<p class="version">Version: 5.4.2</p>
+<ol class="table_of_contents">
+    <li><a href="#introduction">Introduction</a>
+        <ul>
+            <li>1.1 <a href="#about">About This Document</a></li>
+            <li>1.2 <a href="#about-jxbrowser">About JxBrowser</a></li>
+            <li>1.3 <a href="#examples-and-demo">Examples and Demo Application</a></li>
+            <li>1.4 <a href="#distribution">Distribution Package</a></li>
+            <li>1.5 <a href="#installation">Installation Instruction</a></li>
+            <li>1.6 <a href="#licensing">Licensing</a></li>
+        </ul>
+    </li>
+    <li><a href="#requirements">Requirements</a>
+        <ul>
+            <li>2.1 <a href="#requirements-windows">Windows</a></li>
+            <li>2.2 <a href="#requirements-linux">Linux</a></li>
+            <li>2.3 <a href="#requirements-mac">Mac OS X</a></li>
+        </ul>
+    </li>
+    <li><a href="#browser-context">Browser Context</a>
+    <li><a href="#hello">Hello world!</a>
+    <li><a href="#loading">Loading URL</a></li>
+    <li><a href="#loading-with-post">Loading URL with POST Data</a></li>
+    <li><a href="#loading-html">Loading HTML</a></li>
+    <li><a href="#browser-events">Browser Events</a>
+        <ul>
+            <li>8.1 <a href="#load-events">Load</a></li>
+            <li>8.2 <a href="#title-events">Title</a></li>
+            <li>8.3 <a href="#zoom-events">Zoom</a></li>
+            <li>8.4 <a href="#dispose-events">Dispose</a></li>
+            <li>8.5 <a href="#render-events">Render</a></li>
+        </ul>
+    </li>
+    <li><a href="#popups">Pop-up Windows</a></li>
+    <li><a href="#javascript">JavaScript</a></li>
+    <li><a href="#javascript-dialogs">JavaScript Dialogs</a></li>
+    <li><a href="#javascript-java-bridge">JavaScript-Java Bridge</a></li>
+    <li><a href="#zooming">Zooming</a></li>
+    <li><a href="#context-menu">Context Menu</a></li>
+    <li><a href="#cookies">Cookies</a></li>
+    <li><a href="#history">Navigation History</a></li>
+    <li><a href="#user-agent">User-Agent</a></li>
+    <li><a href="#proxy">Proxy Settings</a>
+        <ul>
+            <li>18.1 <a href="#proxy-auto-detect">AutoDetect</a></li>
+            <li>18.2 <a href="#proxy-direct">Direct</a></li>
+            <li>18.3 <a href="#proxy-auto-config">AutoConfig URL</a></li>
+            <li>18.4 <a href="#proxy-manual">Manual</a></li>
+        </ul>
+    </li>
+    <li><a href="#web-preferences">Disabling images, videos, JavaScript, etc.</a></li>
+    <li><a href="#proxy-authentication">Proxy Authentication</a></li>
+    <li><a href="#basic-authentication">Basic, Digest and NTLM Authentication</a></li>
+    <li><a href="#request-handling">Network Delegate</a></li>
+    <li><a href="#downloads">File Downloads</a></li>
+    <li><a href="#html-to-png">Web page as PNG image</a></li>
+    <li><a href="#executing-commands">Executing commands</a></li>
+    <li><a href="#saving-web-pages">Saving web pages</a></li>
+    <li><a href="#dom">DOM API</a></li>
+    <li><a href="#dom-events">DOM Events</a></li>
+    <li><a href="#find-text">Find Text</a></li>
+    <li><a href="#jws">JxBrowser & Java Web Start</a></li>
+    <li><a href="#applet">JxBrowser & Java Applet</a></li>
+    <li><a href="#remote-debugging">Remote Debugging</a></li>
+    <li><a href="#dnd">Drag and Drop</a></li>
+    <li><a href="#plugins">Plugins</a>
+        <ul>
+            <li>34.1 <a href="#flash">Flash and Silverlight</a></li>
+            <li>34.2 <a href="#plugin-manager">Plugins Manager</a></li>
+        </ul>
+    </li>
+    <li><a href="#printing">Printing</a></li>
+    <li><a href="#geolocation">Geolocation</a></li>
+    <li><a href="#logging">Logging</a></li>
+    <li><a href="#restrictions">Known Restrictions</a></li>
+    <li><a href="#support">Technical Support</a></li>
+</ol>
+<div class="chapter">
+    <h1 id="introduction">1. Introduction</h1>
+    <span class="hor_separator"></span>
+
+    <h2 id="about">1.1. About This Document</h2>
+
+    <p>This document represents a developer’s guide to JxBrowser library. Here you can find all the required information
+        regarding the use of JxBrowser library in your Java Swing/AWT/JavaFX application.</p>
+
+    <h2 id="about-jxbrowser">1.2. About JxBrowser</h2>
+
+    <p>JxBrowser is a cross-platform Java library that allows integrating <a href="http://www.chromium.org/Home">Google
+        Chromium</a>-based web browser component
+        into your Java Swing/AWT/JavaFX application. With JxBrowser you can embed a lightweight Swing/JavaFX component into your Java
+        application to display modern web pages, supporting the latest web standards such as HTML5, CSS3, JavaScript
+        etc.</p>
+        etc.</p>
+
+    <p>JxBrowser is based on Chromium 43.0.2357.52 engine and supports Windows, Linux and Mac OS X platforms. All the
+        required Chromium binaries are deployed with JxBrowser libraries, so you don’t need to install Google Chromium
+        on the target environment.</p>
+
+    <h2 id="examples-and-demo">1.3. Examples and Demo Application</h2>
+
+    <p>Almost all the examples from this guide can be found in the samples directory of JxBrowser Distribution Package
+        and on the <a href="http://links.teamdev.com/jxbrowser-samples">Samples</a> web page.</p>
+
+    <p>You can find the JxBrowser Web Start Online Demo at <a href="http://www.teamdev.com/jxbrowser/onlinedemo">http://www.teamdev.com/jxbrowser/onlinedemo</a>.
+    </p>
+
+    <h2 id="distribution">1.4. Distribution Package</h2>
+
+    <p>The structure of JxBrowser Distribution Package (<code>jxbrowser-5.4.2-cross-desktop-win_mac_linux.zip</code>) is the following:</p>
+
+    <pre>lib/
+    jxbrowser-5.4.2.jar          // JxBrowser library
+    jxbrowser-win-5.4.2.jar      // Chromium binaries for Windows
+    jxbrowser-mac-5.4.2.jar      // Chromium binaries for Mac OS X
+    jxbrowser-linux32-5.4.2.jar  // Chromium binaries for Linux 32-bit
+    jxbrowser-linux64-5.4.2.jar  // Chromium binaries for Linux 64-bit
+samples/                       // API samples
+doc/javadoc/                   // Public API JavaDocs
+doc/guide/                     // Programmer's and Quick Start Guide
+demo/
+    jxbrowserdemo.jar          // Demo application library
+    jxbrowserdemo.bat          // Executable *.bat to run Demo application on Windows
+    jxbrowserdemo.sh           // Executable *.sh to run Demo application on Mac OS X and Linux
+Readme.txt                     // Readme file
+License agreement.txt          // License agreement</pre>
+
+    <h2 id="installation">1.5. Installation Instruction</h2>
+
+    <p>In order to use JxBrowser library in your Java application you need to include all the JAR files from the lib
+        directory of the JxBrowser Distribution Package. Your application class path should look like:</p>
+
+    <pre>java -classpath jxbrowser-5.4.2.jar;jxbrowser-win-5.4.2.jar;jxbrowser-mac-5.4.2.jar;
+jxbrowser-linux32-5.4.2.jar;jxbrowser-linux64-5.4.2.jar &lt;your-application-class&gt;</pre>
+
+    <p class="note">If your application supports only Windows platform, there is no need to include the <code>jxbrowser-mac</code>,
+        <code>jxbrowser-linux32</code> and <code>jxbrowser-linux64</code> JAR files into your application class
+        path.</p>
+
+    <p>The <code>jxbrowser-win-5.4.2.jar</code>, <code>jxbrowser-mac-5.4.2.jar</code>,
+        <code>jxbrowser-linux32-5.4.2.jar</code>, <code>jxbrowser-linux64-5.4.2.jar</code> libraries
+        contain Chromium binaries for corresponding platform. At the first run JxBrowser extracts the binaries from the
+        JAR file into user’s temp folder.</p>
+
+    <h3>Chromium binaries</h3>
+
+    <p>You can extract Chromium binaries from these JAR files manually and configure JxBrowser to use them via the
+        "<code>jxbrowser.chromium.dir</code>" System Property. This property must contain a valid absolute/related path to the
+        directory with extracted Chromium binaries. </p>
+    <p>JxBrowser checks the directory and if the directory doesn't
+        contain all the required Chromium files, JxBrowser will search for the binaries inside JAR files included in the application class path
+        and extract them programmatically. If JxBrowser couldn't find Chromium binaries in the provided directory and none of
+        JAR files included into Java application class path contains Chromium binaries, an exception will be thrown during
+        <code>Browser</code> instance initialization.
+    </p>
+
+    <h2 id="licensing">1.6. Licensing</h2>
+
+    <p>The JxBrowser library requires a valid license (teamdev.licenses) file for operations. You can <a
+            href="http://www.teamdev.com/jxbrowser">request</a> a fully-functional
+        30-day evaluation license or <a href="http://www.teamdev.com/jxbrowser/purchase/">purchase</a> a commercial
+        license for JxBrowser library. </p>
+
+    <h3>30-day Evaluation license</h3>
+
+    <p>When you request a 30-day evaluation license file, you get an email message with the link that you can use to
+        download a <code>licence.jar</code> file. To enable the evaluation license you need to include this
+        <code>licence.jar</code> into your application class path.</p>
+
+    <h3>Commercial License</h3>
+
+    <p>When you purchase a license file, you get two JARs: <code>development.jar</code> and <code>runtime.jar</code>.
+        You need to include one of these JARs into your application class path to enable the license. The difference
+        between Development and Runtime license is the following:</p>
+
+    <p>&ndash; you need to use the Development license (<code>development.jar</code>) for development
+        purposes only. The number of licenses should be equal to the number of developers who use JxBrowser in
+        development. For example, if you have 10 developers involved into your project and only 4 of them work with
+        JxBrowser, you should purchase 4 licenses only.</p>
+
+    <p>&ndash; the Runtime license (<code>runtime.jar</code>) should be used when you distribute your software with
+        JxBrowser enclosed. For example, you can include the runtime.jar file into class path of your application
+        production version. You can deploy the Runtime license with your application to unlimited number of end users.
+    </p>
+
+    <h3>License Information</h3>
+
+    <p>In order to get information about the JxBrowser license, use the "<code>teamdev.license.info</code>" system
+        property. The following code demonstrates how to enable license info printing in your application.</p>
+
+    <pre>System.setProperty("teamdev.license.info", "true");
+Browser browser = new Browser();</pre>
+</div>
+<div class="chapter">
+    <h1 id="requirements">2. Requirements</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser supports Windows, Linux and Mac OS X platforms (Intel and AMD), both 32- and 64-bit:</p>
+
+    <h2 id="requirements-windows">2.1. Windows</h2>
+    <ul class="ol_type1">
+        <li>Microsoft Windows XP (SP2), 7, 8, Vista, Server 2003 (SP1), Server 2008/2012, 32-bit and 64-bit.
+        </li>
+        <li><b>Swing</b>: Oracle (Sun) JRE 1.6.x and higher, IBM JRE 1.7.x and higher, 32-bit and 64-bit.</li>
+        <li><b>JavaFX</b>: Oracle (Sun) JRE 1.8.x and higher, 32-bit and 64-bit.</li>
+    </ul>
+    <h2 id="requirements-linux">2.2. Linux</h2>
+    <ul class="ol_type1">
+        <li>Ubuntu 12.04+, Debian 7.7, RedHat Enterprise Linux 7, openSUSE 13.1, Fedora 20, 32-bit and 64-bit.</li>
+        <li><b>Swing</b>: Oracle (Sun) JRE 1.6.x and higher, IBM JRE 1.7.x and higher, 32-bit and 64-bit.</li>
+        <li><b>JavaFX</b>: Oracle (Sun) JRE 1.8.x and higher, 32-bit and 64-bit.</li>
+    </ul>
+    <p class="note">Linux environment must be in non-headless mode, because Chromium doesn't support headless mode.</p>
+    <h2 id="requirements-mac">2.3. Mac OS X</h2>
+    <ul class="ol_type1">
+        <li>Mac OS X 10.7.x - 10.10.x (Intel)</li>
+        <li><b>Swing</b>: Apple or Oracle (Sun) JRE 1.6.x and higher, 32-bit and 64-bit.</li>
+        <li><b>JavaFX</b>: Oracle (Sun) JRE 1.8.x and higher, 32-bit and 64-bit.</li>
+    </ul>
+</div>
+
+<div class="chapter">
+    <h1 id="browser-context">3. Browser Context</h1>
+    <span class="hor_separator"></span>
+
+    <p>Each <code>Browser</code> instance must be initialized with <code>BrowserContext</code>.
+        <code>BrowserContext</code> holds the context needed for a browsing session and provides path to the directory
+    where Chromium stores cookies, cache data files, etc.</p>
+
+    <p>The following code creates a new <code>Browser</code> instance initialized with default context:</p>
+
+    <pre>Browser browser = new Browser();</pre>
+
+    The code above equals to:
+
+    <pre>Browser browser = new Browser(BrowserContext.defaultContext());</pre>
+
+    <p>The <code>BrowserContext.defaultContext()</code> method returns default <code>BrowserContext</code> that
+    is configured to store Chromium data files such as cookies, cache, etc. in user's temp directory. You can
+    get path to the directory where data files are stored using the <code>BrowserPreferences.getDefaultDataDir()</code>
+    method.</p>
+
+    <p>Two <code>Browser</code> instances with same <code>BrowserContext</code> will use same user data directory. As
+        result they shares cookies and cache files. For example:</p>
+
+    <pre>BrowserContext context = new BrowserContext("C:\\my-data1");
+Browser browser1 = new Browser(context);
+Browser browser2 = new Browser(context);</pre>
+
+    <p>To create independent <code>Browser</code> instances that don't share cookies and cache data, you must initialize
+        each <code>Browser</code> instance with a different <code>BrowserContext</code> configured to use different
+        data directory. For example:
+    </p>
+
+    <pre>BrowserContext context1 = new BrowserContext("C:\\my-data1");
+Browser browser1 = new Browser(context1);
+
+BrowserContext context2 = new BrowserContext("C:\\my-data2");
+Browser browser2 = new Browser(context2);</pre>
+
+    <p>To get <code>BrowserContext</code> of the <code>Browser</code> instance you can use the <code>browser.getContext()</code>
+        method.</p>
+
+    <p class="note">Make sure that you don't use several <code>BrowserContext</code> instances configured to use same data directory.
+    In this case Chromium engine will read/write same data directory from different <code>Browser</code> instances which might cause
+        unexpected behavior or errors.
+    </p>
+</div>
+
+<div class="chapter">
+    <h1 id="hello">4. Hello world!</h1>
+    <span class="hor_separator"></span>
+
+    <p>After including all the required JxBrowser JAR files into your application class path together with the license
+        JAR, you should be able to run your first program with JxBrowser in it:</p>
+
+    <h2>Swing</h2>
+
+    <pre>import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class HelloWorldSample {
+    public static void main(String[] args) {
+        Browser browser = new Browser();
+        BrowserView browserView = new BrowserView(browser);
+
+        JFrame frame = new JFrame("Hello World!");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(browserView, BorderLayout.CENTER);
+        frame.setSize(400, 300);
+        frame.setVisible(true);
+
+        browser.loadHTML("&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello world!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;");
+    }
+}
+</pre>
+
+    <p>To embed <code>Browser</code> into a Swing container use the <code>com.teamdev.jxbrowser.chromium.swing.BrowserView</code> component.</p>
+
+    <h2>JavaFX</h2>
+
+    <pre>import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+public class HelloWorldSample extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        Browser browser = new Browser();
+        BrowserView browserView = new BrowserView(browser);
+
+        StackPane pane = new StackPane();
+        pane.getChildren().add(browserView);
+        Scene scene = new Scene(pane, 400, 300);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        browser.loadHTML("&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello world!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;");
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</pre>
+
+    <p>To embed <code>Browser</code> into a JavaFX container use the <code>com.teamdev.jxbrowser.chromium.javafx.BrowserView</code> component.</p>
+
+    <p>This simple example above shows how to create a <code>Browser</code> component, embed it into Swing/JavaFX container, display it and load the "<code>&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello
+            world!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;</code>" HTML string directly into the <code>Browser</code>.</p>
+
+    <p>When you run this sample you should see the following output:</p>
+    <img src="images/examples-hello.png" alt="Hello world example output">
+</div>
+
+<div class="chapter">
+    <h1 id="loading">5. Loading URL</h1>
+    <span class="hor_separator"></span>
+
+    <p>In order to load a web page by its URL you can use the <code>Browser.loadURL(String url)</code>, <code>Browser.loadURL(int
+        frameId, String url)</code> and <code>Browser.loadURL(LoadURLParams params)</code> methods. The following code
+        demonstrates how to load the <a href="http://www.google.com">http://www.google.com</a> web page:</p>
+
+    <pre>browser.loadURL("http://www.google.com");</pre>
+
+    <p>All web pages are loaded asynchronously. It means that the <code>Browser.loadURL()</code> method doesn’t
+        guarantee that the web page will be loaded completely after this method has finished its execution. For testing
+        purposes you may need to wait until the web page is loaded completely. In this case you can use the following
+        approach:</p>
+
+    <pre>browser.loadURL("http://www.google.com");
+while (browser.isLoading()) {
+    TimeUnit.MILLISECONDS.wait(50);
+}
+// web page is loaded completely</pre>
+
+    <p>The code below shows how to periodically check if the <code>Browser</code> component is still loading web page. This approach
+        blocks the current thread execution until the web page is loaded completely. If you don’t need to block the
+        current thread and receive notification when the web page is loaded completely, you can use the
+        <code>LoadListener.onFinishLoadingFrame(FinishLoadingEvent event)</code> event. For example:</p>
+
+    <pre>browser.addLoadListener(new LoadAdapter() {
+    @Override
+    public void onFinishLoadingFrame(FinishLoadingEvent event) {
+        if (event.isMainFrame()) {
+            // web page is loaded completely including all frames
+        }
+    }
+});
+browser.loadURL("http://www.google.com");</pre>
+
+    <p>You can find more information about <code>LoadListener</code> in the <a href="#load-events">Load</a> chapter of
+        this guide.
+    </p>
+</div>
+
+<div class="chapter">
+    <h1 id="loading-with-post">6. Loading URL with POST Data</h1>
+    <span class="hor_separator"></span>
+
+    <p>To send POST data to a specific URL you can use the <code>Browser.loadURL(LoadURLParams params)</code>
+        method:</p>
+    <pre>browser.loadURL(new LoadURLParams("http://www.google.com",
+    "firstKey=KeyValue1&secondKey=KeyValue2"));</pre>
+
+    <p>POST data in this method represents a string in the <code>key=value&key=value...</code> format. The content type
+        in HTTP header for all the POST data will be <code>application/x-www-form-urlencoded</code>.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="loading-html">7. Loading HTML</h1>
+    <span class="hor_separator"></span>
+
+    <p>To load HTML document from a string you can use the <code>Browser.loadHTML(String html)</code> or <code>Browser.loadHTML(LoadHTMLParams
+        params)</code> method. The second method allows you to provide additional parameters to the <code>Browser</code> component,
+        such as text encoding and base URL for resolving relative links.</p>
+
+    <pre>browser.loadHTML("&lt;html&gt;&lt;body&gt;&lt;h1&gt;HTML Content&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;");</pre>
+
+    <p>To find out whether HTML document is loaded completely, you can use one of the described approaches in the <a
+            href="#loading">Loading URL</a> section.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="browser-events">8. Browser Events</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser API provides different listeners for listening various browser events such as loading events, title
+        change, zoom level change, render process events etc.</p>
+
+    <h2 id="load-events">8.1. Load</h2>
+
+    <p>The <code>LoadListener</code> provides methods for receiving browser load events. You can use this listener to
+        get notifications about web page loading events, document availability events, loading failure events etc. The
+        following code demonstrates how to register <code>LoadListener</code>:</p>
+
+    <pre>browser.addLoadListener(new LoadAdapter() {
+    @Override
+    public void onStartLoadingFrame(StartLoadingEvent event) {
+        if (event.isMainFrame()) {
+            System.out.println("Main frame has started loading");
+        }
+    }
+
+    @Override
+    public void onProvisionalLoadingFrame(ProvisionalLoadingEvent event) {
+        if (event.isMainFrame()) {
+            System.out.println("Provisional load was committed for a frame");
+        }
+    }
+
+    @Override
+    public void onFinishLoadingFrame(FinishLoadingEvent event) {
+        if (event.isMainFrame()) {
+            System.out.println("Main frame has finished loading");
+        }
+    }
+
+    @Override
+    public void onFailLoadingFrame(FailLoadingEvent event) {
+        int errorCode = event.getErrorCode();
+        if (event.isMainFrame()) {
+            System.out.println("Main frame has failed loading: " + errorCode);
+        }
+    }
+
+    @Override
+    public void onDocumentLoadedInFrame(FrameLoadEvent event) {
+        System.out.println("Frame document is loaded.");
+    }
+
+    @Override
+    public void onDocumentLoadedInMainFrame(LoadEvent event) {
+        System.out.println("Main frame document is loaded.");
+    }
+});</pre>
+
+    <h2 id="title-events">8.2. Title</h2>
+
+    <p>The <code>TitleListener</code> allows you to receive the document title change events. For example:</p>
+
+    <pre>browser.addTitleListener(new TitleListener() {
+    public void onTitleChange(TitleEvent event) {
+        System.out.println("Title = " + event.getTitle());
+    }
+});</pre>
+
+    <h2 id="zoom-events">8.3. Zoom</h2>
+
+    <p>The <code>ZoomListener</code> can be used to listen to the zoom level change events for different web pages. For
+        example:</p>
+
+    <pre>browser.getContext().getZoomService().addZoomListener(new ZoomListener() {
+    public void onZoomChanged(ZoomEvent event) {
+        System.out.println("event.getURL() = " + event.getURL());
+        System.out.println("event.getZoomLevel() = " + event.getZoomLevel());
+        System.out.println("event.isRemember() = " + event.isRemember());
+    }
+});</pre>
+
+    <p>You can configure default zoom level for all web pages using the
+        <code>browser.getContext().getZoomService().setDefaultZoomLevel(double level)</code> method.</p>
+
+    <h2 id="dispose-events">8.4. Dispose</h2>
+
+    <p>The <code>DisposeListener</code> allows you to receive notifications about <code>Browser</code> instance disposal. This
+        listener informs you that its <code>Browser</code> instance is disposed because of the <code>Browser.dispose()</code> method
+        or because the JavaScript <code>window.close()</code> function has been invoked. For example:</p>
+
+    <pre>Browser browser = new Browser();
+browser.addDisposeListener(new DisposeListener&lt;Browser&gt;() {
+    public void onDisposed(DisposeEvent&lt;Browser&gt; event) {
+        System.out.println("Browser is disposed.");
+    }
+});
+browser.dispose();</pre>
+
+    <h2 id="render-events">8.5. Render</h2>
+
+    <p>Each<code>Browser</code> instance is running in a separate native process where the web page is rendered. Sometimes this
+        process can exit unexpectedly because of the crash in plugin. To receive notifications about unexpected render
+        process termination you can use <code>RenderListener</code>. When you receive notification about render process
+        termination you can display a "sad" icon like Google Chrome does, for example, to inform the user that this
+        particular <code>Browser</code> component has crashed. Example:</p>
+
+    <pre>browser.addRenderListener(new RenderAdapter() {
+    @Override
+    public void onRenderCreated(RenderEvent event) {
+        System.out.println("Render process is created.");
+    }
+
+    @Override
+    public void onRenderGone(RenderEvent event) {
+        System.out.println("Render process is gone:");
+        TerminationStatus terminationStatus =
+                event.getTerminationStatus();
+        System.out.println("Termination Status: " + terminationStatus);
+    }
+});</pre>
+
+    <p>If you refresh or load the same or another URL, the render process and <code>Browser</code> instance will be
+        restored. Example:</p>
+
+    <pre>browser.addRenderListener(new RenderAdapter() {
+    @Override
+    public void onRenderGone(RenderEvent event) {
+        Browser browser = event.getBrowser();
+        // Restore Browser instance by loading the same URL
+        browser.loadURL(browser.getURL());
+    }
+});</pre>
+
+</div>
+
+<div class="chapter">
+    <h1 id="popups">9. Pop-up Windows</h1>
+    <span class="hor_separator"></span>
+
+    <p>Any web page can display pop-up windows. JxBrowser API provides <code>PopupHandler</code> to handle pop-up window
+        creation.</p>
+
+    <p class="note">By default JxBrowser doesn't display pop-up windows, because it cannot know what UI Toolkit must be used &mdash; Swing or JavaFX.</p>
+
+    <p>To enable support of popup-windows you must register default Swing or JavaFX implementation depending on what UI Toolkit you use in your Java application:</p>
+    <h2>Swing</h2>
+
+    <p>Register default Swing popup handler implementation:</p>
+    <pre>browser.setPopupHandler(new com.teamdev.jxbrowser.chromium.swing.DefaultPopupHandler());</pre>
+    <p>Register custom Swing popup handler implementation:</p>
+    <pre>browser.setPopupHandler(new PopupHandler() {
+    public PopupContainer handlePopup(PopupParams params) {
+        return new PopupContainer() {
+            public void insertBrowser(final Browser browser, Rectangle initialBounds) {
+                BrowserView browserView = new BrowserView(browser);
+                browserView.setPreferredSize(initialBounds.getSize());
+
+                final JFrame frame = new JFrame("Popup");
+                frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                frame.add(browserView, BorderLayout.CENTER);
+                frame.pack();
+                frame.setLocation(initialBounds.getLocation());
+                frame.setVisible(true);
+                frame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        browser.dispose();
+                    }
+                });
+
+                browser.addDisposeListener(new DisposeListener() {
+                    public void onDisposed(DisposeEvent event) {
+                        frame.setVisible(false);
+                    }
+                });
+            }
+        };
+    }
+});</pre>
+
+    <h2>JavaFX</h2>
+
+    <p>Register default JavaFX popup handler implementation:</p>
+    <pre>browser.setPopupHandler(new com.teamdev.jxbrowser.chromium.javafx.DefaultPopupHandler());</pre>
+    <p>Register custom JavaFX popup handler implementation:</p>
+    <pre>browser.setPopupHandler(new PopupHandler() {
+    public PopupContainer handlePopup(PopupParams params) {
+        return new PopupContainer() {
+            public void insertBrowser(final Browser browser, final Rectangle initialBounds) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Stage stage = new Stage();
+                        StackPane root = new StackPane();
+                        Scene scene = new Scene(root, 800, 600);
+                        BrowserView browserView = new BrowserView(browser);
+                        root.getChildren().add(browserView);
+                        stage.setScene(scene);
+                        stage.setTitle("Popup");
+                        if (!initialBounds.isEmpty()) {
+                            stage.setX(initialBounds.getLocation().getX());
+                            stage.setY(initialBounds.getLocation().getY());
+                            stage.setWidth(initialBounds.width);
+                            stage.setHeight(initialBounds.height);
+                        }
+
+                        stage.setOnCloseRequest(new EventHandler&lt;javafx.stage.WindowEvent&gt;() {
+                            public void handle(javafx.stage.WindowEvent event) {
+                                browser.dispose();
+                            }
+                        });
+
+                        browser.addDisposeListener(new DisposeListener&lt;Browser&gt;() {
+                            public void onDisposed(DisposeEvent&lt;Browser&gt; event) {
+                                Platform.runLater(new Runnable() {
+                                    public void run() {
+                                        stage.close();
+                                    }
+                                });
+                            }
+                        });
+                        stage.show();
+                    }
+                });
+            }
+        };
+    }
+});</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="javascript">10. JavaScript</h1>
+    <span class="hor_separator"></span>
+
+    <p>Ability to execute JavaScript code on the loaded web page is one of the main features of JxBrowser. To execute
+        JavaScript code, first of all you need to make sure that web page is loaded completely (see <a href="#loading">Loading
+            URL</a> chapter).</p>
+
+    <p>If the web page is loaded completely you can execute JavaScript code on it in one of the following ways:</p>
+
+    <p>1. Using the <code>Browser.executeJavaScript(String javaScript)</code> method. This method executes the
+        JavaScript code asynchronously without blocking the current thread execution. If you are not interested in
+        receiving the result of JavaScript code, you can use this method because its return parameter is void.</p>
+
+    <p>2. Using the <code>Browser.executeJavaScriptAndReturnValue(String javaScript)</code> method. This method executes
+        the code described by <code>javaScript</code> parameter and returns the result of JavaScript code execution as
+        <code>JSValue</code>. This method blocks the current thread execution until the passed JavaScript code stop its
+        execution and return the result of execution.</p>
+
+    <p>The <code>JSValue</code> provides access to the result of JavaScript code execution. Using the methods of <code>JSValue</code>
+        you can determine whether the result value is an object, number, string or boolean value. For example, the
+        following code demonstrates how to get a document title string value using the <code>Browser.executeJavaScriptAndReturnValue(String
+            javaScript)</code> method:</p>
+
+    <pre>JSValue documentTitle = browser.executeJavaScriptAndReturnValue("document.title");
+// Make sure that result value is a string and read its value
+if (documentTitle.isString()) {
+    System.out.println("Document Title = " + documentTitle.getString());
+}</pre>
+
+    <p>In this sample we check that the return <code>JSValue</code> is a string value, using the <code>JSValue.isString()</code>
+        method; and access the string value, using the <code>JSValue.getString()</code> method.</p>
+
+    <p class="note">Please avoid using the <code>Browser.executeJavaScriptAndReturnValue(String javaScript)</code>
+        method in
+        Swing UI thread, because the passed JavaScript code can cause JavaScript Alert dialog to be shown. All the
+        dialogs are displayed in Swing UI thread by default. As result, it can cause a deadlock.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="javascript-dialogs">11. JavaScript Dialogs</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser API provides <code>DialogHandler</code> interface that allows handling JavaScript dialogs.</p>
+
+    <p class="note">By default JxBrowser doesn't display JavaScript dialogs such as Alert, Confirmation or Prompt, because it
+        doesn't know what UI Toolkit must be used &mdash; Swing or JavaFX.</p>
+
+    <p>To enable JavaScript dialogs you must register Swing or JavaFX <code>DialogHandler</code> implementation depending
+        on what UI Toolkit you use in your Java application:</p>
+
+    <h2>Swing</h2>
+
+    <pre>import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import com.teamdev.jxbrowser.chromium.swing.DefaultDialogHandler;
+
+Browser browser = new Browser();
+final BrowserView browserView = new BrowserView(browser);
+
+browser.setDialogHandler(new DefaultDialogHandler(browserView) {
+    @Override
+    public void onAlert(DialogParams params) {
+        String title = "My Alert Dialog";
+        String message = params.getMessage();
+        JOptionPane.showMessageDialog(browserView, message, title,
+                JOptionPane.PLAIN_MESSAGE);
+    }
+});</pre>
+
+    <h2>JavaFX</h2>
+
+    <pre>import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
+import com.teamdev.jxbrowser.chromium.javafx.DefaultDialogHandler;
+import com.teamdev.jxbrowser.chromium.javafx.internal.dialogs.MessageDialog;
+
+Browser browser = new Browser();
+final BrowserView browserView = new BrowserView(browser);
+
+browser.setDialogHandler(new DefaultDialogHandler(browserView) {
+    @Override
+    public void onAlert(DialogParams params) {
+        String title = "My Alert Dialog";
+        String message = params.getMessage();
+        MessageDialog.show(browserView, title, message);
+    }
+});</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="javascript-java-bridge">12. JavaScript-Java Bridge</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser API provides functionality that allows you to register a <code>BrowserFunction</code> callback and
+        associate it with JavaScript function. Every time when this JavaScript function is invoked, an appropriate
+        <code>BrowserFunction</code> callback will be used as a body for this JavaScript function. You can receive input
+        parameters from JavaScript as array of <code>JSValue</code> instances and even return the function result from
+        Java to JavaScript via <code>JSValue</code>.</p>
+
+    <pre>browser.registerFunction("MyFunction", new BrowserFunction() {
+    public JSValue invoke(JSValue... args) {
+        for (JSValue arg : args) {
+            System.out.println("arg = " + arg);
+        }
+        return JSValue.create("Hello!");
+    }
+});</pre>
+
+    <p>In the example above we register a <code>BrowserFunction</code> callback and associate it with the "MyFunction"
+        JS function. After that, every time when JavaScript on any web page invokes the "MyFunction" JS function, the
+        <code>invoke()</code> method of our <code>BrowserFunction</code> instance will be executed:</p>
+
+    <pre>var result = MyFunction("Hello JxBrowser!", 1, 2, 3, true);</pre>
+
+    <p>The result of the JavaScript code above will be the "Hello!" string.</p>
+
+    <p>When you don’t need to use the <code>BrowserFunction</code> instance you can un-register it using the <code>Browser.unregisterFunction(String
+        functionName)</code> method:</p>
+
+    <pre>browser.unregisterFunction("MyFunction");</pre>
+
+    <p class="note">This functionality doesn't allow overriding existing JavaScript functions. So, if JavaScript on the
+        web page already defines the <code>MyFunction</code> function, then the registered "MyFunction" Java callback
+        will not be invoked.
+    </p>
+</div>
+
+<div class="chapter">
+    <h1 id="zooming">13. Zooming</h1>
+    <span class="hor_separator"></span>
+
+    <p>With JxBrowser you can zoom the web page content using <code>Browser.setZoomLevel(double
+        zoomLevel)</code>, <code>Browser.zoomIn()</code>, <code>Browser.zoomOut()</code>, <code>
+        Browser.zoomReset()</code> methods. Please note that zoom level can be applied only for the completely loaded
+        web page. You need to wait until the web page is loaded completely and only then you can zoom it:</p>
+
+    <pre>browser.addLoadListener(new LoadAdapter() {
+    @Override
+    public void onFinishLoadingFrame(FinishLoadingEvent event) {
+        if (event.isMainFrame()) {
+            event.getBrowser().setZoomLevel(2.0);
+        }
+    }
+});</pre>
+
+    <p>The zoom level is configured for each domain separately, so if you have set zoom level for the <code>a.com</code>
+        web page, it will not be applied for the <code>b.com</code> web page.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="context-menu">14. Context Menu</h1>
+    <span class="hor_separator"></span>
+
+    <p>By registering your <code>ContextMenuHandler</code> implementation you can handle mouse right click events on a
+        web page and display your custom Swing context menu. To register your implementation of the <code>ContextMenuHandler</code>
+        you should use the <code>Browser.setContextMenuHandler(ContextMenuHandler contextMenuHandler)</code> method.
+        JxBrowser doesn't display context menu by default.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="cookies">15. Cookies</h1>
+    <span class="hor_separator"></span>
+
+    <p>Using <code>CookieStorage</code> you can manage all the <code>Browser</code> cookies including session, secure, HTTP-only and
+        persistent cookies. To access the Browser’s cookie storage you can use the
+        <code>Browser.getCookieStorage()</code> method. For example:</p>
+    <pre>CookieStorage cookieStorage = browser.getCookieStorage();
+List&lt;Cookie&gt; cookies = cookieStorage.getAllCookies();</pre>
+
+    <p>The <code>CookieStorage</code> allows receiving all the cookies, deleting and registering new cookies. Every time
+        when you modify the cookie storage you must save the changes using the <code>CookieStorage.save()</code> method.
+        For example:
+    </p>
+    <pre>CookieStorage cookieStorage = browser.getCookieStorage();
+cookieStorage.setSessionCookie("http://www.a.com", "name1", "value1", ".a.com",
+        "/", false, false);
+cookieStorage.save();</pre>
+
+    <p>All <code>Browser</code> instances share the persistent cookies by default, because they use the same user data directory
+        where
+        the persistent cookies are stored. If you need to avoid such sharing, you can provide unique user data directory
+        for
+        each <code>Browser</code> instance. In the <code>BrowserContext</code> parameter you can provide the data directory path that
+        must be used in the <code>new Browser(BrowserContext browserContext)</code> method. For example:</p>
+
+    <pre>Browser browser = new Browser(new BrowserContext("C:\\MyUserData"));</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="history">16. Navigation History</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser provides API that allows you to work with Browser's navigation history. Using this API, you
+        can remove navigation history entries (clear navigation history), obtain information about every entry (e.g. URL, title,
+        HTTP status code, etc.), get total number of history entries and navigate to a specified entry from the
+        history.
+    </p>
+    <p>The following sample demonstrates how to use Navigation History API:</p>
+
+    <pre>Browser browser = new Browser();
+
+// Returns the number of entries in the back/forward list.
+int entryCount = browser.getNavigationEntryCount();
+
+// Returns index of the current navigation entry in the back/forward list.
+int index = browser.getCurrentNavigationEntryIndex();
+
+// Navigates to the entry at a specific index in the back/forward list.
+browser.goToIndex(index);
+
+// Removes navigation entry from the back/forward list at a specific index.
+boolean success = browser.removeNavigationEntryAtIndex(index);
+
+// Prints information about the navigation entry at specific index.
+NavigationEntry navigationEntry = browser.getNavigationEntryAtIndex(index);
+System.out.println("URL = " + navigationEntry.getURL());
+System.out.println("Original URL = " + navigationEntry.getOriginalURL());
+System.out.println("Title = " + navigationEntry.getTitle());</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="user-agent">17. User-Agent</h1>
+    <span class="hor_separator"></span>
+
+    <p>Due to Chromium API restrictions the default user-agent string can be modified only once, before you create any
+       <code>Browser</code> instances. You can provide your own user-agent string using the <code>BrowserPreferences.setUserAgent(String
+            userAgent)</code> method or via the "<code>jxbrowser.chromium.user-agent</code>" Java System Property.</p>
+
+    <pre>BrowserPreferences.setUserAgent("My User Agent String");
+
+Browser browser = new Browser();
+BrowserView browserView = new BrowserView(browser);
+
+JFrame frame = new JFrame();
+frame.add(browserView, BorderLayout.CENTER);
+frame.setSize(700, 500);
+frame.setVisible(true);
+
+browser.loadURL("http://whatsmyuseragent.com/");</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="proxy">18. Proxy Settings</h1>
+    <span class="hor_separator"></span>
+
+    <p>Proxy settings can be configured for each <code>Browser</code> instance during its creation. You can set the required Proxy
+        configuration using the <code>new Browser(ProxyConfig proxyConfig)</code> method. The workflow
+        is the following:</p>
+
+    <pre>Browser browser = new Browser(new [AutoDetectProxyConfig, DirectProxyConfig,
+    URLProxyConfig or CustomProxyConfig]);</pre>
+
+    <p class="note">By default JxBrowser uses system proxy settings. On Windows, JxBrowser uses the same settings that
+        MS Internet Explorer uses. On Mac &mdash; it uses the proxy settings listed under the Network Control Panel.
+        These
+        are the same settings that Safari uses. On Linux &mdash; JxBrowser uses either GNOME/KDE proxy settings, or will
+        use certain environment variables. When you modify JxBrowser proxy settings you don't modify the system global
+        proxy settings.</p>
+
+    <p>The <code>ProxyConfig</code> class is an abstract class that is implemented by different proxy configurations:
+    </p>
+
+    <h2 id="proxy-auto-detect">18.1. AutoDetect</h2>
+
+    <p>With the <code>AutoDetectProxyConfig</code> proxy configuration the connection automatically detects proxy
+        settings:</p>
+    <pre>new Browser(new AutoDetectProxyConfig());</pre>
+
+    <h2 id="proxy-direct">18.2. Direct</h2>
+
+    <p>With the <code>DirectProxyConfig</code> configuration the connection will not use proxy server at all:</p>
+    <pre>new Browser(new DirectProxyConfig());</pre>
+
+    <h2 id="proxy-auto-config">18.3. AutoConfig URL</h2>
+
+    <p>With the <code>URLProxyConfig</code> proxy configuration the connection uses proxy settings received from proxy
+        auto-config (PAC) file. You will need to provide URL of the required PAC file:</p>
+    <pre>new Browser(new URLProxyConfig("&lt;pac-file-url&gt;"));</pre>
+
+    <p class="note">URL to the PAC file must be a valid <code>http://</code> address. You cannot provide a path to the
+        local *.pac
+        file. The name of the PAC file must have the "pac" extension. For example,
+        <code>http://my-site.com/proxy.pac</code> and on a web server the <code>pac</code> file must be served with the
+        <code>application/x-ns-proxy-autoconfig</code> mime type.</p>
+
+    <h2 id="proxy-manual">18.4. Manual</h2>
+
+    <p>With the <code>CustomProxyConfig</code> proxy configuration you can provide custom proxy settings for HTTP, HTTPS
+        and FTP protocols:</p>
+    <pre>HostPortPair httpServer = new HostPortPair("http-proxy-server", 80);
+HostPortPair httpsServer = new HostPortPair("https-proxy-server", 80);
+HostPortPair ftpServer = new HostPortPair("ftp-proxy-server", 80);
+String exceptions = "&lt;local&gt;";  // bypass proxy server for local web pages
+new Browser(new CustomProxyConfig(httpServer, httpsServer, ftpServer,
+        exceptions));</pre>
+
+    <p>The format of the <code>exceptions</code> string can be any of the following:</p>
+
+    <p>&ndash; <code>[ URL_SCHEME "://" ] HOSTNAME_PATTERN [ ":" &lt;port&gt; ]</code>
+        e.g. "foobar.com", "*foobar.com", "*.foobar.com", "*foobar.com:99", "https://x.*.y.com:99"<br/>
+
+        &ndash; <code>"." HOSTNAME_SUFFIX_PATTERN [ ":" PORT ]</code>
+        e.g. ".google.com", ".com", "http://.google.com"<br/>
+
+        &ndash; <code>[ SCHEME "://" ] IP_LITERAL [ ":" PORT ]</code>
+        e.g. "127.0.1", "[0:0::1]", "[::1]", "http://[::1]:99"<br/>
+
+        &ndash; <code>IP_LITERAL "/" PREFIX_LENGHT_IN_BITS</code>
+        e.g. "192.168.1.1/16", "fefe:13::abc/33"<br/>
+
+        &ndash; "<code>&lt;local&gt;</code>" Match local addresses. The meaning of "<code>&lt;local&gt;</code>" is
+        whether the host
+        matches one of:
+        "127.0.0.1", "::1", "localhost".</p>
+</div>
+
+<div class="chapter">
+    <h1 id="web-preferences">19. Disabling images, JavaScript, videos, etc.</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser provides functionality that allows you to enable or disable various features, such as images,
+        JavaScript, videos, etc., for each <code>Browser</code> instance.
+    </p>
+    <p>The following sample demonstrates how to disable images and JavaScript on <code>www.google.com</code> web page:</p>
+
+    <pre>Browser browser = new Browser();
+
+// Gets the current Browser's preferences
+BrowserPreferences preferences = browser.getPreferences();
+preferences.setImagesEnabled(false);
+preferences.setJavaScriptEnabled(false);
+
+// Updates Browser's preferences
+browser.setPreferences(preferences);
+
+// Images and JavaScript will be disabled
+browser.loadURL("http://www.google.com/");</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="proxy-authentication">20. Proxy Authentication</h1>
+    <span class="hor_separator"></span>
+
+    <p>Some proxy servers require authorization. You can use the <code>NetworkDelegate.onAuthRequired(AuthRequiredParams
+        params)</code> handler in order to handle proxy authentication. The following sample demonstrates how to use it:
+    </p>
+
+    <pre>browser.getContext().getNetworkService().setNetworkDelegate(new DefaultNetworkDelegate() {
+    @Override
+    public boolean onAuthRequired(AuthRequiredParams params) {
+        if (params.isProxy()) {
+            params.setUsername("proxy-username");
+            params.setPassword("proxy-password");
+            // Don't cancel authentication
+            return false;
+        }
+        // Cancel authentication
+        return true;
+    }
+});</pre>
+
+    <p class="note">By default JxBrowser doesn't display authorization dialog because it doesn't know
+        what UI Toolkit must be used &mdash; Swing or JavaFX.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="basic-authentication">21. Basic, Digest and NTLM Authentication</h1>
+    <span class="hor_separator"></span>
+
+    <p>To handle basic, digest or NTLM authentication you can use the <code>NetworkDelegate.onAuthRequired(AuthRequiredParams
+        params)</code> handler.
+    </p>
+
+    <p class="note">To display authentication dialog where user can enter valid user name and password you must
+        register default Swing/JavaFX implementation of the <code>NetworkDelegate</code> or your own implementation
+        of the <code>NetworkDelegate</code> interface.</p>
+
+    <p>The following example demonstrates how to register and override default Swing implementation of
+        the <code>NetworkDelegate</code> interface in order to provide user name and password without displaying
+        authorization dialog:</p>
+
+    <pre>import com.teamdev.jxbrowser.chromium.swing.DefaultNetworkDelegate;
+
+browser.getContext().getNetworkService().setNetworkDelegate(new DefaultNetworkDelegate() {
+    @Override
+    public boolean onAuthRequired(AuthRequiredParams params) {
+        if (!params.isProxy()) {
+            params.setUsername("proxy-username");
+            params.setPassword("proxy-password");
+            // Don't cancel authentication
+            return false;
+        }
+        // Cancel authentication
+        return true;
+    }
+});</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="request-handling">22. Network Delegate</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser provides functionality that allows handling network activity including HTTP requests/responses.
+        You can use the <code>NetworkDelegate</code> to handle all network activity of the <code>Browser</code>
+        instances associated with specified <code>BrowserContext</code>.
+    </p>
+    <p>With <code>NetworkDelegate</code> you can intercept all HTTP requests/responses headers and obtain information
+    about each request/response stage. Below is the list of all request/response stages:
+    </p>
+    <ul class="ul_type1">
+        <li>
+            <h3 style="margin-top: 10px;">onBeforeRequest</h3>
+            <p>Fires when a request is about to occur. This event is sent before any TCP connection is made
+                and can be used to redirect requests to another location. It can be used to access and modify
+            POST data of the request when method type is "POST". See <a href="https://sites.google.com/a/teamdev.com/jxbrowser-support/samples#TOC-POST-Data">example</a>.</p>
+        </li>
+        <li>
+            <h3>onBeforeSendHeaders</h3>
+            <p>Fires when a request is about to occur and the initial headers have been prepared. It allows adding,
+                modifying, and deleting HTTP request headers</p>
+        </li>
+        <li>
+            <h3>onBeforeSendProxyHeaders</h3>
+            <p>Fires after onBeforeSendHeaders when proxy connection is used. Provides information about proxy
+                connection, and allows adding, modifying, and deleting HTTP request headers.</p>
+        </li>
+        <li>
+            <h3>onSendHeaders</h3>
+            <p>Fires right before the HTTP headers are sent to the network. This event is informational and it does not
+                allow modifying HTTP headers.</p>
+        </li>
+        <li>
+            <h3>onHeadersReceived</h3>
+            <p>Fires each time that an HTTP(S) response header is received. Due to redirects and authentication requests
+                this can happen multiple times per request. This event is intended to allow adding, modifying, and
+                deleting HTTP response headers, such as incoming "Set-Cookie" headers.</p>
+        </li>
+        <li>
+            <h3>onAuthRequired</h3>
+            <p>Fires when a request receives an authentication challenge and is unable to respond using cached
+                credentials. You can use this method to handle "basic" or "digest" authentication.</p>
+        </li>
+        <li>
+            <h3>onBeforeRedirect</h3>
+            <p>Fires when a request is about to occur and the initial headers have been prepared. It allows adding,
+                modifying, and deleting HTTP request headers.</p>
+        </li>
+        <li>
+            <h3>onResponseStarted</h3>
+            <p>Fires when the first byte of the response body is received. For HTTP requests, this means that the status
+                line and response headers are available. This event is informational.</p>
+        </li>
+        <li>
+            <h3>onCompleted</h3>
+            <p>Fires when a request has been processed successfully or failed.</p>
+        </li>
+        <li>
+            <h3>onDestroyed</h3>
+            <p>Fires when a request is being destroyed.</p>
+        </li>
+        <li>
+            <h3>onCanSetCookies</h3>
+            <p>Fires when engine is about to decide whether specified cookies can be set or not.</p>
+        </li>
+        <li>
+            <h3>onCanGetCookies</h3>
+            <p>Fires when engine is about to decide whether specified cookies can be received and send to a web server.</p>
+        </li>
+    </ul>
+
+    <p>The following sample demonstrates how to change target URL using <code>onBeforeURLRequest</code> event and
+        print "User-Agent" HTTP header value when user loads <code>www.google.com</code>:</p>
+
+    <pre>BrowserContext browserContext = BrowserContext.defaultContext();
+browserContext.getNetworkService().setNetworkDelegate(new DefaultNetworkDelegate() {
+    @Override
+    public void onBeforeURLRequest(BeforeURLRequestParams params) {
+        // If navigate to teamdev.com, then change URL to google.com.
+        if (params.getURL().equals("http://www.teamdev.com/")) {
+            params.setURL("www.google.com");
+        }
+    }
+
+    @Override
+    public void onBeforeSendHeaders(BeforeSendHeadersParams params) {
+        // If navigate to google.com, then print User-Agent header value.
+        if (params.getURL().equals("http://www.google.com/")) {
+            HttpHeaders headers = params.getHeaders();
+            System.out.println("User-Agent: " + headers.getHeader("User-Agent"));
+        }
+    }
+});
+Browser browser = new Browser(browserContext);
+browser.loadURL("http://www.teamdev.com/");</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="downloads">23. File Downloads</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser provides API that allows handling all the file downloads. Using this API you can control what
+        files should be downloaded, provide path to the destination directory where file must be saved and track download progress.</p>
+
+    <p>You can register your own implementation of the <code>DownloadHandler</code> interface to
+        handle file downloads in your own way. The following sample demonstrates how to do this:</p>
+    <pre>browser.setDownloadHandler(new DownloadHandler() {
+    public boolean allowDownload(DownloadItem download) {
+        download.addDownloadListener(new DownloadListener() {
+            public void onDownloadUpdated(DownloadEvent event) {
+                DownloadItem download = event.getDownloadItem();
+                if (download.isCompleted()) {
+                    System.out.println("Download is completed!");
+                }
+            }
+        });
+        System.out.println("Dest file: " + download.getDestinationFile().getAbsolutePath());
+        return true;
+    }
+});</pre>
+
+    <p>The <code>DownloadItem</code> class provides methods for pausing and canceling download process. See its corresponding methods.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="html-to-png">24. Web page as PNG image</h1>
+    <span class="hor_separator"></span>
+
+    <p>The web page content is rendered off-screen (in memory) by Chromium engine in a separate native process. To
+        render web content Chromium engine requires the view size to be provided by the application. To provide the view
+        size you need to use the <code>BrowserView.updateSize(int width, int height)</code> method. To get the image
+        from the web page you can use the <code>BrowserView.getImage()</code> method.</p>
+
+    <p>The complete sample that demonstrates how to get an image of the web page with the 1280x1024 view size is the
+        following:</p>
+    <pre>final Browser browser = new Browser();
+BrowserView view = new BrowserView(browser);
+
+int viewWidth = 1280;
+int viewHeight = 1024;
+// Resize view to the required size
+view.setBounds(new Rectangle(viewWidth, viewHeight));
+
+// Wait until web page is loaded completely
+invokeAndWaitReady(browser, new Runnable() {
+    public void run() {
+        browser.loadURL("http://www.teamdev.com");
+    }
+});
+// Get image of the loaded web page
+Image image = view.getImage();</pre>
+
+    <p>Where <code>invokeAndWaitReady()</code> method has the following implementation:</p>
+    <pre>public static void invokeAndWaitReady(Browser browser, Runnable runnable) {
+    final CountDownLatch latch = new CountDownLatch(1);
+    LoadAdapter listener = new LoadAdapter() {
+        @Override
+        public void onFinishLoadingFrame(FinishLoadingEvent event) {
+            if (event.isMainFrame()) {
+                latch.countDown();
+            }
+        }
+    };
+    browser.addLoadListener(listener);
+    try {
+        runnable.run();
+        try {
+            if (!latch.await(45, TimeUnit.SECONDS)) {
+                throw new RuntimeException(new TimeoutException());
+            }
+        } catch (InterruptedException ignore) {
+            Thread.currentThread().interrupt();
+        }
+    } finally {
+        browser.removeLoadListener(listener);
+    }
+}</pre>
+    <p>You can use standard Java API to save this image as PNG file:</p>
+
+    <pre>// Save image as PNG file
+BufferedImage bufferedImage = new BufferedImage(viewWidth, viewHeight,
+        BufferedImage.TYPE_4BYTE_ABGR);
+Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
+// Scale image according to the current device scale factor.
+// This code must be used to support Retina displays.
+Double scale = 1.0 / view.getDeviceScaleFactor();
+graphics.scale(scale, scale);
+graphics.drawImage(image, 0, 0, null);
+
+ImageIO.write(bufferedImage, "PNG", new File("teamdev.com.png"));</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="executing-commands">25. Executing commands</h1>
+    <span class="hor_separator"></span>
+
+    <p>
+        JxBrowser provides functionality that allows you to execute commands such as "Cut", "Copy", "Paste", "Undo",
+        "Redo", "Insert Text", etc. on the loaded web page. JxBrowser supports two types of commands: simple commands
+        (e.g. "Copy", "Cut", "Paste") and parameterized commands ("InsertText", "FindString", etc.).
+    </p>
+
+    <p>
+        Most of commands can be executed only in a WYSIWYG editor (e.g. "FontSize", "ForegroundColor", "Bold", etc.),
+        HTML text filed or text area ("InsertText", "Cut", "Delete", etc.).
+    </p>
+
+    <p>
+        To execute command you need to use the <code>Browser.executeCommand(EditorCommand command)</code> method to
+        execute simple commands or the <code>Browser.executeCommand(EditorCommand command, String value)</code> method
+        to execute parameterized command.
+    </p>
+    <pre>
+browser.executeCommand(EditorCommand.SELECT_ALL);
+browser.executeCommand(EditorCommand.COPY);
+browser.executeCommand(EditorCommand.CUT);
+browser.executeCommand(EditorCommand.PASTE);
+browser.executeCommand(EditorCommand.INSERT_TEXT, "Text");
+</pre>
+    <p>The list of all supported commands you can find in the <code>EditorCommand</code> enum.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="saving-web-pages">26. Saving web pages</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser allows you to save web pages as a file or set of files. You can use <code>Browser.saveWebPage(String
+        filePath, String dirPath, SavePageType saveType)</code> method to save the current web page. Before saving make
+        sure the page is loaded completely. To find out whether HTML document is loaded completely, you can use one
+        of the described approaches in the <a href="#loading">Loading URL</a> section.</p>
+    <pre>
+String filePath = "C:\\SavedPages\\index.html";
+String dirPath = "C:\\SavedPages\\resources";
+browser.saveWebPage(filePath, dirPath, SavePageType.COMPLETE_HTML);
+</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="dom">27. DOM API</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser DOM API provides functionality that allows you to work with DOM of the loaded web page. Before you
+        access the DOM of the web page make sure the page is loaded completely. To find out that web page is loaded
+        completely you can use one of the approaches described in the <a href="#loading">Loading URL</a> section.</p>
+
+    <p>To access the web page DOM you need to get its document. You can do it using the
+        <code>Browser.getDocument()</code> method. This method returns <code>DOMDocument</code> instance that represents
+        a web page’s DOM document. Using <code>DOMDocument</code> you can go through DOM structure, access HTML elements
+        by tag name or ID.</p>
+
+    <pre>DOMDocument document = browser.getDocument();
+List&lt;DOMElement&gt; elements = document.findElements(By.tagName("body"));</pre>
+
+    <p>The <code>DOMDocument.findElements(By by)</code> method returns a list of <code>DOMNode</code>
+        objects.</p>
+
+    <p>The <code>DOMNode</code> object represents a standard W3C DOM node. If <code>DOMNode</code> object represents a
+        HTML element (see the <code>DOMNode.getNodeType()</code> method), you can cast it to the <code>DOMElement</code>
+        interface.</p>
+
+    <p><code>DOMElement</code> inherits <code>DOMNode</code> and represents a HTML element. <code>DOMElement</code>
+        provides methods for working with the HTML element attributes:</p>
+    <pre>DOMElement element = document.getDocumentElement();
+element.setAttribute("id", "my-id");</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="dom-events">28. DOM Events</h1>
+    <span class="hor_separator"></span>
+
+    <p>Each <code>DOMNode</code> implements <code>DOMEventTarget</code> interface that provides methods for registering
+        DOM events. You can register DOM listener to receive DOM events such as click, mousedown, mouseup, keydown,
+        load, error etc. The following sample demonstrates how to register click event listener for a document HTML
+        element:</p>
+
+    <pre>DOMElement element = document.getDocumentElement();
+element.addEventListener(DOMEventType.OnClick, new DOMEventListener() {
+    public void handleEvent(DOMEvent event) {
+        // user clicked document element
+    }
+}, false);</pre>
+
+    <p>You can register DOM event listener only for the document of the loaded web page. After reloading the web page,
+        all the registered DOM event listeners will not work anymore, so you need to register the required DOM event
+        listeners again.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="find-text">29. Find Text</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser API provides functionality that finds specified text, highlights all matches and selects
+        the first match on the currently loaded web page. See example below:</p>
+
+    <pre>final Browser browser = new Browser();
+
+browser.addLoadListener(new LoadAdapter() {
+    @Override
+    public void onFinishLoadingFrame(FinishLoadingEvent event) {
+        if (event.isMainFrame()) {
+            SearchParams request = new SearchParams("find me");
+
+            // Find text from the beginning of the loaded web page.
+            SearchResult result = browser.findText(request);
+            System.out.println(result.indexOfSelectedMatch() + "/" +
+                result.getNumberOfMatches());
+
+            // Find the same text again from the currently selected match.
+            result = browser.findText(request);
+            System.out.println(result.indexOfSelectedMatch() + "/" +
+                result.getNumberOfMatches());
+        }
+    }
+});
+browser.loadHTML("&lt;html&gt;&lt;body&gt;&lt;p&gt;Find me&lt;/p&gt;&lt;p&gt;Find me&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;");</pre>
+
+    <p class="note">Browser performs search only through visible content on the loaded document. If some text is presented on the
+        web page, but due to CSS rules it's not visible, <code>Browser</code> will not check this content during search. Also
+       <code>Browser</code> will not find text on the document with size 0x0, so make sure that <code>Browser</code> component is visible and its
+        size isn't empty.</p>
+
+    <p>To clear highlights on a web page (search results) and cancel search use <code>Browser.stopFindingText(StopFindAction action)</code> method.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="jws">30. JxBrowser & Java Web Start</h1>
+    <span class="hor_separator"></span>
+
+    <p>This section describes how you can deploy your application that uses JxBrowser via Java Web Start (JWS)
+        technology. To deploy your application via JWS, please follow the steps below:</p>
+
+    <p>1. Pack your application classes into application JAR file(s) (e.g. <code>myapp.jar</code>).</p>
+
+    <p>2. Sign all your application JAR files with a valid signature. To sign JAR files you can use the following Ant
+        script:</p>
+
+    <pre>&lt;project name="MyApp"&gt;
+    &lt;target name="myapp-jar"&gt;
+        &lt;signjar jar="myapp.jar" alias="my_alias" keystore="my_keystore"
+            keypass="my_keypass" storepass="my_storepass"/&gt;
+    &lt;/target&gt;
+&lt;/project&gt;</pre>
+
+    <p>where: <code>my_alias</code>, <code>my_keystore</code>, <code>my_keypass</code>,
+        <code>my_storepass</code> &mdash; <code>signjar</code> parameters. You can see their description in <a
+                href="http://ant.apache.org/manual/Tasks/signjar.html">Apache Ant User Manual</a>.</p>
+
+    <p>You can also use the <code>jarsigner</code> tool to sign all your application JAR files:</p>
+    <pre>jarsigner -keystore keystore_file -storepass storepass -keypass keypass myapp.jar alias</pre>
+
+    <p>3. Create and configure your application JNLP file.</p>
+
+    <p>Your JNLP file content (e.g. <code>my.jnlp</code>):</p>
+    <pre>&lt;jnlp spec="1.6+" codebase="http://codebase" href="my.jnlp"&gt;
+    &lt;information&gt;
+        &lt;title>My Application&lt;/title&gt;
+        &lt;vendor>My Company&lt;/vendor&gt;
+        &lt;description>My Application Description&lt;/description&gt;
+        &lt;offline-allowed/&gt;
+    &lt;/information&gt;
+
+    &lt;security&gt;
+        &lt;all-permissions/&gt;
+    &lt;/security&gt;
+
+    &lt;resources&gt;
+        &lt;j2se version="1.6+"/&gt;
+        &lt;!-- myapp.jar is your jar file signed with your own signature--&gt;
+        &lt;jar href="lib/myapp.jar"/&gt;
+        &lt;extension name="jxbrowser" href="jxbrowser.jnlp"/&gt;
+    &lt;/resources&gt;
+    &lt;application-desc main-class="com.mycompany.myapp.Application"/&gt;
+&lt;/jnlp&gt;</pre>
+
+    <p>The <code>jxbrowser.jnlp</code> file content:</p>
+    <pre>&lt;jnlp spec="1.6+" codebase="http://codebase" href="jxbrowser.jnlp"&gt;
+    &lt;information&gt;
+        &lt;title&gt;JxBrowser JAR files&lt;/title&gt;
+        &lt;vendor&gt;TeamDev Ltd.&lt;/vendor&gt;
+        &lt;homepage href="http://www.teamdev.com/jxbrowser"/&gt;
+        &lt;offline-allowed/&gt;
+    &lt;/information&gt;
+
+    &lt;security&gt;
+        &lt;all-permissions/&gt;
+    &lt;/security&gt;
+
+    &lt;resources&gt;
+        &lt;jar href="lib/jxbrowser-5.4.2.jar" /&gt;
+    &lt;/resources&gt;
+
+    &lt;resources os="Windows"&gt;
+        &lt;jar href="lib/jxbrowser-win-5.4.2.jar" /&gt;
+    &lt;/resources&gt;
+
+    &lt;resources os="Mac OS X"&gt;
+        &lt;jar href="lib/jxbrowser-mac-5.4.2.jar" /&gt;
+    &lt;/resources&gt;
+
+    &lt;resources os="Linux" arch="ppc i386 i686"&gt;
+        &lt;jar href="lib/jxbrowser-linux32-5.4.2.jar" /&gt;
+    &lt;/resources&gt;
+
+    &lt;resources os="Linux" arch="x86_64 amd64"&gt;
+        &lt;jar href="lib/jxbrowser-linux64-5.4.2.jar" /&gt;
+    &lt;/resources&gt;
+&lt;/jnlp&gt;
+    </pre>
+
+    <p>4. Upload your application JAR files, JxBrowser JAR files and JNLP (<code>my.jnlp</code> and
+        <code>jxbrowser.jnlp</code>) files to a web-server.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="applet">31. JxBrowser & Java Applet</h1>
+    <span class="hor_separator"></span>
+
+    <p>You can use JxBrowser in a Java Applet the same way as a standard Java library.</p>
+
+    <p>JxBrowser requires access to the file system, so all the JAR libraries of your Java Applet must be signed.
+        JxBrowser JAR files are signed with TeamDev signature by default, so you don’t need to to sign them.</p>
+
+    <p>Your APPLET tag on a web page should look like:</p>
+    <pre>&lt;APPLET code="com.mycompany.myapp.Application.class" codebase="." archive="myapp.jar,
+    jxbrowser-5.4.2.jar,jxbrowser-win-5.4.2.jar,jxbrowser-mac-5.4.2.jar,jxbrowser-linux32-5.4.2.jar,
+    jxbrowser-linux64-5.4.2.jar" WIDTH=800 HEIGHT=400&gt;Browser doesn't support Java Applets.
+&lt;/APPLET&gt;</pre>
+
+    <p>Where the <code>myapp.jar</code> file is your application JAR file.</p>
+
+    <p class="note">If your Java Applet supports only Windows
+        platform, there is no need to include the the <code>jxbrowser-mac</code>, <code>jxbrowser-linux32</code>
+        and <code>jxbrowser-linux64</code> JAR files into the <code>archive</code> attribute.</p>
+</div>
+
+
+<div class="chapter">
+    <h1 id="remote-debugging">32. Remote Debugging</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser provides functionality that allows you to use the
+        <a href="https://developers.google.com/chrome-developer-tools/">Chrome Developer Tools</a> remote debugging
+        feature. To enable this feature you must define the <code>remote-debugging-port</code> Chromium switch by
+        calling
+        <code>BrowserPreferences.setChromiumSwitches(String...)</code> method before creating any <code>Browser</code>
+        instance.<br/>
+        Once you configured JxBrowser to use a specified remote debugging port, you can get a remote DevTools URL by
+        calling the <code>Browser.getRemoteDebuggingURL()</code> method:
+        <pre>
+BrowserPreferences.setChromiumSwitches("--remote-debugging-port=9222");
+
+Browser browser = new Browser();
+browser.loadURL("http://www.google.com");
+
+String remoteDebuggingURL = browser.getRemoteDebuggingURL();
+</pre>
+    <p>The <code>remoteDebuggingURL</code> you can load in Google Chrome 31 and higher, or in any other JxBrowser
+        <code>Browser</code> instance to open Chrome Developer Tools page that allows inspecting HTML, debugging
+        JavaScript etc.
+        For example, in the source code above if you navigate to the <code>remoteDebuggingURL</code> in Google Chrome,
+        you
+        will see Chrome Developer Tools Inspector that you could use to debug the loaded
+        <code>http://www.google.com</code>
+        web page.</p>
+
+    <p class="note">Do not open the <code>remote debugging URL</code> in other web browser applications such as
+        Mozilla FireFox, MS IE, etc. This will lead to a native crash in Chromium DevTools web server. The remote
+        debugging feature is compatible with Chromium 31 and higher.
+    </p>
+</div>
+
+<div class="chapter">
+    <h1 id="dnd">33. Drag and Drop</h1>
+    <span class="hor_separator"></span>
+
+    <p><code>Browser</code> component supports the following Drag and Drop features:<br/><br/>
+        - Drag selected text and links on loaded web page and drop them into other applications.<br/>
+        - Drag selected text and links on loaded web page and drop them into text fields or text areas on the same web page.<br/>
+        - Drag text from other applications and drop it into text fields or text areas on loaded web page.</p>
+    <p>HTML5 drag and drop feature is also supported.</p>
+
+    <p>To disable Drag and Drop use the <code>BrowserView.setDragAndDropEnabled(boolean enabled)</code> method or the
+        <code>jxbrowser.chromium.dnd.enabled=false</code> System Property.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="plugins">34. Plugins</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser inherits Google Chromium <a
+            href="http://www.chromium.org/developers/design-documents/plugin-architecture">Plugin Architecture</a>, but
+        it can display only windowless plugins, because it uses Swing lightweight component to display HTML web pages.
+        Windowless plugins are designed to run directly within the rendering pipeline.
+        Right now only Flash and Silverlight supports windowless mode, so they can be displayed by JxBrowser.</p>
+
+    <p>Adobe PDF plugin can be used, but JxBrowser cannot display its content, because Adobe PDF Viewer doesn't support
+        windowless mode.</p>
+
+    <p>Java Applets can be used partially &mdash; JxBrowser cannot display Java Applets embedded directly into a web
+        page document, but if Java Applet represents a separate window, then it can be used with JxBrowser without
+        any issues.</p>
+
+    <h2 id="flash">34.1. Flash and Silverlight</h2>
+
+    <p>JxBrowser can display Flash and Silverlight content on Windows platform only. It forces these plugins to use
+        windowless mode.</p>
+
+    <p>&mdash; In order to display Flash contents you need to <a href="https://get.adobe.com/flashplayer">download</a>
+        and install Flash Player.<br/>
+
+        &mdash; In order to display Silverlight contents you need to <a
+                href="http://www.microsoft.com/getsilverlight/Get-Started/Install/Default.aspx">download and
+            install</a> Silverlight on the target Windows platform.</p>
+
+    <h2 id="plugin-manager">34.2. Plugins Manager</h2>
+
+    <p>To get information about all installed and available plugins you can use the <code>PluginManager.getPluginsInfo()</code>
+        method:</p>
+    <pre>PluginManager pluginManager = browser.getPluginManager();
+List&lt;PluginInfo&gt; pluginsList = pluginManager.getPluginsInfo();
+for (PluginInfo plugin : pluginsList) {
+    System.out.println("Plugin Name: " + plugin.getName());
+}</pre>
+    <p>To enable/disable specified plugin register your own <code>PluginFilter</code> implementation:</p>
+    <pre>pluginManager.setPluginFilter(new PluginFilter() {
+    @Override
+    public boolean isPluginAllowed(PluginInfo pluginInfo) {
+        // Allow only PDF plugin
+        return pluginInfo.getMimeTypes().contains("application/pdf");
+    }
+});</pre>
+
+</div>
+
+<div class="chapter">
+    <h1 id="printing">35. Printing</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser allows printing currently loaded web page using one of the installed printer devices. To print web
+        page use the <code>Browser.print()</code> method. The web page can be printed also from JavaScript via
+        the <code>window.print()</code> function.
+    </p>
+
+    <p>To handle printing and provide custom print settings, register your own implementation of the
+        <code>PrintHandler</code> interface using the <code>Browser.setPrintHandler()</code> method. For example:</p>
+
+    <pre>browser.setPrintHandler(new PrintHandler() {
+    @Override
+    public PrintStatus onPrint(PrintJob printJob) {
+        PrintSettings printSettings = printJob.getPrintSettings();
+        printSettings.setLandscape(true);
+        printSettings.setPrintBackgrounds(true);
+        printJob.addPrintJobListener(new PrintJobListener() {
+            @Override
+            public void onPrintingDone(PrintJobEvent event) {
+                System.out.println("PrintingDone success: " + event.isSuccess());
+            }
+        });
+        return PrintStatus.CONTINUE;
+    }
+});</pre>
+</div>
+
+<div class="chapter">
+    <h1 id="geolocation">36. Geolocation</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser is based on Google Chromium engine. Some Chromium features uses Google APIs. To access those APIs, an
+        API Key is required. To acquire API Key follow the
+        <a href="http://www.chromium.org/developers/how-tos/api-keys#TOC-Acquiring-Keys">instruction</a>.</p>
+
+    <p>Geolocation is one of those Chromium features that uses Google API. You must enable Google Maps Geolocation API
+        and <a href="https://developers.google.com/console/help/#EnableBilling">billing</a>, otherwise Geolocation API
+        will not work.</p>
+
+    <p>Once you enable Google Maps Geolocation API and billing, you can provide the keys to JxBrowser Chromium engine:</p>
+
+    <p>1. Via environment variables. Set the environment variables GOOGLE_API_KEY, GOOGLE_DEFAULT_CLIENT_ID and
+        GOOGLE_DEFAULT_CLIENT_SECRET to your "API key", "Client ID" and "Client secret" values respectively. To find out
+        where to get "API key", "Client ID" and "Client secret" see the <a href="https://www.youtube.com/watch?v=o425vQXpigw">
+            video instruction</a>.<p/>
+    <p>2. Using the <code>BrowserPreferences.setChromiumVariable(String name, String value)</code> method. For example:</p>
+
+    <pre>BrowserPreferences.setChromiumVariable("GOOGLE_API_KEY", "Your API Key");
+BrowserPreferences.setChromiumVariable("GOOGLE_DEFAULT_CLIENT_ID", "Your Client ID");
+BrowserPreferences.setChromiumVariable("GOOGLE_DEFAULT_CLIENT_SECRET", "Your Client Secret");</pre>
+
+    <p class="note">You must configure Chromium variables before you create any <code>Browser</code> instance.</p>
+</div>
+
+
+<div class="chapter">
+    <h1 id="logging">37. Logging</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser logging system is based on <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/logging/">Java
+        Logging</a>, so you can configure JxBrowser logging using standard Java
+        Logging API. For example, in order to access different JxBrowser Loggers and specify the <a
+                href="http://docs.oracle.com/javase/6/docs/api/java/util/logging/Level.html#SEVERE">SEVERE</a> log level
+        you can use the following code:</p>
+
+    <pre>import com.teamdev.jxbrowser.chromium.LoggerProvider;
+import java.util.logging.*;
+...
+LoggerProvider.getBrowserLogger().setLevel(Level.SEVERE);
+LoggerProvider.getIPCLogger().setLevel(Level.SEVERE);
+LoggerProvider.getChromiumProcessLogger().setLevel(Level.SEVERE);</pre>
+
+    <p>The <code>BrowserLogger</code> is used to log browser messages.<br/>
+        The <code>IPCLogger</code> is used to log IPC (Inter-Process Communication) messages.<br/>
+        The <code>ChromiumProcessLogger</code> is used to log messages that are come from Chromium process.</p>
+
+    <p class="note">By default the log level for all JxBrowser loggers is set to <code>Level.ALL</code>.</p>
+
+    <h2>Redirect logging to a file</h2>
+
+    <p>To redirect all log messages of <code>BrowserLogger</code> to the "D:/jxbrowser.log" file, you can use the
+        following way:</p>
+    <pre>Logger logger = LoggerProvider.getBrowserLogger();
+FileHandler fileHandler = new FileHandler("D:/jxbrowser.log");
+logger.addHandler(fileHandler);
+fileHandler.setFormatter(new SimpleFormatter());</pre>
+
+    <p>You can redirect log messages of any JxBrowser logger: <code>BrowserLogger</code>, <code>IPCLogger</code> or
+        <code>ChromiumProcessLogger</code>.</p>
+</div>
+
+<div class="chapter">
+    <h1 id="restrictions">38. Known Restrictions</h1>
+    <span class="hor_separator"></span>
+
+    <p>JxBrowser uses a lightweight Swing/JavaFX component to display HTML web pages, all heavyweight
+        plugins such as Java Applet, Adobe PDF Viewer etc. cannot be embedded into a lightweight component, so
+        they are not supported.</p>
+
+    <p>The following features and functionality are not supported in JxBrowser yet:<br/><br/>
+        &mdash; Flash on Linux isn't supported;<br/>
+        &mdash; Java Applets on all platforms will be downloaded but not displayed</p>
+</div>
+
+<div class="chapter">
+    <h1 id="support">39. Technical Support</h1>
+    <span class="hor_separator"></span>
+
+    <h3>Support Site</h3>
+
+    <p>You can find more information about how to use JxBrowser library at <a
+            href="https://sites.google.com/a/teamdev.com/jxbrowser-support/home">JxBrowser Support Site</a>.</p>
+
+    <h3>Support Forum</h3>
+
+    <p>If you would like to discuss any topics related to JxBrowser, please visit our <a
+            href="https://groups.google.com/a/teamdev.com/group/jxbrowser-forum/topics?pli=1">Support Forum</a>.</p>
+
+    <h3>Samples</h3>
+
+    <p>You can find JxBrowser samples on the following resource: <a href="http://links.teamdev.com/jxbrowser-samples">http://links.teamdev.com/jxbrowser-samples</a>
+    </p>
+
+    <h3>Reporting Issues</h3>
+
+    <p>If you have any questions regarding JxBrowser, please e-mail us at: <a
+            href="mailto:jxbrowser-evaluation@teamdev.com">jxbrowser-evaluation@teamdev.com</a></p>
+</div>
+
+<div class="copyright">
+    Copyright &copy; 2002-2015 TeamDev Ltd.
+</div>
+</div>
+</body>
+</html>

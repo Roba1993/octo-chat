@@ -15,6 +15,14 @@
         <main.class>de.robertschuette.octachat.OctaChat</main.class>
     </properties>
 
+    <!--<repositories>
+        <repository>
+            <id>in-project</id>
+            <name>In Project Repo</name>
+            <url>file://${project.basedir}/src/lib/jxbrowser-5/lib</url>
+        </repository>
+    </repositories>-->
+
     <dependencies>
         <!-- .xml reader & writer -->
         <dependency>
@@ -44,11 +52,76 @@
             <version>2.0.1</version>
         </dependency>
 
+        <!-- JxBrowser main jar -->
+        <!--<dependency>
+            <groupId>jxbrowser-5.4.2</groupId>
+            <artifactId>jxbrowser-5.4.2</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}/src/lib/jxbrowser-5/lib/jxbrowser-5.4.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jxbrowser-mac-5.4.2</groupId>
+            <artifactId>jxbrowser-mac-5.4.2</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}/src/lib/jxbrowser-5/lib/jxbrowser-mac-5.4.2.jar</systemPath>
+        </dependency>-->
+
+        <!--<dependency>
+            <groupId>license-development</groupId>
+            <artifactId>license-development</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>license-development.jar</systemPath>
+        </dependency>-->
+
+        <dependency>
+            <groupId>teamdev</groupId>
+            <artifactId>jxbrowser</artifactId>
+            <version>5.4.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>teamdev</groupId>
+            <artifactId>jxbrowser-mac</artifactId>
+            <version>5.4.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>teamdev</groupId>
+            <artifactId>jxbrowser-license</artifactId>
+            <version>5.4.2</version>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>${jar.final.name}</finalName>
+        <!-- sass / scss compiler -->
         <plugins>
+            <plugin>
+                <groupId>com.github.warmuuh</groupId>
+                <artifactId>libsass-maven-plugin</artifactId>
+                <version>0.1.5-libsass_3.2.4</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--<imgPath>../img</imgPath>-->
+                    <inputPath>${basedir}/src/main/resources/chat/sass</inputPath>
+                    <outputPath>${basedir}/src/main/resources/chat/css</outputPath>
+                    <includePath>${basedir}/src/main/resources/chat/sass/plugins/</includePath>
+                    <outputStyle>compressed</outputStyle>
+                    <generateSourceMap>false</generateSourceMap>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -71,6 +144,64 @@
                     </archive>
                 </configuration>
             </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>jxbrowser</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <file>${basedir}/src/lib/jxbrowser-5/lib/jxbrowser-5.4.2.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>teamdev</groupId>
+                            <artifactId>jxbrowser</artifactId>
+                            <version>5.4.2</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jxbrowser-mac</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <file>${basedir}/src/lib/jxbrowser-5/lib/jxbrowser-mac-5.4.2.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>teamdev</groupId>
+                            <artifactId>jxbrowser-mac</artifactId>
+                            <version>5.4.2</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jxbrowser-license</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <file>${basedir}/src/lib/jxbrowser-5/lib/license-development.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>teamdev</groupId>
+                            <artifactId>jxbrowser-license</artifactId>
+                            <version>5.4.2</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
         </plugins>
     </build>
 

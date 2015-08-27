@@ -1,6 +1,8 @@
 package de.robertschuette.octachat;
 
 import com.sun.javafx.runtime.VersionInfo;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 import de.robertschuette.octachat.os.OsSpecific;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -10,6 +12,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -21,9 +24,12 @@ import javafx.stage.Stage;
  */
 public class OctaChat extends Application {
     private FbChat fbChat;
-    private WaChat waChat;
+    //private WaChat waChat;
     private IrcChat ircChat;
     private Group root;
+
+    private Browser browser;
+    private BrowserView browserView;
 
     /**
      * The main entry point for the program.
@@ -41,7 +47,7 @@ public class OctaChat extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        // set a os specific style first to show dock image first
+         // set a os specific style first to show dock image first
         OsSpecific.getSpecific().setSpecificStyle();
 
         // initialise the new cookie manager and load the cookies from the file
@@ -59,13 +65,22 @@ public class OctaChat extends Application {
         root.getChildren().add(fbChat);
 
         // define the wa chat window
-        waChat = new WaChat();
+        /*waChat = new WaChat();
         waChat.setLayoutX(50);
         waChat.setLayoutY(0);
         waChat.setPrefWidth(850);
         waChat.setPrefHeight(650);
         waChat.setVisible(false);
-        root.getChildren().add(waChat);
+        root.getChildren().add(waChat);*/
+        browser = new Browser();
+        browserView = new BrowserView(browser);
+        browserView.setLayoutX(50);
+        browserView.setLayoutY(0);
+        browserView.setPrefHeight(650);
+        browserView.setPrefWidth(850);
+        browserView.setVisible(false);
+        root.getChildren().add(browserView);
+        browser.loadURL("http://www.google.com");
 
         // define the irc chat window
         ircChat = new IrcChat();
@@ -88,7 +103,8 @@ public class OctaChat extends Application {
         fbImageViewer.setCache(true);
         fbImageViewer.setOnMouseClicked(event -> {
             fbChat.setVisible(true);
-            waChat.setVisible(false);
+            //waChat.setVisible(false);
+            browserView.setVisible(false);
             ircChat.setVisible(false);
         });
         root.getChildren().add(fbImageViewer);
@@ -105,7 +121,8 @@ public class OctaChat extends Application {
         waImageViewer.setOnMouseClicked(event -> {
             ircChat.setVisible(false);
             fbChat.setVisible(false);
-            waChat.setVisible(true);
+            //waChat.setVisible(true);
+            browserView.setVisible(true);
         });
         root.getChildren().add(waImageViewer);
 
@@ -120,7 +137,8 @@ public class OctaChat extends Application {
         ircImageViewer.setCache(true);
         ircImageViewer.setOnMouseClicked(event -> {
             fbChat.setVisible(false);
-            waChat.setVisible(false);
+            //waChat.setVisible(false);
+            browserView.setVisible(false);
             ircChat.setVisible(true);
         });
         root.getChildren().add(ircImageViewer);
@@ -157,12 +175,11 @@ public class OctaChat extends Application {
         menuItem1.setOnAction(event -> {
             //OsSpecific.getSpecific().setSpecificNotification("Robert Schuette", "Send you a new Message");
             //fbChat.testFetch();
-            //ircChat.testFetch();
             ircChat.displayMessage("Hello", true);
             ircChat.displayMessage("World", false);
         });
         menuItem2.setOnAction(event -> {
-            FileCookieStore.showCookies();
+            ircChat.testFetch();
         });
         menu4.getItems().addAll(menuItem1, menuItem2);
 
