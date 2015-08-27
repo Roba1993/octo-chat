@@ -55,6 +55,19 @@ public class OctaChat extends Application {
         // define root element for the stage
         root = new Group();
 
+        // create and add the menu
+        createMenu();
+
+        // create the stage
+        Scene scene = new Scene(root, 500, 500, Color.WHITE);
+        stage.setScene(scene);
+        stage.setWidth(900);
+        stage.setHeight(700);
+        stage.getIcons().add(new Image("/img/octo.png"));
+        stage.setTitle("Octo-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
+        stage.show();
+
+
         // define the fb chat window
         chatFacebook = new ChatFacebook();
         chatFacebook.setLayoutX(50);
@@ -130,17 +143,6 @@ public class OctaChat extends Application {
         });
         root.getChildren().add(ircImageViewer);
 
-        // create and add the menu
-        createMenu();
-
-        // create the stage
-        Scene scene = new Scene(root, 500, 500, Color.WHITE);
-        stage.setScene(scene);
-        stage.setWidth(900);
-        stage.setHeight(700);
-        stage.getIcons().add(new Image("/img/octo.png"));
-        stage.setTitle("Octo-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
-        stage.show();
 
         // start the worker demon for background work
         WorkerThread wt = new WorkerThread(chatFacebook, chatWhatsapp);

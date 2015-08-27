@@ -22,14 +22,18 @@ import java.io.IOException;
  */
 public class ChatIrc extends Region {
 
-    private final WebView browser = new WebView();
-    private final WebEngine webEngine = browser.getEngine();
+    private final WebView browser;
+    private final WebEngine webEngine;
     private final IrcEngine ircEngine;
 
     /**
      * Constructor to create a new Irc Chat.
      */
     public ChatIrc() {
+        // create the engine and view
+        browser = new WebView();
+        webEngine = browser.getEngine();
+
         // load the web page
         webEngine.load("file:" + Util.getResourcesPath() + "chat/chat.html");
 

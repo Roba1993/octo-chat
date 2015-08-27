@@ -18,14 +18,18 @@ import netscape.javascript.JSObject;
  * @author Robert Schütte
  */
 public class ChatFacebook extends Region {
-    private final WebView browser = new WebView();
-    private final WebEngine webEngine = browser.getEngine();
+    private final WebView browser;
+    private final WebEngine webEngine;
 
     /**
      * Generate the Facebook region.
      *
      */
     public ChatFacebook() {
+        // create the engine and view
+        browser = new WebView();
+        webEngine = browser.getEngine();
+
         // load the web page
         webEngine.load("https://www.messenger.com");
 
