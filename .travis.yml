@@ -7,3 +7,6 @@ before_install:
 
 install:
  - mvn package
+
+ notifications:
+   email: false
