@@ -24,5 +24,5 @@ A native chat program with focus on the Facebook and WhatsApp messengers.
 Feel free to support this project :)
 
 # Thanks
-- [TeamDev](http://www.teamdev.com/jxbrowser) for the JxBrowser
+- [TeamDev](http://www.teamdev.com/jxbrowser) for the JxBrowser (proprietary software)
 - [Pixabay](https://pixabay.com/de/krake-kraken-sea-life-tier-monster-152287/) for the octo symbol
