@@ -73,6 +73,7 @@ public class OctaChat extends Application {
 
         chatHandler.addChat(new ChatFacebook());
         chatHandler.addChat(new ChatWhatsapp());
+        //chatHandler.addChat(new ChatFacebook());
 
         // start the worker demon for background work
         WorkerThread wt = new WorkerThread(chatHandler);

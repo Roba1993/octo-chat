@@ -22,12 +22,12 @@ public class JsUtil {
      * in the WebEngine.
      *
      * @param engine the WebEngine to inject the code in
-     * @param url the path to the local file with the code
+     * @param url    the path to the local file with the code
      */
     public static void injectFile(WebEngine engine, String url) {
         // try to read the source code from the file
         String sourceCode = null;
-        try(BufferedReader br = new BufferedReader(new FileReader(url))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(url))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
 
@@ -44,12 +44,16 @@ public class JsUtil {
         }
 
         // only continue when there is source code
-        if(sourceCode == null) {
+        if (sourceCode == null) {
             return;
         }
 
         // get the dom
         Document doc = engine.getDocument();
+
+        if (doc == null) {
+            return;
+        }
 
         // create a new script element
         Element n = doc.createElement("script");
@@ -65,9 +69,14 @@ public class JsUtil {
      *
      * @param engine the WebEngine to inject the code in
      */
-    public static void injectFirebugLite(WebEngine engine) {
+    public static synchronized void injectFirebugLite(WebEngine engine) {
         // get the dom
         Document doc = engine.getDocument();
+
+        if (doc == null) {
+            System.out.println("No DOC");
+            return;
+        }
 
         // create a new script element
         Element n = doc.createElement("script");
@@ -82,13 +91,13 @@ public class JsUtil {
      * Injects the Java - Javascript Bridge. All functions
      * in the JsBridge class are after this call available
      * for javascript over the variable Java.
-     *
+     * <p>
      * Example javascript call:
      * Java.println("Hello World");
      *
      * @param engine
      */
-    public static void injectBridge(WebEngine engine) {
+    public static synchronized void injectBridge(WebEngine engine) {
         JSObject window = (JSObject) engine.executeScript("window");
         window.setMember("Java", new JsBridge());
     }

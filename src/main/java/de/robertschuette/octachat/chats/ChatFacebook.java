@@ -32,23 +32,20 @@ public class ChatFacebook extends Chat {
         browser = new WebView();
         webEngine = browser.getEngine();
 
-        // load the web page
-        webEngine.load("https://www.messenger.com");
-
         // bind the browser windows dimensions to the FbChat dimension
         browser.prefWidthProperty().bind(this.widthProperty());
         browser.prefHeightProperty().bind(this.heightProperty());
 
         webEngine.getLoadWorker().stateProperty().addListener(
-                new ChangeListener<Worker.State>() {
-                    @Override
-                    public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
-                        if (newState == Worker.State.SUCCEEDED) {
-                            //JsUtil.injectFile(webEngine, Util.getResourcesPath() + "jquery2.1.4.js");
-                            //JsUtil.injectFile(webEngine, Util.getResourcesPath() + "fbchat.js");
-                        }
+                (ov, oldState, newState) -> {
+                    if (newState == Worker.State.SUCCEEDED) {
+                        JsUtil.injectFile(webEngine, Util.getResourcesPath() + "jquery2.1.4.js");
+                        JsUtil.injectFile(webEngine, Util.getResourcesPath() + "fbchat.js");
                     }
                 });
+
+        // load the web page
+        webEngine.load("https://www.messenger.com");
 
         // add the web view to the scene
         getChildren().add(browser);
