@@ -20,7 +20,7 @@ import java.io.IOException;
  *
  * @author Robert Schütte
  */
-public class ChatIrc extends Region {
+public class ChatIrc extends Chat {
 
     private final WebView browser;
     private final WebEngine webEngine;
@@ -103,6 +103,17 @@ public class ChatIrc extends Region {
 
     public void testFetch() {
         webEngine.reload();
+    }
+
+    /**
+     * Sets the ChatHandler which receives all updates
+     * and who manages everything.
+     *
+     * @param chatHandler to registrate this chat
+     */
+    @Override
+    public void setChatHandler(ChatHandler chatHandler) {
+
     }
 
 

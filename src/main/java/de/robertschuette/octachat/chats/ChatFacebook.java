@@ -12,12 +12,14 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 
+import java.io.File;
+
 /**
  * The Facebook chat window from a browser view.
  *
  * @author Robert Schütte
  */
-public class ChatFacebook extends Region {
+public class ChatFacebook extends Chat {
     private final WebView browser;
     private final WebEngine webEngine;
 
@@ -42,8 +44,8 @@ public class ChatFacebook extends Region {
                     @Override
                     public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
                         if (newState == Worker.State.SUCCEEDED) {
-                            JsUtil.injectFile(webEngine, Util.getResourcesPath() + "jquery2.1.4.js");
-                            JsUtil.injectFile(webEngine, Util.getResourcesPath() + "fbchat.js");
+                            //JsUtil.injectFile(webEngine, Util.getResourcesPath() + "jquery2.1.4.js");
+                            //JsUtil.injectFile(webEngine, Util.getResourcesPath() + "fbchat.js");
                         }
                     }
                 });
@@ -60,17 +62,6 @@ public class ChatFacebook extends Region {
      */
     public boolean isReady() {
         return webEngine.getLoadWorker().getState() == Worker.State.SUCCEEDED;
-    }
-
-
-    public void testFetch() {
-        if(isReady()) {
-            // inject the js bridge
-            JsUtil.injectBridge(webEngine);
-
-            // test
-            webEngine.executeScript("test();");
-        }
     }
 
     /**
@@ -111,6 +102,22 @@ public class ChatFacebook extends Region {
 
             i++;
         }
+    }
+
+    /**
+     * Sets the ChatHandler which receives all updates
+     * and who manages everything.
+     *
+     * @param chatHandler to registrate this chat
+     */
+    @Override
+    public void setChatHandler(ChatHandler chatHandler) {
+
+    }
+
+    @Override
+    public File getIcon() {
+        return new File(Util.getResourcesPath()+"/img/fb-icon.png");
     }
 }
 

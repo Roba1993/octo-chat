@@ -1,5 +1,6 @@
 package de.robertschuette.octachat;
 
+import de.robertschuette.octachat.chats.ChatHandler;
 import de.robertschuette.octachat.chats.ChatWhatsapp;
 import de.robertschuette.octachat.chats.ChatFacebook;
 import de.robertschuette.octachat.model.ChatDataStore;
@@ -13,14 +14,11 @@ import javafx.application.Platform;
  * @author Robert Schütte
  */
 public class WorkerThread extends Thread {
-    private ChatFacebook chatFacebook;
-    private ChatWhatsapp chatWhatsapp;
+    private ChatHandler chatHandler;
     private ChatDataStore cds;
 
-    public WorkerThread(ChatFacebook chatFacebook, ChatWhatsapp chatWhatsapp) {
-        this.chatFacebook = chatFacebook;
-        this.chatWhatsapp = chatWhatsapp;
-
+    public WorkerThread(ChatHandler chatHandler) {
+        this.chatHandler = chatHandler;
         cds = new ChatDataStore();
 
         setDaemon(true);
@@ -35,7 +33,7 @@ public class WorkerThread extends Thread {
             // use runLater to access gui components
             Platform.runLater(() -> {
                 // update the data store with fb data
-                chatFacebook.update(cds);
+                //chatFacebook.update(cds);
 
                 // show unread messages
                 OsSpecific.getSpecific().setSpecificEventCount(cds.getNumberUnread());

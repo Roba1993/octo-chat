@@ -8,6 +8,7 @@ import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 import de.robertschuette.octachat.util.Util;
 import javafx.scene.layout.Region;
 
+import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -16,7 +17,7 @@ import java.util.logging.Level;
  *
  * @author Robert Schütte
  */
-public class ChatWhatsapp extends Region {
+public class ChatWhatsapp extends Chat {
     private Browser engine;
     private BrowserView browser;
 
@@ -52,4 +53,19 @@ public class ChatWhatsapp extends Region {
         return engine.getCookieStorage().getAllCookies();
     }
 
+    /**
+     * Sets the ChatHandler which receives all updates
+     * and who manages everything.
+     *
+     * @param chatHandler to registrate this chat
+     */
+    @Override
+    public void setChatHandler(ChatHandler chatHandler) {
+
+    }
+
+    @Override
+    public File getIcon() {
+        return new File(Util.getResourcesPath()+"/img/wa-icon.png");
+    }
 }
