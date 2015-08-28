@@ -6,10 +6,10 @@ os:
 jdk:
  - oraclejdk8
 
-before_install:
+install:
  - mvn clean
 
-install:
+script:
  - mvn package
 
 notifications:
