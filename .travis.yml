@@ -1,16 +1,16 @@
 language: java
 
 os:
-  - osx
+ - osx
 
 jdk:
-  - oraclejdk8
+ - oraclejdk8
 
 before_install:
-  - mvn clean
+ - mvn clean
 
 install:
-  - mvn package
+ - mvn package
 
- notifications:
-  email: false
+notifications:
+ email: false
