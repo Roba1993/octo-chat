@@ -26,6 +26,7 @@ import javafx.stage.Stage;
  * @author Robert Schütte
  */
 public class OctaChat extends Application {
+    private ChatFacebook chatFacebook;
     private Group root;
 
     /**
@@ -71,7 +72,9 @@ public class OctaChat extends Application {
         stage.setTitle("Octo-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
         stage.show();
 
-        chatHandler.addChat(new ChatFacebook(chatHandler));
+
+        chatFacebook = new ChatFacebook(chatHandler);
+        chatHandler.addChat(chatFacebook);
         chatHandler.addChat(new ChatWhatsapp());
         //chatHandler.addChat(new ChatFacebook());
 
@@ -93,7 +96,7 @@ public class OctaChat extends Application {
         final MenuItem menuItem1 = new MenuItem("Test");
         final MenuItem menuItem2 = new MenuItem("Test2");
         menuItem1.setOnAction(event -> {
-            // insert here test code
+            chatFacebook.test();
         });
         menuItem2.setOnAction(event -> {
             // insert here test code

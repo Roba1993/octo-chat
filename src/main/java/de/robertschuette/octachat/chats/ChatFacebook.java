@@ -1,5 +1,10 @@
 package de.robertschuette.octachat.chats;
 
+import com.teamdev.jxbrowser.chromium.*;
+import com.teamdev.jxbrowser.chromium.dom.By;
+import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
+import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
+import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 import de.robertschuette.octachat.model.ChatData;
 import de.robertschuette.octachat.model.ChatDataStore;
 import de.robertschuette.octachat.util.JsBridge;
@@ -11,6 +16,7 @@ import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 
 import java.io.File;
+import java.util.logging.Level;
 
 /**
  * The Facebook chat window from a browser view.
@@ -18,8 +24,8 @@ import java.io.File;
  * @author Robert Schütte
  */
 public class ChatFacebook extends Chat {
-    private final WebView browser;
-    private final WebEngine webEngine;
+    private Browser engine;
+    private BrowserView browser;
     private final ChatHandler chatHandler;
 
     /**
@@ -29,78 +35,56 @@ public class ChatFacebook extends Chat {
     public ChatFacebook(ChatHandler chatHandler) {
         this.chatHandler = chatHandler;
 
-        // create the engine and view
-        browser = new WebView();
-        webEngine = browser.getEngine();
+        // disable console output
+        LoggerProvider.getChromiumProcessLogger().setLevel(Level.OFF);
+        LoggerProvider.getIPCLogger().setLevel(Level.OFF);
+        LoggerProvider.getBrowserLogger().setLevel(Level.OFF);
 
-        // bind the browser windows dimensions to the FbChat dimension
+        // create the browser and view
+        engine = new Browser(new BrowserContext(Util.getResourcesPath()+"/cache/jx-browser"));
+        browser = new BrowserView(engine);
+
+        // bind the browser dimensions to the dimensions of this object
         browser.prefWidthProperty().bind(this.widthProperty());
         browser.prefHeightProperty().bind(this.heightProperty());
 
-        webEngine.getLoadWorker().stateProperty().addListener(
-                (ov, oldState, newState) -> {
-                    if (newState == Worker.State.SUCCEEDED) {
-                        //JsUtil.injectFile(webEngine, Util.getResourcesPath() + "jquery2.1.4.js");
-                        //JsUtil.injectBridge(webEngine, new JsBridge(chatHandler, this));
-                        //JsUtil.injectFile(webEngine, Util.getResourcesPath() + "fbchat.js");
-                    }
-                });
+        engine.addLoadListener(new LoadAdapter() {
+            @Override
+            public void onFinishLoadingFrame(FinishLoadingEvent event) {
+                if (event.isMainFrame()) {
+                    System.out.println("loaded");
+                    JsUtil.injectFile(engine, Util.getResourcesPath() + "jquery2.1.4.js");
+                    JsUtil.injectFile(engine, Util.getResourcesPath() + "fbchat.js");
+                }
+            }
+        });
 
-        // load the web page
-        webEngine.load("https://www.messenger.com");
+        engine.registerFunction("javaNew", (JSValue... jsValues) -> {
+            ChatData chatData = new ChatData(this, jsValues[0].getString(), jsValues[1].getString());
+            chatData.setLastMessage(jsValues[2].getString());
+            chatData.setLastMessageTime(jsValues[3].getString());
+            chatData.setLastMessageUnread(jsValues[4].getBoolean());
+            chatData.setIsOnline(jsValues[5].getBoolean());
 
-        // add the web view to the scene
+            chatHandler.updateChatData(chatData);
+
+            return null;
+        });
+
+        engine.registerFunction("println", (JSValue... jsValues) -> {
+            System.out.println(jsValues[0].getString());
+            return null;
+        });
+
+        // load the website
+        engine.loadURL("https://messenger.com");
+
+        // add the browser to this window
         getChildren().add(browser);
     }
 
-    /**
-     * This function checks if the engine has
-     * loaded to url and is ready to work with.
-     *
-     * @return true or false
-     */
-    public boolean isReady() {
-        return webEngine.getLoadWorker().getState() == Worker.State.SUCCEEDED;
-    }
-
-    /**
-     * Update the chat data store with the actual facebook
-     * chat data.
-     *
-     * @param cds the data store to updat
-     */
-    public void update(ChatDataStore cds) {
-        /*if(!isReady()) {
-            return;
-        }
-
-        // execute the function & get the json
-        JSObject json = (JSObject) webEngine.executeScript("update();");
-        JSObject messages = (JSObject) json.getMember("messages");
-
-        // loop over the messages and compare them with the store
-        int i = 0;
-        while (true) {
-            // when there aren't more entries end
-            if("undefined".equals(messages.getSlot(i).toString())) {
-                break;
-            }
-
-            // fetch the message object from the json
-            JSObject m = (JSObject) messages.getSlot(i);
-
-            // create the chat data
-            ChatData cd = new ChatData(chat, m.getMember("id").toString(), m.getMember("name").toString());
-            cd.setLastMessage(m.getMember("text").toString());
-            cd.setLastMessageUnread(Boolean.parseBoolean(m.getMember("unread").toString()));
-            cd.setLastMessageTime(m.getMember("time").toString());
-            cd.setIsOnline(Boolean.parseBoolean(m.getMember("online").toString()));
-
-            // update the store
-            cds.updateChat(cd);
-
-            i++;
-        }*/
+    public void test() {
+        System.out.println(engine.getDocument().getDocumentElement().getInnerHTML());
     }
 
     /**

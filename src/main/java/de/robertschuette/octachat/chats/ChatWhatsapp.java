@@ -4,7 +4,13 @@ import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserContext;
 import com.teamdev.jxbrowser.chromium.Cookie;
 import com.teamdev.jxbrowser.chromium.LoggerProvider;
+import com.teamdev.jxbrowser.chromium.dom.By;
+import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
+import com.teamdev.jxbrowser.chromium.dom.DOMElement;
+import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
+import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
+import de.robertschuette.octachat.util.JsUtil;
 import de.robertschuette.octachat.util.Util;
 import javafx.scene.layout.Region;
 
@@ -35,6 +41,16 @@ public class ChatWhatsapp extends Chat {
         // bind the browser dimensions to the dimensions of this object
         browser.prefWidthProperty().bind(this.widthProperty());
         browser.prefHeightProperty().bind(this.heightProperty());
+
+        engine.addLoadListener(new LoadAdapter() {
+            @Override
+            public void onFinishLoadingFrame(FinishLoadingEvent event) {
+                if (event.isMainFrame()) {
+                    //JsUtil.injectFile(engine, Util.getResourcesPath() + "jquery2.1.4.js");
+                    //JsUtil.injectFirebugLite(engine);
+                }
+            }
+        });
 
         // load the website
         engine.loadURL("https://web.whatsapp.com");
