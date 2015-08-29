@@ -1,10 +1,9 @@
 package de.robertschuette.octachat;
 
 import com.sun.javafx.runtime.VersionInfo;
+import de.robertschuette.octachat.chats.ChatFacebook;
 import de.robertschuette.octachat.chats.ChatHandler;
 import de.robertschuette.octachat.chats.ChatWhatsapp;
-import de.robertschuette.octachat.chats.ChatFacebook;
-import de.robertschuette.octachat.chats.ChatIrc;
 import de.robertschuette.octachat.model.FileCookieStore;
 import de.robertschuette.octachat.os.OsSpecific;
 import de.robertschuette.octachat.util.Util;
@@ -15,7 +14,6 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -26,7 +24,6 @@ import javafx.stage.Stage;
  * @author Robert Schütte
  */
 public class OctaChat extends Application {
-    private ChatFacebook chatFacebook;
     private Group root;
 
     /**
@@ -72,9 +69,7 @@ public class OctaChat extends Application {
         stage.setTitle("Octo-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
         stage.show();
 
-
-        chatFacebook = new ChatFacebook(chatHandler);
-        chatHandler.addChat(chatFacebook);
+        chatHandler.addChat(new ChatFacebook(chatHandler));
         chatHandler.addChat(new ChatWhatsapp());
         //chatHandler.addChat(new ChatFacebook());
 
@@ -96,7 +91,7 @@ public class OctaChat extends Application {
         final MenuItem menuItem1 = new MenuItem("Test");
         final MenuItem menuItem2 = new MenuItem("Test2");
         menuItem1.setOnAction(event -> {
-            chatFacebook.test();
+            // insert here test code
         });
         menuItem2.setOnAction(event -> {
             // insert here test code

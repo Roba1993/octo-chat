@@ -5,7 +5,6 @@ import com.teamdev.jxbrowser.chromium.dom.By;
 import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
 import com.teamdev.jxbrowser.chromium.dom.DOMElement;
 import javafx.scene.web.WebEngine;
-import netscape.javascript.JSObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -112,7 +111,6 @@ public class JsUtil {
         n.setTextContent(sourceCode);
 
         // add the element to the head section
-        //doc.getElementsByTagName("head").item(0).appendChild(n);
         doc.findElement(By.tagName("head")).appendChild(n);
     }
 
@@ -162,20 +160,4 @@ public class JsUtil {
         //doc.getElementsByTagName("head").item(0).appendChild(n);
         doc.findElement(By.tagName("head")).appendChild(n);
     }
-
-    /**
-     * Injects the Java - Javascript Bridge. All functions
-     * in the JsBridge class are after this call available
-     * for javascript over the variable Java.
-     * <p>
-     * Example javascript call:
-     * Java.println("Hello World");
-     *
-     * @param engine
-     */
-    public static synchronized void injectBridge(WebEngine engine, JsBridge jsBridge) {
-        JSObject window = (JSObject) engine.executeScript("window");
-        window.setMember("Java", jsBridge);
-    }
-
 }
