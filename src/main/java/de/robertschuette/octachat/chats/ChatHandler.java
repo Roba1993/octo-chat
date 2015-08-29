@@ -1,6 +1,7 @@
 package de.robertschuette.octachat.chats;
 
 import de.robertschuette.octachat.model.ChatData;
+import de.robertschuette.octachat.model.ChatDataStore;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,12 +20,14 @@ import java.util.List;
  * @author Robert Schütte
  */
 public class ChatHandler extends SplitPane {
+    private ChatDataStore cds;
     private List<Chat> chats;
     private StackPane chatArea;
     private Pane selectionArea;
 
     public ChatHandler() {
         chats = new ArrayList<>();
+        cds = new ChatDataStore();
 
         // create the selection area
         selectionArea = new Pane();
@@ -55,7 +58,7 @@ public class ChatHandler extends SplitPane {
     }
 
     public void updateChatData(ChatData chatData) {
-
+        cds.updateChat(chatData);
     }
 
     private void addSelectionImage(Chat chat, int x, int y) {

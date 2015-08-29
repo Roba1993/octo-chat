@@ -2,12 +2,10 @@ package de.robertschuette.octachat.chats;
 
 import de.robertschuette.octachat.model.ChatData;
 import de.robertschuette.octachat.model.ChatDataStore;
+import de.robertschuette.octachat.util.JsBridge;
 import de.robertschuette.octachat.util.JsUtil;
 import de.robertschuette.octachat.util.Util;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
-import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
@@ -22,12 +20,15 @@ import java.io.File;
 public class ChatFacebook extends Chat {
     private final WebView browser;
     private final WebEngine webEngine;
+    private final ChatHandler chatHandler;
 
     /**
      * Generate the Facebook region.
      *
      */
-    public ChatFacebook() {
+    public ChatFacebook(ChatHandler chatHandler) {
+        this.chatHandler = chatHandler;
+
         // create the engine and view
         browser = new WebView();
         webEngine = browser.getEngine();
@@ -39,8 +40,9 @@ public class ChatFacebook extends Chat {
         webEngine.getLoadWorker().stateProperty().addListener(
                 (ov, oldState, newState) -> {
                     if (newState == Worker.State.SUCCEEDED) {
-                        JsUtil.injectFile(webEngine, Util.getResourcesPath() + "jquery2.1.4.js");
-                        JsUtil.injectFile(webEngine, Util.getResourcesPath() + "fbchat.js");
+                        //JsUtil.injectFile(webEngine, Util.getResourcesPath() + "jquery2.1.4.js");
+                        //JsUtil.injectBridge(webEngine, new JsBridge(chatHandler, this));
+                        //JsUtil.injectFile(webEngine, Util.getResourcesPath() + "fbchat.js");
                     }
                 });
 
@@ -68,7 +70,7 @@ public class ChatFacebook extends Chat {
      * @param cds the data store to updat
      */
     public void update(ChatDataStore cds) {
-        if(!isReady()) {
+        /*if(!isReady()) {
             return;
         }
 
@@ -88,7 +90,7 @@ public class ChatFacebook extends Chat {
             JSObject m = (JSObject) messages.getSlot(i);
 
             // create the chat data
-            ChatData cd = new ChatData("facebook", m.getMember("id").toString(), m.getMember("name").toString());
+            ChatData cd = new ChatData(chat, m.getMember("id").toString(), m.getMember("name").toString());
             cd.setLastMessage(m.getMember("text").toString());
             cd.setLastMessageUnread(Boolean.parseBoolean(m.getMember("unread").toString()));
             cd.setLastMessageTime(m.getMember("time").toString());
@@ -98,7 +100,7 @@ public class ChatFacebook extends Chat {
             cds.updateChat(cd);
 
             i++;
-        }
+        }*/
     }
 
     /**

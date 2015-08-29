@@ -32,11 +32,12 @@ public class ChatDataStore {
         // loop over all chat data entries
         for(ChatData cd : chatData) {
             // check if the id and provider is the same
-            if(cd.getProviderName().equals(newCd.getProviderName()) &&
+            if(cd.getChat().equals(newCd.getChat()) &&
                     cd.getUserId().equals(newCd.getUserId())) {
 
                 // check if we have to send a chat notification
                 if(newCd.isLastMessageUnread() && !newCd.getLastMessage().equals(cd.getLastMessage())) {
+                    System.out.println("notification check");
                     OsSpecific.getSpecific().setSpecificNotification(newCd.getUserName(), newCd.getLastMessage());
                 }
 
@@ -58,6 +59,7 @@ public class ChatDataStore {
 
         // when the message is unread, send notification
         if(newCd.isLastMessageUnread()) {
+            System.out.println("notification after create");
             OsSpecific.getSpecific().setSpecificNotification(newCd.getUserName(), newCd.getLastMessage());
         }
     }

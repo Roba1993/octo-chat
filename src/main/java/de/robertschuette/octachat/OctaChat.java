@@ -71,7 +71,7 @@ public class OctaChat extends Application {
         stage.setTitle("Octo-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
         stage.show();
 
-        chatHandler.addChat(new ChatFacebook());
+        chatHandler.addChat(new ChatFacebook(chatHandler));
         chatHandler.addChat(new ChatWhatsapp());
         //chatHandler.addChat(new ChatFacebook());
 

@@ -97,9 +97,9 @@ public class JsUtil {
      *
      * @param engine
      */
-    public static synchronized void injectBridge(WebEngine engine) {
+    public static synchronized void injectBridge(WebEngine engine, JsBridge jsBridge) {
         JSObject window = (JSObject) engine.executeScript("window");
-        window.setMember("Java", new JsBridge());
+        window.setMember("Java", jsBridge);
     }
 
 }
