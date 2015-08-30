@@ -1,6 +1,6 @@
 package de.robertschuette.octachat.os;
 
-import java.io.IOException;
+import javafx.stage.Stage;
 
 /**
  * This class is the factory and interface for the operation
@@ -47,7 +47,7 @@ public abstract class OsSpecific {
      * This function generates a operation specific style
      * for the javafx gui.
      */
-    public abstract void setSpecificStyle();
+    public abstract void setSpecificStyle(Stage stage);
 
     /**
      * This functions creates a os specific notification

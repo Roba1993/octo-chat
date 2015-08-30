@@ -2,6 +2,7 @@ package de.robertschuette.octachat.chats;
 
 import de.robertschuette.octachat.model.ChatData;
 import de.robertschuette.octachat.model.ChatDataStore;
+import de.robertschuette.octachat.util.Util;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -66,7 +67,7 @@ public class ChatHandler extends SplitPane {
         try {
             image = new Image(new FileInputStream(chat.getIcon()));
         } catch (FileNotFoundException e) {
-            image = new Image("/img/octo.png");
+            image = new Image(Util.getResourcesPath()+"/img/octo.png");
         }
         ImageView imageView = new ImageView();
         imageView.setImage(image);

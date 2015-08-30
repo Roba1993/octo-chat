@@ -3,6 +3,10 @@ package de.robertschuette.octachat.os;
 import com.apple.eawt.Application;
 import com.aquafx_project.AquaFx;
 import de.robertschuette.octachat.util.Util;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,13 +26,23 @@ public class MacSpecific extends OsSpecific {
      * the menu bar in the top menu.
      */
     @Override
-    public void setSpecificStyle() {
+    public void setSpecificStyle(Stage stage) {
         // style the whole application
         AquaFx.style();
 
         // set the mac os x dock icon
         Image image = new ImageIcon(Util.getResourcesPath()+"/img/octo.png").getImage();
         com.apple.eawt.Application.getApplication().setDockIconImage(image);
+
+        // on window close button, only hide window
+        Platform.setImplicitExit(false);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                //event.consume();
+                //stage.hide();
+            }
+        });
     }
 
     /**

@@ -10,13 +10,13 @@ A native chat program with focus on the Facebook and WhatsApp messengers.
 1. Install und configure the JDK Version 8
 2. Install and configure maven
 3. Download and or clone this repository
-4. Init all components with `mvn clean`
-5. Compile and run with `mvn package -Prun`
+4. Compile and run with `mvn clean jfx:run`
+5. Create own os specific application with `mvn clean jfx:native`
 
 # Todo
 - Integrate WhatsApp Chat always logged in
-- Remove blurry Facebook profile images --> JxBrowser perhabs didn't have such problems
 - Do Windows and Linux specific configurations
+- Create a settings menu for the different chats
 - Integrate XAMPP Chat client
 - A lot more to do ...
 

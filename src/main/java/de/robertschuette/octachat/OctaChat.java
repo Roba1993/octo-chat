@@ -17,6 +17,8 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+
 
 /**
  * Main class for the octachat program.
@@ -42,8 +44,10 @@ public class OctaChat extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        System.out.println("Octa-Chat startet");
+
          // set a os specific style first to show dock image first
-        OsSpecific.getSpecific().setSpecificStyle();
+        OsSpecific.getSpecific().setSpecificStyle(stage);
 
         // initialise the new cookie manager and load the cookies from the file
         FileCookieStore.init(Util.getResourcesPath() + "/cookie-store.xlm");
@@ -65,7 +69,7 @@ public class OctaChat extends Application {
         stage.setScene(scene);
         stage.setWidth(900);
         stage.setHeight(700);
-        stage.getIcons().add(new Image("/img/octo.png"));
+        stage.getIcons().add(new Image(new FileInputStream(Util.getResourcesPath()+"img/octo.png")));
         stage.setTitle("Octo-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
         stage.show();
 

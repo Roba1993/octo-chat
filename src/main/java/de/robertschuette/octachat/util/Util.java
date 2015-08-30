@@ -7,7 +7,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.File;
 import java.io.StringWriter;
+import java.net.URISyntaxException;
+import java.security.CodeSource;
 
 /**
  * In this class you find function for the general
@@ -29,7 +32,25 @@ public class Util {
             return  resourcesPath;
         }
 
-        resourcesPath = new Util().getClass().getClassLoader().getResource("./").getPath();
+        String jarDir = ".";
+
+        // get the path of the .jar
+        try {
+            CodeSource codeSource = Util.class.getProtectionDomain().getCodeSource();
+            File jarFile = new File(codeSource.getLocation().toURI().getPath());
+            jarDir = jarFile.getParentFile().getPath();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        File f = new File(jarDir+"/data");
+        if(f.exists() && f.isDirectory()) {
+            resourcesPath = jarDir+"/data/";
+        }
+        else {
+            resourcesPath = jarDir+"/";
+        }
+
         return resourcesPath;
     }
 

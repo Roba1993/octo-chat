@@ -1,5 +1,7 @@
 package de.robertschuette.octachat.os;
 
+import javafx.stage.Stage;
+
 /**
  * This class executes the commands when no specific
  * operation system was found. Only java functions which
@@ -11,7 +13,7 @@ package de.robertschuette.octachat.os;
 public class DefaultSpecific extends OsSpecific {
 
     @Override
-    public void setSpecificStyle() {}
+    public void setSpecificStyle(Stage stage) {}
 
     /**
      * This functions creates a os specific notification
