@@ -7,10 +7,7 @@ jdk:
  - oraclejdk8
 
 install:
- - mvn clean
-
-script:
- - mvn package
+ - mvn clean jfx:run
 
 notifications:
  email: false
