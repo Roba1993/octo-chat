@@ -475,4 +475,4 @@ _Pvt_Extensions
 ### Own additions
 # allow all ressources
 !src/main/resources/*
-!src/mqin/deploy/*
+!src/main/deploy/*
