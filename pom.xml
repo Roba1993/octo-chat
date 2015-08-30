@@ -129,7 +129,6 @@
                             <resources>
                                 <resource>
                                     <directory>data</directory>
-                                    <filtering>true</filtering>
                                 </resource>
                             </resources>
                         </configuration>

@@ -35,7 +35,7 @@ public class MacSpecific extends OsSpecific {
         com.apple.eawt.Application.getApplication().setDockIconImage(image);
 
         // on window close button, only hide window
-        Platform.setImplicitExit(false);
+        //Platform.setImplicitExit(false);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -55,8 +55,12 @@ public class MacSpecific extends OsSpecific {
      */
     @Override
     public void setSpecificNotification(String title, String message) {
+        System.out.println("Notification# "+title+" > "+message);
+
         // get the path to the terminal notifier app
-        String path = Util.getResourcesPath()+"mac";
+        String path = Util.getResourcesPath()+"/mac";
+
+        System.out.println(path);
 
         // make the app executable
         new File(path + "/terminal-notifier.app").setExecutable(true);
