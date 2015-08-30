@@ -1,4 +1,11 @@
+var timer = Date.now();
+
 function updateJava() {
+    // only continue if the last update was 0.5s ago
+    if(Date.now - timer < 500) {
+        return;
+    }
+
     $("._1ht1").each(function(i) {
         // set the unread flag
         var unread = $(this).hasClass("_1ht3");

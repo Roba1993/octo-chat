@@ -36,8 +36,12 @@ public class ChatDataStore {
                     cd.getUserId().equals(newCd.getUserId())) {
 
                 // check if we have to send a chat notification
-                if(newCd.isLastMessageUnread() && !newCd.getLastMessage().equals(cd.getLastMessage())) {
-                    System.out.println("notification check");
+                // check if the new message flag is set new
+                if(newCd.isLastMessageUnread() && !cd.isLastMessageUnread()) {
+                    OsSpecific.getSpecific().setSpecificNotification(newCd.getUserName(), newCd.getLastMessage());
+                }
+                // or if a new message was received
+                else if(newCd.isLastMessageUnread() && !newCd.getLastMessage().equals(cd.getLastMessage())) {
                     OsSpecific.getSpecific().setSpecificNotification(newCd.getUserName(), newCd.getLastMessage());
                 }
 
