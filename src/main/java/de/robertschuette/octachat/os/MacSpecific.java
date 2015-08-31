@@ -3,7 +3,6 @@ package de.robertschuette.octachat.os;
 import com.apple.eawt.Application;
 import com.aquafx_project.AquaFx;
 import de.robertschuette.octachat.util.Util;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;

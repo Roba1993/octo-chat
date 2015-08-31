@@ -1,6 +1,7 @@
 package de.robertschuette.octachat;
 
 import com.sun.javafx.runtime.VersionInfo;
+import de.robertschuette.octachat.chats.Chat;
 import de.robertschuette.octachat.chats.ChatFacebook;
 import de.robertschuette.octachat.chats.ChatHandler;
 import de.robertschuette.octachat.chats.ChatWhatsapp;
@@ -27,6 +28,7 @@ import java.io.FileInputStream;
  */
 public class OctaChat extends Application {
     private Group root;
+    private Chat testChat;
 
     /**
      * The main entry point for the program.
@@ -69,12 +71,13 @@ public class OctaChat extends Application {
         stage.setScene(scene);
         stage.setWidth(900);
         stage.setHeight(700);
-        stage.getIcons().add(new Image(new FileInputStream(Util.getResourcesPath()+"img/octo.png")));
+        stage.getIcons().add(new Image(new FileInputStream(Util.getResourcesPath() + "img/octo.png")));
         stage.setTitle("Octo-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
         stage.show();
 
         chatHandler.addChat(new ChatFacebook(chatHandler));
-        chatHandler.addChat(new ChatWhatsapp());
+        testChat = new ChatWhatsapp(chatHandler);
+        chatHandler.addChat(testChat);
         //chatHandler.addChat(new ChatFacebook());
 
         // start the worker demon for background work
@@ -95,7 +98,8 @@ public class OctaChat extends Application {
         final MenuItem menuItem1 = new MenuItem("Test");
         final MenuItem menuItem2 = new MenuItem("Test2");
         menuItem1.setOnAction(event -> {
-            // insert here test code
+            //ChatWhatsapp chat = (ChatWhatsapp) testChat;
+            //chat.test();
         });
         menuItem2.setOnAction(event -> {
             // insert here test code
