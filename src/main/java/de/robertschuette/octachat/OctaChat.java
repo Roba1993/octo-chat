@@ -107,7 +107,7 @@ public class OctaChat extends Application {
         System.out.println("          ////**//(*((((//  ///((");
         System.out.println("       /////***((((#/((((((/ ");
         System.out.println("        **     (((#/  #(((((((((");
-        System.out.println("             ((((//      ###(((((( ");
+        System.out.println("             ((((//      ###((((((");
         System.out.println("           (((#//           #");
         System.out.println("");
         System.out.println("         Octo-Chat Version 0.0.1");
