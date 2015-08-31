@@ -5,8 +5,6 @@ A native chat program with focus on the Facebook and WhatsApp messengers. [Downl
 ![alt tag](https://raw.githubusercontent.com/Roba1993/octo-chat/master/img/octo-chat.png)
 
 # How to use
-**WARNING: This project is in a really early stage and may have bugs!**
-
 1. Install und configure the JDK Version 8
 2. Install and configure maven
 3. Download and or clone this repository
