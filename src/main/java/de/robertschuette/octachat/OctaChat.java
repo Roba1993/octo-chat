@@ -88,9 +88,9 @@ public class OctaChat extends Application {
      * @return the created menue
      */
     private void createMenu() {
-        final Menu menu1 = new Menu("File");
-        final Menu menu2 = new Menu("Options");
-        final Menu menu3 = new Menu("Help");
+        //final Menu menu1 = new Menu("File");
+        //final Menu menu2 = new Menu("Options");
+        //final Menu menu3 = new Menu("Help");
         final Menu menu4 = new Menu("Develop");
         final MenuItem menuItem1 = new MenuItem("Test");
         final MenuItem menuItem2 = new MenuItem("Test2");
@@ -103,7 +103,7 @@ public class OctaChat extends Application {
         menu4.getItems().addAll(menuItem1, menuItem2);
 
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(menu1, menu2, menu3, menu4);
+        menuBar.getMenus().addAll(menu4);
 
         root.getChildren().addAll(menuBar);
     }
