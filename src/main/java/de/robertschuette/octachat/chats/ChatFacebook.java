@@ -76,17 +76,6 @@ public class ChatFacebook extends Chat {
         getChildren().add(browser);
     }
 
-    /**
-     * Sets the ChatHandler which receives all updates
-     * and who manages everything.
-     *
-     * @param chatHandler to registrate this chat
-     */
-    @Override
-    public void setChatHandler(ChatHandler chatHandler) {
-
-    }
-
     @Override
     public File getIcon() {
         return new File(Util.getResourcesPath()+"/img/fb-icon.png");

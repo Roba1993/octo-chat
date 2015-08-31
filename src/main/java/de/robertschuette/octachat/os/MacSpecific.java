@@ -3,9 +3,7 @@ package de.robertschuette.octachat.os;
 import com.apple.eawt.Application;
 import com.aquafx_project.AquaFx;
 import de.robertschuette.octachat.util.Util;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,16 +30,6 @@ public class MacSpecific extends OsSpecific {
         // set the mac os x dock icon
         Image image = new ImageIcon(Util.getResourcesPath()+"/img/octo.png").getImage();
         com.apple.eawt.Application.getApplication().setDockIconImage(image);
-
-        // on window close button, only hide window
-        //Platform.setImplicitExit(false);
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                //event.consume();
-                //stage.hide();
-            }
-        });
     }
 
     /**
@@ -58,8 +46,6 @@ public class MacSpecific extends OsSpecific {
 
         // get the path to the terminal notifier app
         String path = Util.getResourcesPath()+"/mac";
-
-        System.out.println(path);
 
         // make the app executable
         new File(path + "/terminal-notifier.app").setExecutable(true);

@@ -1,34 +1,26 @@
 package de.robertschuette.octachat;
 
-import com.sun.javafx.runtime.VersionInfo;
-import de.robertschuette.octachat.chats.Chat;
 import de.robertschuette.octachat.chats.ChatFacebook;
 import de.robertschuette.octachat.chats.ChatHandler;
 import de.robertschuette.octachat.chats.ChatWhatsapp;
-import de.robertschuette.octachat.model.FileCookieStore;
 import de.robertschuette.octachat.os.OsSpecific;
-import de.robertschuette.octachat.util.Util;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-
 
 /**
- * Main class for the octachat program.
+ * Main class for the octo-chat program.
  *
  * @author Robert Schütte
  */
 public class OctaChat extends Application {
     private Group root;
-    private Chat testChat;
 
     /**
      * The main entry point for the program.
@@ -46,13 +38,10 @@ public class OctaChat extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println("Octa-Chat startet");
+        printSymbol();
 
          // set a os specific style first to show dock image first
         OsSpecific.getSpecific().setSpecificStyle(stage);
-
-        // initialise the new cookie manager and load the cookies from the file
-        FileCookieStore.init(Util.getResourcesPath() + "/cookie-store.xlm");
 
         // define root element for the stage
         root = new Group();
@@ -65,30 +54,21 @@ public class OctaChat extends Application {
         root.getChildren().add(chatHandler);
 
         // create and add the menu
-        createMenu();
+        //createMenu();
 
         // create the stage
         stage.setScene(scene);
         stage.setWidth(900);
         stage.setHeight(700);
-        stage.getIcons().add(new Image(new FileInputStream(Util.getResourcesPath() + "img/octo.png")));
-        stage.setTitle("Octo-Chat - Java Version: " + VersionInfo.getRuntimeVersion());
+        stage.setTitle("Octo-Chat");
         stage.show();
 
         chatHandler.addChat(new ChatFacebook(chatHandler));
-        testChat = new ChatWhatsapp(chatHandler);
-        chatHandler.addChat(testChat);
-        //chatHandler.addChat(new ChatFacebook());
-
-        // start the worker demon for background work
-        WorkerThread wt = new WorkerThread(chatHandler);
-        wt.start();
+        chatHandler.addChat(new ChatWhatsapp(chatHandler));
     }
 
     /**
-     * Create the menue for the program
-     *
-     * @return the created menue
+     * Create the menu for the program
      */
     private void createMenu() {
         //final Menu menu1 = new Menu("File");
@@ -98,8 +78,7 @@ public class OctaChat extends Application {
         final MenuItem menuItem1 = new MenuItem("Test");
         final MenuItem menuItem2 = new MenuItem("Test2");
         menuItem1.setOnAction(event -> {
-            //ChatWhatsapp chat = (ChatWhatsapp) testChat;
-            //chat.test();
+            // insert here test code
         });
         menuItem2.setOnAction(event -> {
             // insert here test code
@@ -110,6 +89,28 @@ public class OctaChat extends Application {
         menuBar.getMenus().addAll(menu4);
 
         root.getChildren().addAll(menuBar);
+    }
+
+    private void printSymbol() {
+        System.out.println("               (////, ");
+        System.out.println("          //////////////, ");
+        System.out.println("         /////////////(((//,");
+        System.out.println("        ((    /////(     //,/");
+        System.out.println("        /   &. //// &&&  ///,     % ");
+        System.out.println("        //  &&///////  ////,,    /*");
+        System.out.println("        /////////(/////////**   /#*");
+        System.out.println("          //////.  //////**  %///*");
+        System.out.println("             ///&&%&///*  #////#/ ");
+        System.out.println("           //////  /////////*// ");
+        System.out.println(" ////,,/////*//////////////(//    (((( ");
+        System.out.println("     #(###,,//////////(/#(((((((((((");
+        System.out.println("          ////**//(*((((//  ///((");
+        System.out.println("       /////***((((#/((((((/ ");
+        System.out.println("        **     (((#/  #(((((((((");
+        System.out.println("             ((((//      ###(((((( ");
+        System.out.println("           (((#//           #");
+        System.out.println("");
+        System.out.println("         Octo-Chat Version 0.0.1");
     }
 
 }

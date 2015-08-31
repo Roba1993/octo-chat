@@ -6,18 +6,12 @@ import javafx.scene.layout.Region;
 import java.io.File;
 
 /**
- * Created by roba on 27.08.15.
+ * This class defines a Chat and every chat which should be
+ * manageable over the chat handler must extend this class.
+ *
+ * @author Robert Schütte
  */
 public abstract class Chat extends Region {
-
-    /**
-     * Sets the ChatHandler which receives all updates
-     * and who manages everything.
-     *
-     * @param chatHandler to registrate this chat
-     */
-    abstract public void setChatHandler(ChatHandler chatHandler);
-
     /**
      * Returns a icon which indicates the chat.
      *

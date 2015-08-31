@@ -54,6 +54,7 @@ public class JsUtil {
         // get the dom
         Document doc = engine.getDocument();
 
+        // check if a document object exists
         if (doc == null) {
             return;
         }
@@ -101,6 +102,7 @@ public class JsUtil {
         // get the dom
         DOMDocument doc = engine.getDocument();
 
+        // check if a document object exists
         if (doc == null) {
             return;
         }
@@ -123,6 +125,7 @@ public class JsUtil {
         // get the dom
         Document doc = engine.getDocument();
 
+        // check if a document object exists
         if (doc == null) {
             System.out.println("No DOC");
             return;
@@ -146,6 +149,7 @@ public class JsUtil {
         // get the dom
         DOMDocument doc = engine.getDocument();
 
+        // check if a document object exists
         if (doc == null) {
             System.out.println("No DOC");
             return;
@@ -157,7 +161,6 @@ public class JsUtil {
         n.setAttribute("src", "https://getfirebug.com/firebug-lite.js#startOpened=true,disableWhenFirebugActive=false");
 
         // add the element to the head section
-        //doc.getElementsByTagName("head").item(0).appendChild(n);
         doc.findElement(By.tagName("head")).appendChild(n);
     }
 }

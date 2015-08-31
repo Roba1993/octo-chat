@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.robertschuette</groupId>
-    <artifactId>octa-chat</artifactId>
+    <artifactId>octo-chat</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -18,12 +18,12 @@
     </developers>
 
     <organization>
-        <name>Octa-Chat</name>
+        <name>Octo-Chat</name>
     </organization>
 
     <properties>
         <!-- the name for the native app -->
-        <project.name>Octa-Chat</project.name>
+        <project.name>Octo-Chat</project.name>
         <!-- the version for the native deployments -->
         <native.version>0.0.1</native.version>
         <!--  the main class that has the public static void main(String[]) method -->

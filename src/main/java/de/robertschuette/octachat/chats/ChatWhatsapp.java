@@ -115,17 +115,6 @@ public class ChatWhatsapp extends Chat implements Runnable {
         }
     }
 
-    /**
-     * Sets the ChatHandler which receives all updates
-     * and who manages everything.
-     *
-     * @param chatHandler to registrate this chat
-     */
-    @Override
-    public void setChatHandler(ChatHandler chatHandler) {
-
-    }
-
     @Override
     public File getIcon() {
         return new File(Util.getResourcesPath()+"/img/wa-icon.png");

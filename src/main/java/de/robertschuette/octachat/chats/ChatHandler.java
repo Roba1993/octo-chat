@@ -41,7 +41,12 @@ public class ChatHandler extends SplitPane {
         this.setDividerPositions(0.1f);
     }
 
-
+    /**
+     * Register a new chat in this chat handler. The chat is now
+     * clickable in the side and configurable over this handler.
+     *
+     * @param chat the chat to add
+     */
     public void addChat(Chat chat) {
         // add the chat to the list
         chats.add(chat);
@@ -58,10 +63,24 @@ public class ChatHandler extends SplitPane {
         addSelectionImage(chat, 0, chats.indexOf(chat)*50);
     }
 
+    /**
+     * This function updates a specific chat data. When a new
+     * message was found, we send automatically a new notification.
+     *
+     * @param chatData the chatdata
+     */
     public void updateChatData(ChatData chatData) {
         cds.updateChat(chatData);
     }
 
+    /**
+     * Internal function to add a picture for a chat
+     * in the selection list.
+     *
+     * @param chat to add
+     * @param x piston of the image
+     * @param y position of the image
+     */
     private void addSelectionImage(Chat chat, int x, int y) {
         Image image = null;
         try {
@@ -85,6 +104,9 @@ public class ChatHandler extends SplitPane {
         selectionArea.getChildren().add(imageView);
     }
 
+    /**
+     * Internal function to hide all chats.
+     */
     private void setChatsUnvisible() {
         for(Chat chat : chats) {
             chat.setVisible(false);
