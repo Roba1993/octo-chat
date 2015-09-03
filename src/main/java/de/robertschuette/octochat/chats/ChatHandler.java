@@ -3,15 +3,23 @@ package de.robertschuette.octochat.chats;
 import de.robertschuette.octochat.model.ChatData;
 import de.robertschuette.octochat.model.ChatDataStore;
 import de.robertschuette.octochat.model.ChatHandlerSettings;
+import de.robertschuette.octochat.model.ChatSettings;
 import de.robertschuette.octochat.util.Util;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javax.print.Doc;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +29,18 @@ import java.util.List;
  *
  * @author Robert Schütte
  */
-public class ChatHandler extends SplitPane {
+public class ChatHandler extends SplitPane implements Runnable {
     private ChatDataStore cds;
     private List<Chat> chats;
     private StackPane chatArea;
     private Pane selectionArea;
     private ChatHandlerSettings chatHandlerSettings;
+    private String xmlPath;
 
-    public ChatHandler() {
+    public ChatHandler(String xmlPath) {
+        this.xmlPath = xmlPath;
+
+        // create the necessary objects
         chats = new ArrayList<>();
         cds = new ChatDataStore(this);
         chatHandlerSettings = new ChatHandlerSettings();
@@ -42,6 +54,18 @@ public class ChatHandler extends SplitPane {
         // add the panes
         this.getItems().addAll(selectionArea, chatArea);
         this.setDividerPositions(0.1f);
+
+        // load the settings from the xml settings file
+        loadChatHandlerState();
+
+        // when no chats exist - create fb and wa chat
+        if(chats.size() < 1) {
+            addChat(new ChatFacebook(this, new ChatSettings("Facebook")));
+            addChat(new ChatWhatsapp(this, new ChatSettings("Whats App")));
+        }
+
+        // start this thread
+        new Thread(this).start();
     }
 
     /**
@@ -63,7 +87,7 @@ public class ChatHandler extends SplitPane {
         chatArea.getChildren().add(chat);
 
         // add the image
-        addSelectionImage(chat, 0, chats.indexOf(chat)*50);
+        addSelectionImage(chat, 0, chats.indexOf(chat) * 50);
     }
 
     /**
@@ -84,7 +108,29 @@ public class ChatHandler extends SplitPane {
         return chatHandlerSettings;
     }
 
-    /**************** Getter & Setter *************************/
+    /**
+     * Run the background thread to save the settings
+     * and update information
+     *
+     * @see Thread#run()
+     */
+    @Override
+    public void run() {
+        String tmpXml = "";
+
+        // endless loop
+        while (true) {
+            // sleep for 0.5s
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {}
+
+            // save the settings
+            tmpXml = saveChatHandlerState(tmpXml);
+        }
+    }
+
+    /**************** Private functions *************************/
 
     /**
      * Internal function to add a picture for a chat
@@ -124,5 +170,95 @@ public class ChatHandler extends SplitPane {
         for(Chat chat : chats) {
             chat.setVisible(false);
         }
+    }
+
+    private String saveChatHandlerState(String tmpXml) {
+        try {
+            // generate the document and root element
+            Document doc = new Document(new Element("octa-chat"));
+
+            // create chat handler element and add it to root
+            Element eChatHandler = new Element("chat-handler");
+            doc.getRootElement().addContent(eChatHandler);
+
+            // set the information for the chat handler
+            eChatHandler.addContent(new Element("notifications").setText(Boolean.toString(chatHandlerSettings.isNotifications())));
+
+            // create chats element and add it to root
+            Element eChats = new Element("chats");
+            doc.getRootElement().addContent(eChats);
+
+            // set the chat settings
+            for(Chat chat : chats) {
+                // create the element with the information
+                Element eChat = new Element("chat");
+                eChat.addContent(new Element("name").setText(chat.getChatSettings().getName()));
+                eChat.addContent(new Element("notifications").setText(Boolean.toString(chat.getChatSettings().isNotifications())));
+
+                // add the chat type attribute
+                if(chat instanceof ChatFacebook) {
+                    eChat.setAttribute("type", "facebook");
+                }
+                else if(chat instanceof ChatWhatsapp) {
+                    eChat.setAttribute("type", "whats-app");
+                }
+
+                // add it to the chats element
+                eChats.addContent(eChat);
+            }
+
+
+            // create the xml outputter
+            XMLOutputter xmlOutput = new XMLOutputter();
+
+            // get the document as string
+            String tmp = xmlOutput.outputString(doc);
+
+            // only continue when there is a change
+            if(tmp.equals(tmpXml)) {
+                return tmp;
+            }
+
+            // format right and write to file
+            xmlOutput.setFormat(Format.getPrettyFormat());
+            xmlOutput.output(doc, new FileWriter(xmlPath));
+
+            // return string to compare the next time
+            return tmp;
+        } catch (IOException io) {
+            System.out.println(io.getMessage());
+        }
+
+        return "";
+    }
+
+    private void loadChatHandlerState() {
+        try {
+            // read the document
+            Document doc = (Document) new SAXBuilder().build(new File(xmlPath));
+            Element eRoot = doc.getRootElement();
+
+            // get the chat handler settings
+            Element eChatHandler = eRoot.getChild("chat-handler");
+
+            // fill the chat handler settings object with data
+            chatHandlerSettings.setNotifications(Boolean.parseBoolean(eChatHandler.getChildText("notifications")));
+
+            // loop over all chats
+            for(Element eChat : eRoot.getChild("chats").getChildren()) {
+                // create a new chat setting
+                ChatSettings chatSettings = new ChatSettings(eChat.getChildText("name"));
+                chatSettings.setNotifications(Boolean.parseBoolean(eChat.getChildText("notifications")));
+
+                // add a new facebook chat
+                if("facebook".equals(eChat.getAttributeValue("type"))){
+                    addChat(new ChatFacebook(this, chatSettings));
+                }
+                // or a new whats app chat
+                else if("whats-app".equals(eChat.getAttributeValue("type"))){
+                    addChat(new ChatWhatsapp(this, chatSettings));
+                }
+            }
+        } catch (IOException | JDOMException io) {}
     }
 }

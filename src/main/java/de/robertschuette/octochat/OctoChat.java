@@ -5,6 +5,7 @@ import de.robertschuette.octochat.chats.ChatHandler;
 import de.robertschuette.octochat.chats.ChatWhatsapp;
 import de.robertschuette.octochat.model.ChatSettings;
 import de.robertschuette.octochat.os.OsSpecific;
+import de.robertschuette.octochat.util.Util;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -50,7 +51,7 @@ public class OctoChat extends Application {
         Scene scene = new Scene(root, Color.WHITE);
         //Scene scene = new Scene(root, 500, 500, Color.WHITE);
 
-        chatHandler = new ChatHandler();
+        chatHandler = new ChatHandler(Util.getResourcesPath()+"settings.xml");
         chatHandler.prefWidthProperty().bind(scene.widthProperty());
         chatHandler.prefHeightProperty().bind(scene.heightProperty());
         root.getChildren().add(chatHandler);
@@ -65,8 +66,8 @@ public class OctoChat extends Application {
         stage.setTitle("Octo-Chat");
         stage.show();
 
-        chatHandler.addChat(new ChatFacebook(chatHandler, new ChatSettings("Facebook")));
-        chatHandler.addChat(new ChatWhatsapp(chatHandler, new ChatSettings("Whats App")));
+        //chatHandler.addChat(new ChatFacebook(chatHandler, new ChatSettings("Facebook")));
+        //chatHandler.addChat(new ChatWhatsapp(chatHandler, new ChatSettings("Whats App")));
     }
 
     /**
