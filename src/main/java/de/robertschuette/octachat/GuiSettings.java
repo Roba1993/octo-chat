@@ -180,7 +180,7 @@ public class GuiSettings extends Stage {
             // change the notification setting
             chatHandler.getChatHandlerSettings().setNotifications(!chatHandler.getChatHandlerSettings().isNotifications());
             // change the display text
-            bNotification.setSelected(chatHandler.getChatHandlerSettings().isNotifications());
+            bNotification.setText(Boolean.toString(chatHandler.getChatHandlerSettings().isNotifications()));
             // change the click state
             bNotification.setSelected(chatHandler.getChatHandlerSettings().isNotifications());
         });
@@ -243,7 +243,7 @@ public class GuiSettings extends Stage {
             // change the notification setting
             chat.getChatSettings().setNotifications(!chat.getChatSettings().isNotifications());
             // change the display text
-            bNotification.setSelected(chat.getChatSettings().isNotifications());
+            bNotification.setText(Boolean.toString(chat.getChatSettings().isNotifications()));
             // change the click state
             bNotification.setSelected(chat.getChatSettings().isNotifications());
         });
@@ -278,7 +278,7 @@ public class GuiSettings extends Stage {
             // change the notification setting
             chat.getChatSettings().setNotifications(!chat.getChatSettings().isNotifications());
             // change the display text
-            bNotification.setSelected(chat.getChatSettings().isNotifications());
+            bNotification.setText(Boolean.toString(chat.getChatSettings().isNotifications()));
             // change the click state
             bNotification.setSelected(chat.getChatSettings().isNotifications());
         });
