@@ -3,6 +3,7 @@ package de.robertschuette.octachat;
 import de.robertschuette.octachat.chats.ChatFacebook;
 import de.robertschuette.octachat.chats.ChatHandler;
 import de.robertschuette.octachat.chats.ChatWhatsapp;
+import de.robertschuette.octachat.model.ChatSettings;
 import de.robertschuette.octachat.os.OsSpecific;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
  * @author Robert Schütte
  */
 public class OctaChat extends Application {
+    private ChatHandler chatHandler;
     private Group root;
 
     /**
@@ -48,13 +50,13 @@ public class OctaChat extends Application {
         Scene scene = new Scene(root, Color.WHITE);
         //Scene scene = new Scene(root, 500, 500, Color.WHITE);
 
-        ChatHandler chatHandler = new ChatHandler();
+        chatHandler = new ChatHandler();
         chatHandler.prefWidthProperty().bind(scene.widthProperty());
         chatHandler.prefHeightProperty().bind(scene.heightProperty());
         root.getChildren().add(chatHandler);
 
         // create and add the menu
-        //createMenu();
+        createMenu();
 
         // create the stage
         stage.setScene(scene);
@@ -63,17 +65,22 @@ public class OctaChat extends Application {
         stage.setTitle("Octo-Chat");
         stage.show();
 
-        chatHandler.addChat(new ChatFacebook(chatHandler));
-        chatHandler.addChat(new ChatWhatsapp(chatHandler));
+        chatHandler.addChat(new ChatFacebook(chatHandler, new ChatSettings("Facebook")));
+        chatHandler.addChat(new ChatWhatsapp(chatHandler, new ChatSettings("Whats App")));
     }
 
     /**
      * Create the menu for the program
      */
     private void createMenu() {
-        //final Menu menu1 = new Menu("File");
-        //final Menu menu2 = new Menu("Options");
-        //final Menu menu3 = new Menu("Help");
+        final Menu menu1 = new Menu("Home");
+        final MenuItem menu1Item1 = new MenuItem("Settings");
+        menu1Item1.setOnAction(event -> {
+            Stage stage = new Stage();
+            new GuiSettings(chatHandler);
+        });
+        menu1.getItems().addAll(menu1Item1);
+
         final Menu menu4 = new Menu("Develop");
         final MenuItem menuItem1 = new MenuItem("Test");
         final MenuItem menuItem2 = new MenuItem("Test2");
@@ -86,7 +93,7 @@ public class OctaChat extends Application {
         menu4.getItems().addAll(menuItem1, menuItem2);
 
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(menu4);
+        menuBar.getMenus().addAll(menu1, menu4);
 
         root.getChildren().addAll(menuBar);
     }

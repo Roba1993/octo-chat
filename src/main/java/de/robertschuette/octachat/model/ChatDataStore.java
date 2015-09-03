@@ -1,5 +1,6 @@
 package de.robertschuette.octachat.model;
 
+import de.robertschuette.octachat.chats.ChatHandler;
 import de.robertschuette.octachat.os.OsSpecific;
 
 import java.util.ArrayList;
@@ -11,7 +12,14 @@ import java.util.List;
  * @author Robert Schütte
  */
 public class ChatDataStore {
-    private List<ChatData> chatData = new ArrayList<>();
+    private ChatHandler chatHandler;
+    private List<ChatData> chatData;
+
+    public ChatDataStore(ChatHandler chatHandler) {
+        this.chatHandler = chatHandler;
+
+        chatData = new ArrayList<>();
+    }
 
 
     /**
@@ -35,14 +43,14 @@ public class ChatDataStore {
             if(cd.getChat().equals(newCd.getChat()) &&
                     cd.getUserId().equals(newCd.getUserId())) {
 
-                // check if we have to send a chat notification
                 // check if the new message flag is set new
                 if(newCd.isLastMessageUnread() && !cd.isLastMessageUnread()) {
-                    OsSpecific.getSpecific().setSpecificNotification(newCd.getUserName(), newCd.getLastMessage());
-                }
-                // or if a new message was received
-                else if(newCd.isLastMessageUnread() && !newCd.getLastMessage().equals(cd.getLastMessage())) {
-                    OsSpecific.getSpecific().setSpecificNotification(newCd.getUserName(), newCd.getLastMessage());
+                    // check if notifications are enabled
+                    if(chatHandler.getChatHandlerSettings().isNotifications() &&
+                            cd.getChat().getChatSettings().isNotifications()) {
+                        // send the notification
+                        OsSpecific.getSpecific().setSpecificNotification(newCd.getUserName(), newCd.getLastMessage());
+                    }
                 }
 
                 // update the values
@@ -63,8 +71,11 @@ public class ChatDataStore {
 
         // when the message is unread, send notification
         if(newCd.isLastMessageUnread()) {
-            System.out.println("notification after create");
-            OsSpecific.getSpecific().setSpecificNotification(newCd.getUserName(), newCd.getLastMessage());
+            // check if notifications are enabled
+            if(chatHandler.getChatHandlerSettings().isNotifications() &&
+                    newCd.getChat().getChatSettings().isNotifications()) {
+                OsSpecific.getSpecific().setSpecificNotification(newCd.getUserName(), newCd.getLastMessage());
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 import de.robertschuette.octachat.model.ChatData;
+import de.robertschuette.octachat.model.ChatSettings;
 import de.robertschuette.octachat.util.JsUtil;
 import de.robertschuette.octachat.util.Util;
 
@@ -22,14 +23,16 @@ import java.util.logging.Level;
 public class ChatFacebook extends Chat {
     private Browser engine;
     private BrowserView browser;
-    private final ChatHandler chatHandler;
+    private ChatHandler chatHandler;
+    private ChatSettings chatSettings;
 
     /**
      * Generate the Facebook region.
      *
      */
-    public ChatFacebook(ChatHandler chatHandler) {
+    public ChatFacebook(ChatHandler chatHandler, ChatSettings chatSettings) {
         this.chatHandler = chatHandler;
+        this.chatSettings = chatSettings;
 
         // disable console output
         LoggerProvider.getChromiumProcessLogger().setLevel(Level.OFF);
@@ -79,6 +82,16 @@ public class ChatFacebook extends Chat {
     @Override
     public File getIcon() {
         return new File(Util.getResourcesPath()+"/img/fb-icon.png");
+    }
+
+    /**
+     * Returns the actual settings of the chat.
+     *
+     * @return the chat settings
+     */
+    @Override
+    public ChatSettings getChatSettings() {
+        return chatSettings;
     }
 }
 

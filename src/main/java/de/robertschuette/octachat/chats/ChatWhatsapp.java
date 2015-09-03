@@ -9,6 +9,7 @@ import com.teamdev.jxbrowser.chromium.events.FinishLoadingEvent;
 import com.teamdev.jxbrowser.chromium.events.LoadAdapter;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 import de.robertschuette.octachat.model.ChatData;
+import de.robertschuette.octachat.model.ChatSettings;
 import de.robertschuette.octachat.util.Util;
 
 import java.io.File;
@@ -24,9 +25,11 @@ public class ChatWhatsapp extends Chat implements Runnable {
     private ChatHandler chatHandler;
     private Browser engine;
     private BrowserView browser;
+    private ChatSettings chatSettings;
 
-    public ChatWhatsapp(ChatHandler chatHandler) {
+    public ChatWhatsapp(ChatHandler chatHandler, ChatSettings chatSettings) {
         this.chatHandler = chatHandler;
+        this.chatSettings = chatSettings;
 
         // disable console output
         LoggerProvider.getChromiumProcessLogger().setLevel(Level.OFF);
@@ -118,6 +121,16 @@ public class ChatWhatsapp extends Chat implements Runnable {
     @Override
     public File getIcon() {
         return new File(Util.getResourcesPath()+"/img/wa-icon.png");
+    }
+
+    /**
+     * Returns the actual settings of the chat.
+     *
+     * @return the chat settings
+     */
+    @Override
+    public ChatSettings getChatSettings() {
+        return chatSettings;
     }
 
 }

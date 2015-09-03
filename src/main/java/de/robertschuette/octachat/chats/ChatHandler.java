@@ -2,6 +2,7 @@ package de.robertschuette.octachat.chats;
 
 import de.robertschuette.octachat.model.ChatData;
 import de.robertschuette.octachat.model.ChatDataStore;
+import de.robertschuette.octachat.model.ChatHandlerSettings;
 import de.robertschuette.octachat.util.Util;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
@@ -25,10 +26,12 @@ public class ChatHandler extends SplitPane {
     private List<Chat> chats;
     private StackPane chatArea;
     private Pane selectionArea;
+    private ChatHandlerSettings chatHandlerSettings;
 
     public ChatHandler() {
         chats = new ArrayList<>();
-        cds = new ChatDataStore();
+        cds = new ChatDataStore(this);
+        chatHandlerSettings = new ChatHandlerSettings();
 
         // create the selection area
         selectionArea = new Pane();
@@ -72,6 +75,16 @@ public class ChatHandler extends SplitPane {
     public void updateChatData(ChatData chatData) {
         cds.updateChat(chatData);
     }
+
+    public List<Chat> getChats() {
+        return chats;
+    }
+
+    public ChatHandlerSettings getChatHandlerSettings() {
+        return chatHandlerSettings;
+    }
+
+    /**************** Getter & Setter *************************/
 
     /**
      * Internal function to add a picture for a chat
