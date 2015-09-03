@@ -172,6 +172,15 @@ public class ChatHandler extends SplitPane implements Runnable {
         }
     }
 
+    /**
+     * Save the actual chat handler status and all the status
+     * from the chats to a xml file. This function writes the
+     * the new xml file only when the string has changed from
+     * the input string.
+     *
+     * @param tmpXml the old xml file for comparison
+     * @return the new tmpXml string to compare
+     */
     private String saveChatHandlerState(String tmpXml) {
         try {
             // generate the document and root element
@@ -232,10 +241,13 @@ public class ChatHandler extends SplitPane implements Runnable {
         return "";
     }
 
+    /**
+     * This function loads the old state from the xml file.
+     */
     private void loadChatHandlerState() {
         try {
             // read the document
-            Document doc = (Document) new SAXBuilder().build(new File(xmlPath));
+            Document doc = new SAXBuilder().build(new File(xmlPath));
             Element eRoot = doc.getRootElement();
 
             // get the chat handler settings
