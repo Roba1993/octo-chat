@@ -27,7 +27,7 @@
         <!-- the version for the native deployments -->
         <native.version>0.0.1</native.version>
         <!--  the main class that has the public static void main(String[]) method -->
-        <main.class>de.robertschuette.octachat.OctaChat</main.class>
+        <main.class>de.robertschuette.octochat.OctoChat</main.class>
         <!-- use java 8 -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -271,7 +271,7 @@
                         <id>jxbrowser-license-dev</id>
                         <phase>clean</phase>
                         <configuration>
-                            <file>${basedir}/src/lib/jxbrowser-5/lib/license-development.jar</file>
+                            <file>${basedir}/src/lib/jxbrowser-5/lib/development.jar</file>
                             <repositoryLayout>default</repositoryLayout>
                             <groupId>teamdev</groupId>
                             <artifactId>jxbrowser-license-dev</artifactId>
@@ -288,7 +288,7 @@
                         <id>jxbrowser-license</id>
                         <phase>clean</phase>
                         <configuration>
-                            <file>${basedir}/src/lib/jxbrowser-5/lib/license-runtime.jar</file>
+                            <file>${basedir}/src/lib/jxbrowser-5/lib/runtime.jar</file>
                             <repositoryLayout>default</repositoryLayout>
                             <groupId>teamdev</groupId>
                             <artifactId>jxbrowser-license</artifactId>
