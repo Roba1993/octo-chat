@@ -1,9 +1,6 @@
 package de.robertschuette.octochat;
 
-import de.robertschuette.octochat.chats.ChatFacebook;
 import de.robertschuette.octochat.chats.ChatHandler;
-import de.robertschuette.octochat.chats.ChatWhatsapp;
-import de.robertschuette.octochat.model.ChatSettings;
 import de.robertschuette.octochat.os.OsSpecific;
 import de.robertschuette.octochat.util.Util;
 import javafx.application.Application;
@@ -65,9 +62,6 @@ public class OctoChat extends Application {
         stage.setHeight(700);
         stage.setTitle("Octo-Chat");
         stage.show();
-
-        //chatHandler.addChat(new ChatFacebook(chatHandler, new ChatSettings("Facebook")));
-        //chatHandler.addChat(new ChatWhatsapp(chatHandler, new ChatSettings("Whats App")));
     }
 
     /**
@@ -94,7 +88,7 @@ public class OctoChat extends Application {
         menu4.getItems().addAll(menuItem1, menuItem2);
 
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(menu1, menu4);
+        menuBar.getMenus().addAll(menu1);
 
         root.getChildren().addAll(menuBar);
     }
@@ -118,7 +112,7 @@ public class OctoChat extends Application {
         System.out.println("             ((((//      ###((((((");
         System.out.println("           (((#//           #");
         System.out.println("");
-        System.out.println("         Octo-Chat Version 0.0.1");
+        System.out.println("         Octo-Chat Version 0.0.2");
     }
 
 }
