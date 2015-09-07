@@ -88,6 +88,17 @@ public class ChatHandler extends SplitPane implements Runnable {
         addSelectionImage(chat, 0, chats.indexOf(chat) * 50);
     }
 
+    public void removeChat(Chat chat) {
+        // remove from the list
+        chats.remove(chat);
+
+        // remove from the chat area
+        chatArea.getChildren().remove(chat);
+
+        // redraw the selection area
+        redrawSelectionArea();
+    }
+
     /**
      * This function updates a specific chat data. When a new
      * message was found, we send automatically a new notification.
@@ -129,6 +140,16 @@ public class ChatHandler extends SplitPane implements Runnable {
     }
 
     /**************** Private functions *************************/
+
+    public void redrawSelectionArea() {
+        // clear the area
+        selectionArea.getChildren().clear();
+
+        // draw the chats
+        for(Chat chat : chats) {
+            addSelectionImage(chat, 0, chats.indexOf(chat) * 50);
+        }
+    }
 
     /**
      * Internal function to add a picture for a chat

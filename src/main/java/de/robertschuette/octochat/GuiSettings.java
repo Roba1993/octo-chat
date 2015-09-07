@@ -4,6 +4,7 @@ import de.robertschuette.octochat.chats.Chat;
 import de.robertschuette.octochat.chats.ChatFacebook;
 import de.robertschuette.octochat.chats.ChatHandler;
 import de.robertschuette.octochat.chats.ChatWhatsapp;
+import de.robertschuette.octochat.model.ChatSettings;
 import de.robertschuette.octochat.util.Util;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -72,17 +73,7 @@ public class GuiSettings extends Stage {
         tiChats = new TreeItem<>("Chats");
 
         // add the specific chat settings
-        for(Chat chat : chatHandler.getChats()) {
-            // create a new tree item
-            TreeItem<String> tiChat = new TreeItem<>(
-                    // set the name
-                    chat.getChatSettings().getName(),
-                    // set the icon
-                    getIcon(chat));
-
-            // add the item to the chat
-            tiChats.getChildren().add(tiChat);
-        }
+        redrawChatItems();
 
         // create the root element which is not visible
         TreeItem<String> tiRoot = new TreeItem<>("root");
@@ -116,15 +107,13 @@ public class GuiSettings extends Stage {
 
                         // when the chat is a type of facebook show fb settings group
                         if (chat instanceof ChatFacebook) {
-                            Group group = getGroupChatGeneral(chat);
-                            group = getGroupFacebook((ChatFacebook) chat, group);
+                            Group group = getGroupFacebook((ChatFacebook) chat);
                             settingsArea.getChildren().add(group);
                         }
 
                         // when the chat is a type of whats app show wa settings group
                         else if (chat instanceof ChatWhatsapp) {
-                            Group group = getGroupChatGeneral(chat);
-                            group = getGroupWhatsapp((ChatWhatsapp) chat, group);
+                            Group group = getGroupWhatsapp((ChatWhatsapp) chat);
                             settingsArea.getChildren().add(group);
                         }
 
@@ -204,20 +193,47 @@ public class GuiSettings extends Stage {
     private Group getGroupChats() {
         Group group = new Group();
 
-        // add notification label
-        Label lNewChat = new Label("Create a new Chat");
-        lNewChat.setLayoutX(10);
-        lNewChat.setLayoutY(10);
-        group.getChildren().add(lNewChat);
+        // add new facebook label
+        Label lNewChatFb = new Label("New Facebook Chat");
+        lNewChatFb.setLayoutX(10);
+        lNewChatFb.setLayoutY(10);
+        group.getChildren().add(lNewChatFb);
 
-        // add notification button
-        Button bNewChat = new Button("new Chat");
-        bNewChat.setDisable(true);
-        bNewChat.setLayoutX(300);
-        bNewChat.setLayoutY(10);
-        group.getChildren().add(bNewChat);
-        bNewChat.setOnAction(event -> {
+        // add new facebook button
+        Button bNewChatFb = new Button("Create");
+        bNewChatFb.setLayoutX(300);
+        bNewChatFb.setLayoutY(10);
+        group.getChildren().add(bNewChatFb);
+        bNewChatFb.setOnAction(event -> {
+            // create the new chat
+            ChatSettings chatSettings = new ChatSettings(getFreeName("Facebook",0));
+            chatHandler.addChat(new ChatFacebook(chatHandler, chatSettings));
 
+            // clear the chat tree
+            redrawChatItems();
+        });
+
+        // add new whats app label
+        Label lNewChatWa = new Label("New Whats App Chat");
+        lNewChatWa.setLayoutX(10);
+        lNewChatWa.setLayoutY(40);
+        group.getChildren().add(lNewChatWa);
+
+        // add new facebook button
+        Button bNewChatWa = new Button("Create");
+        bNewChatWa.setLayoutX(300);
+        bNewChatWa.setLayoutY(40);
+        group.getChildren().add(bNewChatWa);
+        bNewChatWa.setOnAction(event -> {
+            // create the new chat
+            ChatSettings chatSettings = new ChatSettings(getFreeName("Whats App",0));
+            chatHandler.addChat(new ChatWhatsapp(chatHandler, chatSettings));
+
+            // clear the chat tree
+            tiChats.getChildren().clear();
+
+            // add the chats to the tree
+            redrawChatItems();
         });
 
         return group;
@@ -230,8 +246,8 @@ public class GuiSettings extends Stage {
      * @param chat for which the settings are
      * @return a group object with the settings
      */
-    private Group getGroupFacebook(ChatFacebook chat, Group group) {
-        // special facebook settings
+    private Group getGroupFacebook(ChatFacebook chat) {
+        Group group = getGroupChatGeneral(chat);
 
         return group;
     }
@@ -243,8 +259,8 @@ public class GuiSettings extends Stage {
      * @param chat for which the settings are
      * @return a group object with the settings
      */
-    private Group getGroupWhatsapp(ChatWhatsapp chat, Group group) {
-        // special Whats App settings
+    private Group getGroupWhatsapp(ChatWhatsapp chat) {
+        Group group = getGroupChatGeneral(chat);
 
         return group;
     }
@@ -311,15 +327,31 @@ public class GuiSettings extends Stage {
                 return;
             }
 
-            // update the tree view name
-            for(TreeItem<String> tiChat : tiChats.getChildren()) {
-                if(tiChat.getValue().equals(chat.getChatSettings().getName())) {
-                    tiChat.setValue(newValue);
-                }
-            }
-
             // write the new name to the settings
             chat.getChatSettings().setName(newValue);
+
+            // update the tree view name
+            redrawChatItems();
+        });
+
+        // add remove label
+        Label lRemove = new Label("Delete this chat");
+        lRemove.setLayoutX(10);
+        lRemove.setLayoutY(70);
+        group.getChildren().add(lRemove);
+
+        // add notification button
+        Button bRemove = new Button("Remove");
+        bRemove.setLayoutX(270);
+        bRemove.setLayoutY(70);
+        bRemove.setPrefWidth(100);
+        group.getChildren().add(bRemove);
+        bRemove.setOnAction(event -> {
+            // delete from chat handler
+            chatHandler.removeChat(chat);
+
+            // redraw tree view
+            redrawChatItems();
         });
 
         return group;
@@ -335,5 +367,41 @@ public class GuiSettings extends Stage {
 
         // if not found return false
         return false;
+    }
+
+    private String getFreeName(String name, int number) {
+        String tmpName = name;
+
+        // don't display the zero as number
+        if(number > 0) {
+            tmpName += Integer.toString(number);
+        }
+
+        // check if the name is free
+        if(!existName(tmpName)) {
+            return tmpName;
+        }
+        // if not call this method again with a higher number
+        else {
+            return getFreeName(name, ++number);
+        }
+    }
+
+    private void redrawChatItems() {
+        // clear the chat tree
+        tiChats.getChildren().clear();
+
+        // add the chats to the tree
+        for(Chat chat : chatHandler.getChats()) {
+            // create a new tree item
+            TreeItem<String> tiChat = new TreeItem<>(
+                    // set the name
+                    chat.getChatSettings().getName(),
+                    // set the icon
+                    getIcon(chat));
+
+            // add the item to the chat
+            tiChats.getChildren().add(tiChat);
+        }
     }
 }
