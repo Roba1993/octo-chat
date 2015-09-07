@@ -88,6 +88,11 @@ public class ChatHandler extends SplitPane implements Runnable {
         addSelectionImage(chat, 0, chats.indexOf(chat) * 50);
     }
 
+    /**
+     * Removes the given chat from the handler.
+     *
+     * @param chat to remove
+     */
     public void removeChat(Chat chat) {
         // remove from the list
         chats.remove(chat);
@@ -141,6 +146,9 @@ public class ChatHandler extends SplitPane implements Runnable {
 
     /**************** Private functions *************************/
 
+    /**
+     * Redraw all icons for the chat selection.
+     */
     public void redrawSelectionArea() {
         // clear the area
         selectionArea.getChildren().clear();

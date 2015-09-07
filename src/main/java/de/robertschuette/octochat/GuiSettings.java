@@ -265,6 +265,14 @@ public class GuiSettings extends Stage {
         return group;
     }
 
+    /**
+     * This function creates a general chat settings view.
+     * This view can be extended from specific chat setting
+     * views.
+     *
+     * @param chat to genertae the general settings for
+     * @return group with settings elements
+     */
     private Group getGroupChatGeneral(Chat chat) {
         Group group = new Group();
 
@@ -357,6 +365,13 @@ public class GuiSettings extends Stage {
         return group;
     }
 
+    /**
+     * This function checks if the exists a chat with
+     * the given name in the chat handler.
+     *
+     * @param name to search for
+     * @return true when the chat exist
+     */
     private boolean existName(String name) {
         // search for the name and return true if found
         for(Chat chat : chatHandler.getChats()) {
@@ -369,6 +384,15 @@ public class GuiSettings extends Stage {
         return false;
     }
 
+    /**
+     * This function returns a free name for a chat.
+     * If the given name is already in use, this function
+     * counts up until a unused name is found.
+     *
+     * @param name to find unused version for
+     * @param number to start counting up (0 preferred)
+     * @return a name which is not used in the chat handler
+     */
     private String getFreeName(String name, int number) {
         String tmpName = name;
 
@@ -387,6 +411,9 @@ public class GuiSettings extends Stage {
         }
     }
 
+    /**
+     * Redraw all chat items in the tree view.
+     */
     private void redrawChatItems() {
         // clear the chat tree
         tiChats.getChildren().clear();
